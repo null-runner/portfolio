@@ -1,6 +1,6 @@
-<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Diagnostica tracking e funnel Meta — demo interattiva</title><style>
+<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Tracking Meta e diagnostica del funnel - demo interattiva</title><style>
 *{box-sizing:border-box}
-:root{--bg:#0a0e14;--panel:#111823;--panel2:#0d131c;--ink:#e2e9f2;--muted:#8b99ab;--acc:#3fd0e0;--acc-ink:#06222a;--acc-dim:#1c5560;--amber:#f0b23e;--red:#ef6b5e;--ok:#5fd08a;--line:#1e2937;--line2:#2c3b4f;--deep:#060a10;--mono:'JetBrains Mono','Cascadia Code',Consolas,monospace;--serif:Georgia,'Times New Roman',serif}
+:root{--bg:#0a0e14;--panel:#111823;--panel2:#0d131c;--ink:#e2e9f2;--muted:#8b99ab;--acc:#3fd0e0;--acc-ink:#06222a;--acc-dim:#1c5560;--amber:#f0b23e;--red:#ef6b5e;--ok:#5fd08a;--line:#1e2937;--line2:#2c3b4f;--deep:#060a10;--mono:'JetBrains Mono','Cascadia Code',Consolas,monospace;--serif:'Segoe UI',system-ui,-apple-system,'Helvetica Neue',Arial,sans-serif}
 [data-theme="light"]{--bg:#f3f5f7;--panel:#ffffff;--panel2:#fafbfc;--ink:#121820;--muted:#5c6b7a;--acc:#0d7c8c;--acc-ink:#f3fbfc;--acc-dim:#9fc6cc;--amber:#a16207;--red:#b3402f;--ok:#15803d;--line:#dde3ea;--line2:#c3cdd8;--deep:#101823}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:Verdana,Arial,sans-serif;line-height:1.55;transition:background-color .3s,color .3s}
 a{color:inherit;text-underline-offset:4px}
@@ -8,7 +8,7 @@ button,select{font:inherit}
 button,.button,select{min-height:44px}
 a:focus-visible,button:focus-visible,select:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
 .wrap{width:min(1240px,calc(100% - 32px));margin:auto}
-.disclaimer{font-size:12px;color:var(--muted)}
+.disclaimer{font-size:12px;color:var(--muted)}.explain{margin-top:12px;padding:10px 14px;border-left:3px solid var(--amber);background:var(--panel2);font-size:14px;max-width:760px}.explain b{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--amber);margin-bottom:4px}
 .demo-top{background:var(--deep);color:#e2e9f2;border-bottom:1px solid var(--line2)}
 .demo-top .wrap{min-height:54px;display:flex;align-items:center;justify-content:space-between;gap:18px}
 .demo-top a{font-size:13px;min-height:44px;display:inline-flex;align-items:center;font-family:var(--mono);text-decoration:none;color:#8b99ab}
@@ -19,7 +19,7 @@ a:focus-visible,button:focus-visible,select:focus-visible{outline:2px solid var(
 .demo-head{border-bottom:1px solid var(--line);padding:22px 0;background:var(--panel2)}
 .demo-title{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:end}
 .eyebrow{font:700 11px var(--mono);letter-spacing:.15em;text-transform:uppercase;color:var(--acc)}
-.demo-title h1{font:400 clamp(26px,4vw,42px)/1.05 var(--serif);margin:7px 0;letter-spacing:-.02em}
+.demo-title h1{font:700 clamp(26px,4vw,42px)/1.05 var(--serif);margin:7px 0;letter-spacing:-.02em}
 .controls{display:flex;gap:10px;flex-wrap:wrap;align-items:end}
 .controls label{font:700 11px var(--mono);text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
 .controls select{display:block;min-width:250px;margin-top:6px;padding:9px;border:1px solid var(--line2);background:var(--panel);color:var(--ink)}
@@ -30,7 +30,7 @@ a:focus-visible,button:focus-visible,select:focus-visible{outline:2px solid var(
 .workspace{padding:20px 0 48px}
 .appgrid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(320px,.8fr);gap:16px}
 .panel{background:var(--panel);border:1px solid var(--line);padding:16px;min-width:0}
-.panel h2{font:400 20px var(--serif);margin:0 0 12px;display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.panel h2{font:700 20px var(--serif);margin:0 0 12px;display:flex;justify-content:space-between;align-items:baseline;gap:10px}
 .panel h2 small{font:600 10px var(--mono);color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
 .metric-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
 .metric{border:1px solid var(--line);border-top:2px solid var(--acc);padding:10px 12px;background:var(--panel2)}
@@ -76,8 +76,8 @@ a:focus-visible,button:focus-visible,select:focus-visible{outline:2px solid var(
 .stack{display:grid;gap:16px}
 @media(max-width:900px){.appgrid{grid-template-columns:1fr}.demo-title{grid-template-columns:1fr}.controls{align-items:end}.controls label{flex:1}.controls select{min-width:0;width:100%}.metric-row{grid-template-columns:1fr}.diag .ba{grid-template-columns:1fr}.attr .row{grid-template-columns:80px 1fr 104px}.demo-top .wrap{flex-direction:column;align-items:flex-start;padding:10px 0;gap:4px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-</style></head><body><header class="demo-top"><div class="wrap"><a href="../START_HERE.it.html">← Torna al portfolio</a><div class="right"><a href="meta-attribution-debugger.html" lang="en">EN</a><button id="theme" aria-label="Cambia tema">◐</button><span class="disclaimer">Ricostruzione interattiva sintetica basata su pattern di delivery reali. Nessun dato di produzione o dei clienti.</span></div></div></header><section class="demo-head"><div class="wrap demo-title"><div><div class="eyebrow">Caso 05 / debugger attribuzione</div><h1>Diagnostica tracking e funnel Meta</h1><p class="disclaimer">Ricostruzione interattiva sintetica basata su pattern di delivery reali. Nessun dato di produzione o dei clienti.</p></div><div class="controls"><label>Scenario<select id="scenario"><option value="healthy">Tracking sano</option><option value="broken">UTM mancanti (redirect rotto)</option><option value="fixed">Dopo il fix</option></select></label><button class="button primary" id="run">Avvia diagnosi</button></div></div></section><main class="workspace"><div class="wrap appgrid"><div class="stack"><section class="panel"><h2>Stream eventi <small>eventi pixel + server · clicca una riga</small></h2><div class="tbl-wrap"><table class="tbl" id="ev"><thead><tr><th>event_id</th><th>tipo</th><th>utm_source</th><th>fbclid</th><th>referrer</th></tr></thead><tbody></tbody></table></div><div class="metric-row"><div class="metric"><b id="m-events">—</b><span>Eventi nella finestra</span></div><div class="metric"><b id="m-attr">—</b><span>Attribuiti</span></div><div class="metric warn" id="m-unk-box"><b id="m-unk">—</b><span>Sorgente sconosciuta</span></div></div></section><section class="panel"><h2>Tabella attribuzione <small>dopo join eventi → contatti CRM</small></h2><div class="attr" id="attr"><div class="disclaimer">Avvia una diagnosi per fare il join dello stream eventi con i contatti CRM e scomporre l'attribuzione per sorgente.</div></div></section></div><aside class="stack"><section class="panel"><h2>Evento selezionato <small>payload grezzo</small></h2><div class="json" id="json">// clicca una riga nello stream eventi per ispezionarla
-// i campi obbligatori mancanti sono evidenziati</div></section><section class="panel"><h2>Diagnosi <small>causa radice + fix</small></h2><div class="diag" id="diag"><div class="disclaimer">La diagnosi spiega perché l'attribuzione si rompe e cosa è stato cambiato per risolverla. Passa a "Dopo il fix" per vedere il prima e dopo.</div></div><div class="notice">Tutte le identità, i click ID e i referrer sono sintetici (example.invalid). Non è presente alcun ID account pubblicitario, audience, spesa o ricavo.</div></section></aside></div></main><script>
+</style></head><body><header class="demo-top"><div class="wrap"><a href="../START_HERE.it.html">← Torna al portfolio</a><div class="right"><a href="meta-attribution-debugger.html" lang="en">EN</a><button id="theme" aria-label="Cambia tema">◐</button><span class="disclaimer">Ricostruzione interattiva sintetica basata su pattern di delivery reali. Nessun dato di produzione o dei clienti.</span></div></div></header><section class="demo-head"><div class="wrap demo-title"><div><div class="eyebrow">Caso 05 / debugger attribuzione</div><h1>Tracking Meta e diagnostica del funnel</h1><p class="disclaimer">Ricostruzione interattiva sintetica basata su pattern di delivery reali. Nessun dato di produzione o dei clienti.</p><div class="explain"><b>Cosa sto guardando?</b> Qui scopri da dove arrivano davvero i tuoi lead, e perché a volte le ads sembrano non tornare. Scegli uno scenario e lancia la diagnosi.</div></div><div class="controls"><label>Scenario<select id="scenario"><option value="healthy">Tracking sano</option><option value="broken">UTM mancanti (redirect rotto)</option><option value="fixed">Dopo il fix</option></select></label><button class="button primary" id="run">Avvia diagnosi</button></div></div></section><main class="workspace"><div class="wrap appgrid"><div class="stack"><section class="panel"><h2>Flusso eventi <small>eventi pixel + server · clicca una riga</small></h2><div class="tbl-wrap"><table class="tbl" id="ev"><thead><tr><th>event_id</th><th>type</th><th>utm_source</th><th>fbclid</th><th>referrer</th></tr></thead><tbody></tbody></table></div><div class="metric-row"><div class="metric"><b id="m-events">—</b><span>Eventi nella finestra</span></div><div class="metric"><b id="m-attr">—</b><span>Attribuiti</span></div><div class="metric warn" id="m-unk-box"><b id="m-unk">—</b><span>Sorgente sconosciuta</span></div></div></section><section class="panel"><h2>Tabella di attribuzione <small>dopo join eventi → contatti CRM</small></h2><div class="attr" id="attr"><div class="disclaimer">Avvia una diagnosi per unire il flusso eventi ai contatti CRM e scomporre l'attribuzione per sorgente.</div></div></section></div><aside class="stack"><section class="panel"><h2>Evento selezionato <small>payload grezzo</small></h2><div class="json" id="json">// clicca una riga nel flusso eventi per ispezionarla
+// i campi obbligatori mancanti sono evidenziati</div></section><section class="panel"><h2>Diagnosi <small>causa radice + fix</small></h2><div class="diag" id="diag"><div class="disclaimer">La diagnosi spiega perché l'attribuzione si rompe e cosa è stato cambiato per sistemarla. Passa a "Dopo il fix" per vedere il prima/dopo.</div></div><div class="notice">Tutte le identità, i click ID e i referrer sono sintetici (example.invalid). Nessun ID account ads, audience, spesa o fatturato è presente.</div></section></aside></div></main><script>
 const root=document.documentElement,tbtn=document.getElementById('theme');
 const saved=localStorage.getItem('nm-theme');
 if(saved){root.dataset.theme=saved}else if(matchMedia('(prefers-color-scheme:light)').matches){root.dataset.theme='light'}
@@ -156,8 +156,8 @@ function loadScenario(){
  document.getElementById('m-attr').textContent=(total-unknown);
  document.getElementById('m-unk').textContent=unknown;
  document.getElementById('m-unk-box').style.display=unknown?'':'';
- document.getElementById('attr').innerHTML='<div class="disclaimer">Stream caricato. Clicca "Avvia diagnosi" per fare il join con il CRM e scomporre l\'attribuzione.</div>';
- document.getElementById('json').innerHTML='// clicca una riga nello stream eventi per ispezionarla\n// i campi obbligatori mancanti sono evidenziati';
+ document.getElementById('attr').innerHTML='<div class="disclaimer">Stream caricato. Clicca "Avvia diagnosi" per unire al CRM e scomporre l\'attribuzione.</div>';
+ document.getElementById('json').innerHTML='// clicca una riga nel flusso eventi per ispezionarla\n// i campi obbligatori mancanti sono evidenziati';
  document.getElementById('diag').innerHTML='<div class="disclaimer">Avvia una diagnosi per vedere la causa radice e il fix.</div>';
 }
 scenSel.onchange=loadScenario;
@@ -178,14 +178,13 @@ function renderAttribution(events){
  order.forEach(src=>{
   const n=bySrc[src];const pct=Math.round(n/total*100);
   const isUnknown=src==='unknown';
-  const label=isUnknown?'sconosciuta':src;
   const row=document.createElement('div');row.className='row';
-  row.innerHTML=`<span class="src" style="${isUnknown?'color:var(--red)':''}">${label}</span><span class="attrbar"><i class="${isUnknown?'u':'a'}" style="width:${pct}%"></i></span><span class="val"><b>${n}</b> lead · ${pct}%</span>`;
+  row.innerHTML=`<span class="src" style="${isUnknown?'color:var(--red)':''}">${src}</span><span class="attrbar"><i class="${isUnknown?'u':'a'}" style="width:${pct}%"></i></span><span class="val"><b>${n}</b> lead · ${pct}%</span>`;
   el.appendChild(row);
  });
  const unk=bySrc['unknown']||0;
  const foot=document.createElement('div');foot.className='disclaimer';foot.style.marginTop='6px';
- foot.textContent=unk?(unk+' conversioni su '+total+' non possono essere attribuite a una sorgente paid.'):'Tutte le conversioni attribuite a una sorgente.';
+ foot.textContent=unk?(unk+' di '+total+' conversioni non attribuibili a una sorgente a pagamento.'):'Tutte le conversioni attribuite a una sorgente.';
  el.appendChild(foot);
 }
 
@@ -193,15 +192,15 @@ function renderAttribution(events){
 function renderDiagnosis(kind){
  const d=document.getElementById('diag');
  if(kind==='healthy'){
-  d.innerHTML=`<div class="head">Risultato del join</div><ul><li>8 eventi collegati a 6 contatti CRM su <b>fbclid</b> + email.</li><li>Ogni conversione porta un <b>utm_source</b>; nessun fallback necessario.</li></ul><div class="fix">Nessun problema rilevato. L'attribuzione è completa per questa finestra.</div>`;
+  d.innerHTML=`<div class="head">Risultato del join</div><ul><li>8 eventi uniti a 6 contatti CRM su <b>fbclid</b> + email.</li><li>Ogni conversione porta un <b>utm_source</b>; nessun fallback necessario.</li></ul><div class="fix">Nessun problema rilevato. L'attribuzione è completa per questa finestra.</div>`;
   return;
  }
  if(kind==='broken'){
-  d.innerHTML=`<div class="head">Risultato del join</div><ul><li>Collegati 8 eventi → 6 contatti CRM su <b>fbclid</b>.</li><li>Le conversioni <b>ig</b> e <b>fb</b> arrivano con <span class="miss">utm_source = null</span> ma con un <b>fbclid</b> valido e referrer <b>go.example.invalid</b>.</li></ul><div class="head">Causa radice</div><div class="cause">Il bulk redirect Cloudflare su <b>go.example.invalid</b> è configurato con una URL di destinazione statica. Riscrive la destinazione ma <b>elimina la query string</b>, quindi <code>?utm_source=ig&amp;utm_campaign=…</code> non raggiunge mai la landing page. Il pixel scatta senza contesto UTM. Il fbclid sopravvive perché viene ri-aggiunto da Meta al click, ed è per questo che gli eventi sono recuperabili.</div><div class="head">Fix da applicare</div><div class="fix">Cambia la regola di redirect in <b>"Preserve query string"</b> (Cloudflare: aggiungi <code>${'{'}http.request.uri.query${'}'}</code> alla destinazione). Fai il backfill della finestra interessata mappando <b>fbclid → campagna</b> dal report dei click degli ads. Ri-esegui l'attribuzione.</div>`;
+  d.innerHTML=`<div class="head">Risultato del join</div><ul><li>Uniti 8 eventi → 6 contatti CRM su <b>fbclid</b>.</li><li>Le conversioni <b>ig</b> e <b>fb</b> arrivano con <span class="miss">utm_source = null</span> ma un <b>fbclid</b> valido e referrer <b>go.example.invalid</b>.</li></ul><div class="head">Causa radice</div><div class="cause">Il redirect bulk di Cloudflare su <b>go.example.invalid</b> è configurato con un URL di destinazione statico. Riscrive la destinazione ma <b>elimina la query string</b>, quindi <code>?utm_source=ig&amp;utm_campaign=…</code> non arriva mai alla landing page. Il pixel scatta senza contesto UTM. fbclid sopravvive perché viene ri-aggiunto da Meta al click, ed è per questo che gli eventi sono recuperabili.</div><div class="head">Fix da applicare</div><div class="fix">Cambia la regola di redirect in <b>"Preserve query string"</b> (Cloudflare: aggiungi <code>${'{'}http.request.uri.query${'}'}</code> alla destinazione). Fai il backfill della finestra interessata mappando <b>fbclid → campaign</b> dal report dei click ads. Riesegui l'attribuzione.</div>`;
   return;
  }
  // fixed
- d.innerHTML=`<div class="head">Risultato del join</div><ul><li>Il redirect ora preserva la query string; <b>utm_source</b> presente su tutte le conversioni.</li><li>4 conversioni prima sconosciute riassegnate a <b>ig</b> / <b>fb</b>.</li></ul><div class="fix">Regola di redirect impostata per preservare la query string + backfill fbclid→campagna applicato.</div><div class="ba"><div><div class="lbl">Sorgente sconosciuta · prima</div><div class="big dn">4 / 6</div></div><div><div class="lbl">Sorgente sconosciuta · dopo</div><div class="big up">0 / 6</div></div></div>`;
+ d.innerHTML=`<div class="head">Risultato del join</div><ul><li>Il redirect ora preserva la query string; <b>utm_source</b> presente su tutte le conversioni.</li><li>4 conversioni prima sconosciute riassegnate a <b>ig</b> / <b>fb</b>.</li></ul><div class="fix">Regola di redirect impostata per preservare la query string + backfill fbclid→campaign applicato.</div><div class="ba"><div><div class="lbl">Sorgente sconosciuta · prima</div><div class="big dn">4 / 6</div></div><div><div class="lbl">Sorgente sconosciuta · dopo</div><div class="big up">0 / 6</div></div></div>`;
 }
 
 runBtn.onclick=()=>{

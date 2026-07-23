@@ -1,0 +1,340 @@
+<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Triage AI con un umano al guinzaglio - demo interattiva</title><style>
+*{box-sizing:border-box}
+:root{--bg:#0a0e14;--panel:#111823;--panel2:#0d131c;--ink:#e2e9f2;--muted:#8b99ab;--acc:#3fd0e0;--acc-ink:#06222a;--acc-dim:#1c5560;--amber:#f0b23e;--red:#ef6b5e;--ok:#5fd08a;--line:#1e2937;--line2:#2c3b4f;--deep:#060a10;--mono:'JetBrains Mono','Cascadia Code',Consolas,monospace;--serif:'Segoe UI',system-ui,-apple-system,'Helvetica Neue',Arial,sans-serif}
+[data-theme="light"]{--bg:#f3f5f7;--panel:#ffffff;--panel2:#fafbfc;--ink:#121820;--muted:#5c6b7a;--acc:#0d7c8c;--acc-ink:#f3fbfc;--acc-dim:#9fc6cc;--amber:#a16207;--red:#b3402f;--ok:#15803d;--line:#dde3ea;--line2:#c3cdd8;--deep:#101823}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Verdana,Arial,sans-serif;line-height:1.55;transition:background-color .3s,color .3s}
+a{color:inherit;text-underline-offset:4px}
+button,select,textarea{font:inherit}
+button,.button{min-height:44px}
+a:focus-visible,button:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+.wrap{width:min(1300px,calc(100% - 32px));margin:auto}
+.disclaimer{font-size:12px;color:var(--muted)}
+.demo-top{background:var(--deep);color:#e2e9f2;border-bottom:1px solid var(--line2)}
+.demo-top .wrap{min-height:54px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.demo-top a{font-size:13px;min-height:44px;display:inline-flex;align-items:center;font-family:var(--mono);text-decoration:none;color:#8b99ab}
+.demo-top a:hover{color:#3fd0e0}
+.demo-top .right{display:flex;gap:12px;align-items:center}
+#theme{border:1px solid #2c3b4f;background:transparent;color:#e2e9f2;min-height:32px;padding:2px 10px;cursor:pointer;font-size:14px}
+#theme:hover{border-color:#3fd0e0}
+.demo-head{border-bottom:1px solid var(--line);padding:22px 0;background:var(--panel2)}
+.eyebrow{font:700 11px var(--mono);letter-spacing:.15em;text-transform:uppercase;color:var(--acc)}
+.demo-head h1{font:700 clamp(26px,4vw,42px)/1.05 var(--serif);margin:7px 0;letter-spacing:-.02em}
+.explain{border-left:3px solid var(--amber);background:color-mix(in srgb,var(--amber) 9%,transparent);padding:12px 16px;margin-top:16px;max-width:760px}
+.explain b{font:700 13px var(--serif);display:block;margin-bottom:3px}
+.explain p{margin:0;font-size:13.5px;color:var(--ink)}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;align-items:center}
+.button{display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--line2);padding:10px 16px;background:var(--panel);color:var(--ink);cursor:pointer;font-weight:700;font-size:14px}
+.button.primary{background:var(--acc);color:var(--acc-ink);border-color:var(--acc)}
+.button:hover:not(:disabled){border-color:var(--acc)}
+.button:disabled{opacity:.4;cursor:not-allowed}
+.button.sm{min-height:34px;padding:6px 11px;font-size:12px}
+.button.ok{border-color:var(--ok);color:var(--ok)}
+.button.warn{border-color:var(--amber);color:var(--amber)}
+.button.bad{border-color:var(--red);color:var(--red)}
+.workspace{padding:20px 0 48px}
+.appgrid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(340px,.85fr);gap:16px;align-items:start}
+.stack{display:grid;gap:16px}
+.panel{background:var(--panel);border:1px solid var(--line);padding:16px;min-width:0}
+.panel h2{font:700 18px var(--serif);margin:0 0 12px;display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.panel h2 small{font:600 10px var(--mono);color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+.metric-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+.metric{border:1px solid var(--line);border-top:2px solid var(--acc);padding:9px 11px;background:var(--panel2)}
+.metric b{font:700 21px var(--serif);display:block}
+.metric span{display:block;font:600 9.5px var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:3px}
+.inbox{list-style:none;margin:0;padding:0;display:grid;gap:8px;max-height:340px;overflow:auto}
+.inbox-item{border:1px solid var(--line2);background:var(--panel2);padding:10px 12px;transition:opacity .3s,border-color .3s,transform .3s}
+.inbox-item .ii-top{display:flex;justify-content:space-between;gap:8px;font:700 11px var(--mono);color:var(--muted)}
+.inbox-item .ii-from{color:var(--ink)}
+.inbox-item .ii-subj{font-weight:700;font-size:13.5px;margin:3px 0}
+.inbox-item .ii-body{font-size:12.5px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.inbox-item.reading{border-color:var(--acc);box-shadow:0 0 0 1px var(--acc)}
+.inbox-empty{font-size:13px;color:var(--muted);padding:8px 2px}
+.cols{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.col{border:1px solid var(--line);background:var(--panel2);padding:8px;min-height:120px}
+.col h3{font:700 10.5px var(--mono);text-transform:uppercase;letter-spacing:.06em;margin:0 0 8px;padding-bottom:6px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between}
+.col.sales h3{color:var(--ok)}.col.billing h3{color:var(--acc)}.col.support h3{color:var(--amber)}.col.spam h3{color:var(--muted)}
+.chip{border:1px solid var(--line2);background:var(--panel);padding:6px 8px;margin-bottom:6px;font-size:11.5px;animation:flash 1s ease}
+.chip .cf{font:700 10px var(--mono);color:var(--muted);display:block}
+.chip b{font-size:12px}
+@keyframes flash{0%{background:color-mix(in srgb,var(--acc) 30%,transparent)}100%{background:var(--panel)}}
+.proc{border:1px solid var(--line2);background:var(--panel2);padding:11px;margin-bottom:12px;min-height:64px}
+.proc .p-hd{display:flex;justify-content:space-between;font:700 11px var(--mono);color:var(--muted)}
+.proc .p-hd b{color:var(--ink)}
+.proc .p-status{font-size:12.5px;margin:7px 0 9px;min-height:18px;display:flex;align-items:center;gap:7px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--acc);flex:none;animation:pulse 1s infinite}
+@keyframes pulse{50%{opacity:.35}}
+.conf-wrap{display:grid;grid-template-columns:1fr auto;gap:9px;align-items:center}
+.conf-track{height:9px;background:var(--line);border-radius:5px;overflow:hidden}
+.conf-fill{height:100%;width:0;background:var(--ok);border-radius:5px;transition:width .6s ease}
+.conf-fill.low{background:var(--red)}.conf-fill.mid{background:var(--amber)}
+.conf-val{font:700 12px var(--mono);min-width:42px;text-align:right}
+.decision{margin-top:9px;font-size:12.5px;display:none}
+.decision.show{display:block}
+.decision .dbadge{display:inline-block;padding:2px 9px;font:700 10px var(--mono);border-radius:11px;text-transform:uppercase;letter-spacing:.05em}
+.dbadge.auto{color:var(--ok);border:1px solid var(--ok)}
+.dbadge.human{color:var(--amber);border:1px solid var(--amber)}
+.decision .drule{color:var(--muted);margin-top:4px;font-family:var(--mono);font-size:11.5px}
+.json{background:var(--deep);border:1px solid var(--line2);color:#c7d4e0;padding:12px;font:12px/1.55 var(--mono);overflow:auto;max-height:260px;white-space:pre}
+.json .k{color:#3fd0e0}.json .s{color:#a8d08a}.json .n{color:#f0b23e}.json .b{color:#c98bdc}
+.draftbox{margin-top:10px;border:1px dashed var(--line2);padding:9px 11px;background:var(--panel2)}
+.draftbox .dl{font:700 9.5px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--amber);display:flex;align-items:center;gap:6px;margin-bottom:5px}
+.draftbox .dl::before{content:"■";color:var(--amber)}
+.draftbox p{margin:0;font-size:12.5px;color:var(--ink)}
+.qcard{border:1px solid var(--amber);background:color-mix(in srgb,var(--amber) 7%,transparent);padding:11px;margin-bottom:10px;animation:flash 1s ease}
+.qcard .qc-top{display:flex;justify-content:space-between;font:700 11px var(--mono);color:var(--muted);gap:8px}
+.qcard .qc-top b{color:var(--ink)}
+.qcard .qc-subj{font-weight:700;font-size:13px;margin:3px 0}
+.qcard .qc-meta{font:600 11px var(--mono);color:var(--muted);margin-bottom:6px}
+.qcard .qc-reason{font-size:11.5px;color:var(--amber);margin-bottom:8px}
+.qcard .qc-draft{font-size:12.5px;background:var(--panel2);border:1px dashed var(--line2);padding:7px 9px;margin-bottom:8px}
+.qcard .qc-draft .lbl{font:700 9px var(--mono);color:var(--muted);letter-spacing:.05em;display:block;margin-bottom:3px}
+.qcard textarea{width:100%;min-height:70px;background:var(--panel2);color:var(--ink);border:1px solid var(--acc);padding:7px;font-size:12.5px;resize:vertical}
+.qbtns{display:flex;gap:7px;flex-wrap:wrap}
+.q-empty{font-size:13px;color:var(--muted)}
+.rules{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.rules li{display:grid;grid-template-columns:auto 1fr;gap:9px;align-items:start;font-size:12.5px;border:1px solid var(--line);padding:8px 10px;background:var(--panel2)}
+.rules .rk{font:700 11px var(--mono);color:var(--amber)}
+.rules b{color:var(--ink)}
+.log{max-height:280px;overflow:auto;background:var(--deep);color:#c7d4e0;padding:12px;font:12px/1.6 var(--mono);border:1px solid var(--line2)}
+.log div{padding:2px 0;border-bottom:1px solid rgba(140,160,180,.08)}
+.log .ai{color:#3fd0e0}.log .human{color:#f0b23e}.log .ok{color:#5fd08a}.log .bad{color:#ef8a7e}.log .muted{color:#738699}
+.notice{padding:9px 12px;background:color-mix(in srgb,var(--amber) 10%,transparent);border:1px solid var(--amber);font-size:12px;margin-top:12px}
+@media(max-width:900px){.appgrid{grid-template-columns:1fr}.metric-row{grid-template-columns:1fr 1fr}.cols{grid-template-columns:1fr 1fr}.demo-top .wrap{flex-direction:column;align-items:flex-start;padding:10px 0;gap:4px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head><body>
+<header class="demo-top"><div class="wrap"><a href="../START_HERE.it.html">&larr; Torna al portfolio</a><div class="right"><a href="ai-agent-triage.html" lang="en">EN</a><button id="theme" aria-label="Cambia tema">&#9686;</button><span class="disclaimer">Ricostruzione interattiva sintetica basata su pattern di delivery reali. Nessun dato di produzione o dei clienti.</span></div></div></header>
+<section class="demo-head"><div class="wrap"><div class="eyebrow">Caso 05 / agenti AI con controllo umano</div><h1>Triage AI al guinzaglio</h1><p class="disclaimer">Ricostruzione interattiva sintetica basata su pattern di delivery reali. Nessun dato di produzione o dei clienti.</p>
+<div class="explain"><b>Cosa sto guardando?</b><p>Un agente AI smista da solo la tua inbox di supporto e vendite, ma le decisioni delicate (rimborsi, clienti arrabbiati, tutto ciò di cui non è sicuro) si fermano e aspettano una persona. Premi "Elabora il prossimo" e guarda dove finisce ogni messaggio: una colonna di reparto, oppure la coda di approvazione.</p></div>
+<div class="actions"><button class="button primary" id="next">Elabora il prossimo</button><button class="button" id="all">Elabora tutti</button><button class="button" id="reset">Reset</button></div>
+</div></section>
+<main class="workspace"><div class="wrap appgrid">
+<div class="stack">
+<section class="panel">
+<div class="metric-row">
+<div class="metric"><b id="m-proc">0</b><span>Elaborati</span></div>
+<div class="metric"><b id="m-auto">0</b><span>Instradati auto</span></div>
+<div class="metric"><b id="m-wait">0</b><span>In attesa approvazione</span></div>
+<div class="metric"><b id="m-appr">0</b><span>Approvati da umano</span></div>
+</div>
+<h2>Conversazioni in arrivo <small>inbox sintetica</small></h2>
+<ul class="inbox" id="inbox"></ul>
+</section>
+<section class="panel">
+<h2>Instradamento per reparto <small>solo instradati auto</small></h2>
+<div class="cols">
+<div class="col sales"><h3>Vendite <span id="c-sales">0</span></h3><div id="col-sales"></div></div>
+<div class="col billing"><h3>Fatturazione <span id="c-billing">0</span></h3><div id="col-billing"></div></div>
+<div class="col support"><h3>Supporto <span id="c-support">0</span></h3><div id="col-support"></div></div>
+<div class="col spam"><h3>Spam <span id="c-spam">0</span></h3><div id="col-spam"></div></div>
+</div>
+</section>
+<section class="panel">
+<h2>Audit trail <small>ogni decisione, con timestamp</small></h2>
+<div class="log" id="log" aria-live="polite"><div class="muted">Ogni riga qui sotto registra chi ha agito (ai o umano), su cosa, e l'esito. Niente qui è testo prescritto.</div></div>
+</section>
+</div>
+<aside class="stack">
+<section class="panel">
+<h2>Output strutturato <small>cosa produce l'AI</small></h2>
+<div class="proc" id="proc">
+<div class="p-hd"><b id="p-from">Fermo</b><span id="p-id">nessun messaggio</span></div>
+<div class="p-status" id="p-status"><span class="muted">Premi "Elabora il prossimo" per iniziare.</span></div>
+<div class="conf-wrap"><div class="conf-track"><div class="conf-fill" id="conf-fill"></div></div><div class="conf-val" id="conf-val">--</div></div>
+<div class="decision" id="decision"><span class="dbadge" id="dbadge"></span><div class="drule" id="drule"></div></div>
+</div>
+<div class="json" id="json">// elabora un messaggio per ispezionare l'output strutturato</div>
+<div class="draftbox"><div class="dl">Bozza di risposta suggerita &middot; mai inviata automaticamente</div><p id="draft-txt">Nessuna bozza.</p></div>
+</section>
+<section class="panel">
+<h2>Coda di approvazione <small>in attesa di un umano</small></h2>
+<div id="queue"><div class="q-empty">Niente in attesa. Rimborsi, messaggi arrabbiati e casi a bassa confidenza atterreranno qui per la revisione.</div></div>
+</section>
+<section class="panel">
+<h2>Regole di sicurezza <small>applicate sempre per prime</small></h2>
+<ul class="rules">
+<li><span class="rk">R1</span><div><b>Rimborsi &rarr; sempre umano.</b> I soldi che escono dall'azienda non li decide mai l'AI da sola.</div></li>
+<li><span class="rk">R2</span><div><b>Confidenza &lt; 0.75 &rarr; umano.</b> Se il modello non è sicuro, conferma una persona.</div></li>
+<li><span class="rk">R3</span><div><b>Sentiment arrabbiato &rarr; umano.</b> Ai clienti irritati risponde una persona vera, non un autoreply.</div></li>
+<li><span class="rk">R4</span><div><b>Categoria sconosciuta &rarr; fallback.</b> Se non riesce a classificare, passa la mano invece di tirare a indovinare.</div></li>
+</ul>
+<div class="notice">L'AI può scrivere una bozza di risposta per ogni caso, ma una bozza resta sempre e solo un suggerimento. L'invio rimane un'azione umana.</div>
+</section>
+</aside>
+</div></main>
+<script>
+const root=document.documentElement,tbtn=document.getElementById('theme');
+const saved=localStorage.getItem('nm-theme');
+if(saved){root.dataset.theme=saved}else if(matchMedia('(prefers-color-scheme:light)').matches){root.dataset.theme='light'}
+tbtn.onclick=()=>{const t=root.dataset.theme==='light'?'dark':'light';root.dataset.theme=t;localStorage.setItem('nm-theme',t)};
+
+const MESSAGES=[
+ {id:'M-01',from:'luca.b',subj:'Domanda sulle rate',body:"Ciao, posso dividere il pagamento del corso in 3 rate mensili? Ho visto Klarna citato da qualche parte.",cat:'billing',intent:'payment_options',sent:'neutral',conf:0.93,draft:"Sì, il corso supporta 3 rate mensili con Klarna al checkout. Posso guidarti passo passo per attivarle."},
+ {id:'M-02',from:'sara.m',subj:'Voglio un rimborso',body:"Ho comprato il programma la settimana scorsa e non fa per me. Vorrei un rimborso per favore.",cat:'billing',intent:'refund_request',sent:'neutral',conf:0.90,draft:"Mi dispiace che non fosse quello giusto. Gli ordini entro 14 giorni danno diritto al rimborso. Verifico i dettagli del tuo ordine."},
+ {id:'M-03',from:'marco.t',subj:'Pronto a iscrivermi',body:"Ho appena visto il webinar, ci sto. Come pago e parto oggi stesso?",cat:'sales',intent:'purchase_intent',sent:'positive',conf:0.96,draft:"Fantastico. Ecco il tuo link di iscrizione, puoi partire subito dopo il checkout."},
+ {id:'M-04',from:'noreply.promo',subj:'CONGRATULAZIONI hai vinto',body:"URGENTE!! Riscatta subito la tua gift card da 1000 euro, clicca il link prima che scada!!!",cat:'spam',intent:'promotion_spam',sent:'neutral',conf:0.98,draft:null},
+ {id:'M-05',from:'elena.r',subj:'Il video non parte',body:"Il video del Modulo 4 continua a bufferare e si blocca a 2:13. Sono su Chrome. Come risolvo?",cat:'support',intent:'technical_issue',sent:'neutral',conf:0.88,draft:"Grazie per la segnalazione. Prova a svuotare la cache del player e a passare a 720p. Se continua, mandami la versione del browser."},
+ {id:'M-06',from:'giovanni.p',subj:'Questo è inaccettabile',body:"Ho scritto TRE volte e non ha risposto nessuno. È una presa in giro, voglio parlare con un umano ORA.",cat:'support',intent:'complaint',sent:'angry',conf:0.84,draft:"Capisco perfettamente la tua frustrazione e mi scuso per il ritardo. Recupero subito le tue email precedenti."},
+ {id:'M-07',from:'anon-visitor',subj:'domanda veloce',body:"funziona?",cat:'unknown',intent:'unclear',sent:'neutral',conf:0.41,draft:null},
+ {id:'M-08',from:'chiara.v',subj:'Fattura per il mio acquisto',body:"Potete mandarmi una fattura in regola per l'ordine 4471? Mi serve per il commercialista.",cat:'billing',intent:'invoice_request',sent:'neutral',conf:0.91,draft:"Certo. Sto generando la fattura per l'ordine 4471, arriverà a questa email entro pochi minuti."}
+];
+const CATLABEL={sales:'Vendite',billing:'Fatturazione',support:'Supporto',spam:'Spam'};
+
+function decide(m){
+ if(m.intent==='refund_request')return{route:'human',rule:'R1 rimborso -> sempre umano'};
+ if(m.sent==='angry')return{route:'human',rule:'R3 sentiment arrabbiato -> umano'};
+ if(m.cat==='unknown')return{route:'human',rule:'R4 categoria sconosciuta -> fallback'};
+ if(m.conf<0.75)return{route:'human',rule:'R2 confidenza '+m.conf.toFixed(2)+' < 0.75 -> umano'};
+ return{route:m.cat,rule:'confidenza '+m.conf.toFixed(2)+' >= 0.75, categoria sicura -> auto-route'};
+}
+
+const stat={proc:0,auto:0,wait:0,appr:0,cols:{sales:0,billing:0,support:0,spam:0}};
+let idx=0,busy=false;
+
+const inboxEl=document.getElementById('inbox'),logEl=document.getElementById('log'),queueEl=document.getElementById('queue');
+function renderInbox(){
+ inboxEl.innerHTML='';
+ const rest=MESSAGES.slice(idx);
+ if(!rest.length){inboxEl.innerHTML='<li class="inbox-empty">Inbox vuota. Tutte le '+MESSAGES.length+' conversazioni elaborate.</li>';return}
+ rest.forEach(m=>{
+  const li=document.createElement('li');li.className='inbox-item';li.id='in-'+m.id;
+  li.innerHTML='<div class="ii-top"><span class="ii-from">'+m.from+'</span><span class="ii-id">'+m.id+'</span></div><div class="ii-subj">'+m.subj+'</div><div class="ii-body">'+m.body+'</div>';
+  inboxEl.appendChild(li);
+ });
+}
+function setStat(){
+ document.getElementById('m-proc').textContent=stat.proc;
+ document.getElementById('m-auto').textContent=stat.auto;
+ document.getElementById('m-wait').textContent=stat.wait;
+ document.getElementById('m-appr').textContent=stat.appr;
+ for(const k in stat.cols)document.getElementById('c-'+k).textContent=stat.cols[k];
+}
+function ts(){return new Date().toLocaleTimeString([],{hour12:false})}
+function audit(actor,html){
+ const d=document.createElement('div');
+ const a=actor==='human'?'<span class="human">[umano]</span>':'<span class="ai">[ai]</span>';
+ d.innerHTML='<span class="muted">'+ts()+'</span> '+a+' '+html;logEl.prepend(d);
+}
+function jsonHtml(o){return JSON.stringify(o,null,2)
+ .replace(/"([^"]+)":/g,'<span class="k">"$1"</span>:')
+ .replace(/: "([^"]*)"/g,': <span class="s">"$1"</span>')
+ .replace(/: (\d+\.?\d*)/g,': <span class="n">$1</span>')
+ .replace(/: (true|false|null)/g,': <span class="b">$1</span>')}
+
+function animate(m,done){
+ const li=document.getElementById('in-'+m.id);if(li)li.classList.add('reading');
+ document.getElementById('p-from').textContent=m.from;
+ document.getElementById('p-id').textContent=m.id;
+ const st=document.getElementById('p-status');
+ const fill=document.getElementById('conf-fill'),cval=document.getElementById('conf-val');
+ fill.className='conf-fill';fill.style.width='0';cval.textContent='--';
+ document.getElementById('decision').classList.remove('show');
+ document.getElementById('json').innerHTML='// classificazione...';
+ document.getElementById('draft-txt').textContent='Nessuna bozza.';
+ const d=decide(m);
+ const steps=[
+  ()=>{st.innerHTML='<span class="dot"></span> L\'AI legge il messaggio';audit('ai','lettura '+m.id+' da '+m.from);},
+  ()=>{st.innerHTML='<span class="dot"></span> Classifica: <b>'+m.cat+'</b> / '+m.intent+' / '+m.sent;
+       document.getElementById('json').innerHTML=jsonHtml({message_id:m.id,category:m.cat,intent:m.intent,sentiment:m.sent});},
+  ()=>{st.innerHTML='<span class="dot"></span> Calcolo confidenza';
+       const cls=m.conf<0.75?'low':(m.conf<0.85?'mid':'');fill.className='conf-fill '+cls;
+       fill.style.width=(m.conf*100)+'%';cval.textContent=m.conf.toFixed(2);},
+  ()=>{const auto=d.route!=='human';st.innerHTML=auto?'Decisione presa':'Trattenuto per revisione umana';
+       const dec=document.getElementById('decision');dec.classList.add('show');
+       const bd=document.getElementById('dbadge');
+       bd.className='dbadge '+(auto?'auto':'human');
+       bd.textContent=auto?('instrada auto -> '+CATLABEL[d.route]):'revisione umana';
+       document.getElementById('drule').textContent=d.rule;
+       const out={message_id:m.id,category:m.cat,intent:m.intent,sentiment:m.sent,confidence:m.conf,suggested_reply_draft:m.draft,route:auto?d.route:'human_review'};
+       document.getElementById('json').innerHTML=jsonHtml(out);
+       document.getElementById('draft-txt').textContent=m.draft?m.draft:'(nessuna bozza - l\'AI ha preferito non indovinare, un umano scriverà la risposta)';},
+  ()=>{finish(m,d);if(li)li.remove();if(done)done();}
+ ];
+ let i=0;const t=setInterval(()=>{if(i>=steps.length){clearInterval(t);return}steps[i++]()},650);
+}
+
+function finish(m,d){
+ idx++;stat.proc++;
+ if(d.route!=='human'){
+  stat.auto++;stat.cols[d.route]++;
+  const col=document.getElementById('col-'+d.route);
+  const c=document.createElement('div');c.className='chip';
+  c.innerHTML='<span class="cf">'+m.id+' &middot; conf '+m.conf.toFixed(2)+'</span><b>'+m.subj+'</b>';
+  col.prepend(c);
+  audit('ai','instradato auto '+m.id+' a <b>'+CATLABEL[d.route]+'</b> ('+m.intent+', conf '+m.conf.toFixed(2)+')');
+ }else{
+  stat.wait++;
+  addQueue(m,d);
+  audit('ai','trattenuto '+m.id+' per revisione &middot; <span class="human">'+d.rule+'</span>');
+ }
+ setStat();
+ if(idx>=MESSAGES.length)renderInbox();
+}
+
+function addQueue(m,d){
+ const empty=queueEl.querySelector('.q-empty');if(empty)empty.remove();
+ const card=document.createElement('div');card.className='qcard';card.id='q-'+m.id;
+ const draftBlock=m.draft
+  ?'<div class="qc-draft"><span class="lbl">Bozza AI (modifica prima di approvare)</span><span class="dtxt">'+m.draft+'</span></div>'
+  :'<div class="qc-draft"><span class="lbl">Nessuna bozza AI</span><span class="dtxt">L\'AI ha preferito non indovinare. Scrivi una risposta, poi approva.</span></div>';
+ card.innerHTML='<div class="qc-top"><b>'+m.from+'</b><span>'+m.id+'</span></div>'
+  +'<div class="qc-subj">'+m.subj+'</div>'
+  +'<div class="qc-meta">'+m.cat+' / '+m.intent+' / '+m.sent+' &middot; conf '+m.conf.toFixed(2)+'</div>'
+  +'<div class="qc-reason">Trattenuto: '+d.rule+'</div>'
+  +draftBlock
+  +'<div class="qbtns"><button class="button sm ok" data-act="approve">Approva</button><button class="button sm warn" data-act="edit">Modifica</button><button class="button sm bad" data-act="reject">Rifiuta</button></div>';
+ queueEl.prepend(card);
+ card.querySelectorAll('button').forEach(b=>b.onclick=()=>qAction(m,b.dataset.act,card));
+}
+
+function qAction(m,act,card){
+ if(act==='edit'){
+  const holder=card.querySelector('.qc-draft');const cur=card.querySelector('.dtxt').textContent;
+  holder.innerHTML='<span class="lbl">Modifica risposta</span><textarea>'+(m.draft?cur:'')+'</textarea>';
+  const ta=holder.querySelector('textarea');ta.focus();
+  const btns=card.querySelector('.qbtns');
+  btns.innerHTML='<button class="button sm ok" data-act="approve">Approva modificata</button><button class="button sm bad" data-act="reject">Rifiuta</button>';
+  m._edited=true;
+  btns.querySelectorAll('button').forEach(b=>b.onclick=()=>qAction(m,b.dataset.act,card));
+  audit('human','aperto '+m.id+' per modifica');
+  return;
+ }
+ if(act==='approve'){
+  stat.wait--;stat.appr++;
+  audit('human','<span class="ok">approvato</span> '+m.id+(m._edited?' (bozza modificata da umano)':'')+' &middot; risposta pronta per l\'invio');
+ }else{
+  stat.wait--;
+  audit('human','<span class="bad">rifiutato</span> '+m.id+' &middot; rimosso dalla coda, niente inviato');
+ }
+ card.remove();
+ if(!queueEl.querySelector('.qcard'))queueEl.innerHTML='<div class="q-empty">Coda vuota. Tutti i casi trattenuti risolti da un umano.</div>';
+ setStat();
+}
+
+const btnNext=document.getElementById('next'),btnAll=document.getElementById('all'),btnReset=document.getElementById('reset');
+function lock(v){busy=v;btnNext.disabled=v;btnAll.disabled=v;}
+btnNext.onclick=()=>{
+ if(busy||idx>=MESSAGES.length)return;lock(true);
+ animate(MESSAGES[idx],()=>lock(false));
+};
+btnAll.onclick=()=>{
+ if(busy||idx>=MESSAGES.length)return;lock(true);
+ const step=()=>{if(idx>=MESSAGES.length){lock(false);return}animate(MESSAGES[idx],step)};
+ step();
+};
+btnReset.onclick=()=>{
+ if(busy)return;
+ idx=0;stat.proc=0;stat.auto=0;stat.wait=0;stat.appr=0;stat.cols={sales:0,billing:0,support:0,spam:0};
+ ['sales','billing','support','spam'].forEach(k=>document.getElementById('col-'+k).innerHTML='');
+ queueEl.innerHTML='<div class="q-empty">Niente in attesa. Rimborsi, messaggi arrabbiati e casi a bassa confidenza atterreranno qui per la revisione.</div>';
+ logEl.innerHTML='<div class="muted">Ogni riga qui sotto registra chi ha agito (ai o umano), su cosa, e l\'esito. Niente qui è testo prescritto.</div>';
+ document.getElementById('p-from').textContent='Fermo';document.getElementById('p-id').textContent='nessun messaggio';
+ document.getElementById('p-status').innerHTML='<span class="muted">Premi "Elabora il prossimo" per iniziare.</span>';
+ document.getElementById('conf-fill').style.width='0';document.getElementById('conf-val').textContent='--';
+ document.getElementById('decision').classList.remove('show');
+ document.getElementById('json').innerHTML='// elabora un messaggio per ispezionare l\'output strutturato';
+ document.getElementById('draft-txt').textContent='Nessuna bozza.';
+ MESSAGES.forEach(m=>delete m._edited);
+ renderInbox();setStat();
+};
+renderInbox();setStat();
+</script></body></html>

@@ -1,6 +1,6 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Stores, websites and lifecycle campaigns — interactive demo</title><style>
 *{box-sizing:border-box}
-:root{--bg:#0a0e14;--panel:#111823;--panel2:#0d131c;--ink:#e2e9f2;--muted:#8b99ab;--acc:#3fd0e0;--acc-ink:#06222a;--acc-dim:#1c5560;--amber:#f0b23e;--red:#ef6b5e;--ok:#5fd08a;--line:#1e2937;--line2:#2c3b4f;--deep:#060a10;--mono:'JetBrains Mono','Cascadia Code',Consolas,monospace;--serif:Georgia,'Times New Roman',serif}
+:root{--bg:#0a0e14;--panel:#111823;--panel2:#0d131c;--ink:#e2e9f2;--muted:#8b99ab;--acc:#3fd0e0;--acc-ink:#06222a;--acc-dim:#1c5560;--amber:#f0b23e;--red:#ef6b5e;--ok:#5fd08a;--line:#1e2937;--line2:#2c3b4f;--deep:#060a10;--mono:'JetBrains Mono','Cascadia Code',Consolas,monospace;--serif:'Segoe UI',system-ui,-apple-system,'Helvetica Neue',Arial,sans-serif}
 [data-theme="light"]{--bg:#f3f5f7;--panel:#ffffff;--panel2:#fafbfc;--ink:#121820;--muted:#5c6b7a;--acc:#0d7c8c;--acc-ink:#f3fbfc;--acc-dim:#9fc6cc;--amber:#a16207;--red:#b3402f;--ok:#15803d;--line:#dde3ea;--line2:#c3cdd8;--deep:#101823}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:Verdana,Arial,sans-serif;line-height:1.55;transition:background-color .3s,color .3s}
 a{color:inherit;text-underline-offset:4px}
@@ -8,7 +8,7 @@ button,select{font:inherit}
 button,.button,select{min-height:44px}
 a:focus-visible,button:focus-visible,select:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
 .wrap{width:min(1240px,calc(100% - 32px));margin:auto}
-.disclaimer{font-size:12px;color:var(--muted)}
+.disclaimer{font-size:12px;color:var(--muted)}.explain{margin-top:12px;padding:10px 14px;border-left:3px solid var(--amber);background:var(--panel2);font-size:14px;max-width:760px}.explain b{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--amber);margin-bottom:4px}
 .demo-top{background:var(--deep);color:#e2e9f2;border-bottom:1px solid var(--line2)}
 .demo-top .wrap{min-height:54px;display:flex;align-items:center;justify-content:space-between;gap:18px}
 .demo-top a{font-size:13px;min-height:44px;display:inline-flex;align-items:center;font-family:var(--mono);text-decoration:none;color:#8b99ab}
@@ -19,7 +19,7 @@ a:focus-visible,button:focus-visible,select:focus-visible{outline:2px solid var(
 .demo-head{border-bottom:1px solid var(--line);padding:22px 0;background:var(--panel2)}
 .demo-title{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:end}
 .eyebrow{font:700 11px var(--mono);letter-spacing:.15em;text-transform:uppercase;color:var(--acc)}
-.demo-title h1{font:400 clamp(26px,4vw,42px)/1.05 var(--serif);margin:7px 0;letter-spacing:-.02em}
+.demo-title h1{font:700 clamp(26px,4vw,42px)/1.05 var(--serif);margin:7px 0;letter-spacing:-.02em}
 .controls{display:flex;gap:10px;flex-wrap:wrap;align-items:end}
 .controls label{font:700 11px var(--mono);text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
 .controls select{display:block;min-width:240px;margin-top:6px;padding:9px;border:1px solid var(--line2);background:var(--panel);color:var(--ink)}
@@ -29,7 +29,7 @@ a:focus-visible,button:focus-visible,select:focus-visible{outline:2px solid var(
 .workspace{padding:20px 0 48px}
 .appgrid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(320px,.8fr);gap:16px}
 .panel{background:var(--panel);border:1px solid var(--line);padding:16px;min-width:0}
-.panel h2{font:400 20px var(--serif);margin:0 0 12px;display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.panel h2{font:700 20px var(--serif);margin:0 0 12px;display:flex;justify-content:space-between;align-items:baseline;gap:10px}
 .panel h2 small{font:600 10px var(--mono);color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
 .metric-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
 .metric{border:1px solid var(--line);border-top:2px solid var(--acc);padding:10px 12px;background:var(--panel2)}
@@ -66,7 +66,7 @@ a:focus-visible,button:focus-visible,select:focus-visible{outline:2px solid var(
 .tstep.on{border-color:var(--acc);box-shadow:inset 0 0 0 1px var(--acc)}
 .tstep.done{border-color:var(--ok)}
 .tstep .day{font:700 10px var(--mono);color:var(--acc);text-transform:uppercase;letter-spacing:.1em}
-.tstep .ch{font:400 17px var(--serif);margin:4px 0 2px}
+.tstep .ch{font:600 17px var(--serif);margin:4px 0 2px}
 .tstep .cp{font-size:11.5px;color:var(--muted)}
 .tstep .st{font:700 9px var(--mono);color:var(--muted);text-transform:uppercase;position:absolute;top:12px;right:12px}
 .tstep.on .st{color:var(--acc)}.tstep.done .st{color:var(--ok)}
@@ -74,7 +74,7 @@ a:focus-visible,button:focus-visible,select:focus-visible{outline:2px solid var(
 .stack{display:grid;gap:16px}
 @media(max-width:900px){.appgrid{grid-template-columns:1fr}.demo-title{grid-template-columns:1fr}.controls label{flex:1}.controls select{min-width:0;width:100%}.metric-row{grid-template-columns:1fr 1fr}.timeline{grid-template-columns:1fr}.demo-top .wrap{flex-direction:column;align-items:flex-start;padding:10px 0;gap:4px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-</style></head><body><header class="demo-top"><div class="wrap"><a href="../START_HERE.html">← Back to portfolio</a><div class="right"><a href="ecommerce-lifecycle.it.html" lang="it">IT</a><button id="theme" aria-label="Toggle theme">◐</button><span class="disclaimer">Synthetic interactive reconstruction based on real delivery patterns. No production or client data.</span></div></div></header><section class="demo-head"><div class="wrap demo-title"><div><div class="eyebrow">Case 06 / lifecycle lab</div><h1>Stores, websites and lifecycle campaigns</h1><p class="disclaimer">Synthetic interactive reconstruction based on real delivery patterns. No production or client data.</p></div><div class="controls"><label>Scenario<select id="scenario"><option value="winback">Winback email + SMS</option><option value="onboarding">Post-purchase onboarding</option><option value="abandoned">Abandoned checkout</option></select></label><button class="button primary" id="run">Run campaign simulation</button></div></div></section><main class="workspace"><div class="wrap appgrid"><div class="stack"><section class="panel"><h2>Customers <small>RFM segment computed on load</small></h2><div class="tbl-wrap"><table class="tbl" id="cust"><thead><tr><th>customer_id</th><th>email</th><th class="num">last_order</th><th class="num">orders</th><th class="num">ltv</th><th>segment</th><th>status</th></tr></thead><tbody></tbody></table></div><div class="metric-row"><div class="metric"><b id="m-target">0</b><span>Targeted</span></div><div class="metric"><b id="m-email">0</b><span>Emails queued</span></div><div class="metric"><b id="m-sms">0</b><span>SMS eligible</span></div><div class="metric"><b id="m-move">0</b><span>Simulated moves</span></div></div></section><section class="panel"><h2>Campaign sequence <small>timeline · day 0 / 2 / 5</small></h2><div class="timeline" id="timeline"></div><div class="log" id="log" aria-live="polite" style="margin-top:14px"><div class="muted">Pick a scenario and run the simulation. Every line below is produced by the campaign logic, not scripted copy.</div></div></section></div><aside class="stack"><section class="panel"><h2>Segments <small>live counts</small></h2><div class="seg-list" id="segments"></div><div class="notice">Movements are labelled <b>simulated</b>. No conversion rate is claimed — the demo moves a fixed, deterministic subset to show the mechanism, not a result.</div></section><section class="panel"><h2>Campaign payload <small>template sent to the sender</small></h2><div class="json" id="payload">// pick a scenario to inspect the payload</div></section></aside></div></main><script>
+</style></head><body><header class="demo-top"><div class="wrap"><a href="../START_HERE.html">← Back to portfolio</a><div class="right"><a href="ecommerce-lifecycle.it.html" lang="it">IT</a><button id="theme" aria-label="Toggle theme">◐</button><span class="disclaimer">Synthetic interactive reconstruction based on real delivery patterns. No production or client data.</span></div></div></header><section class="demo-head"><div class="wrap demo-title"><div><div class="eyebrow">Case 06 / lifecycle lab</div><h1>Stores, websites and lifecycle campaigns</h1><p class="disclaimer">Synthetic interactive reconstruction based on real delivery patterns. No production or client data.</p><div class="explain"><b>What am I looking at?</b> Customers who stopped buying are brought back to the checkout automatically. Launch the campaign simulation and watch who gets reactivated.</div></div><div class="controls"><label>Scenario<select id="scenario"><option value="winback">Winback email + SMS</option><option value="onboarding">Post-purchase onboarding</option><option value="abandoned">Abandoned checkout</option></select></label><button class="button primary" id="run">Run campaign simulation</button></div></div></section><main class="workspace"><div class="wrap appgrid"><div class="stack"><section class="panel"><h2>Customers <small>RFM segment computed on load</small></h2><div class="tbl-wrap"><table class="tbl" id="cust"><thead><tr><th>customer_id</th><th>email</th><th class="num">last_order</th><th class="num">orders</th><th class="num">ltv</th><th>segment</th><th>status</th></tr></thead><tbody></tbody></table></div><div class="metric-row"><div class="metric"><b id="m-target">0</b><span>Targeted</span></div><div class="metric"><b id="m-email">0</b><span>Emails queued</span></div><div class="metric"><b id="m-sms">0</b><span>SMS eligible</span></div><div class="metric"><b id="m-move">0</b><span>Simulated moves</span></div></div></section><section class="panel"><h2>Campaign sequence <small>timeline · day 0 / 2 / 5</small></h2><div class="timeline" id="timeline"></div><div class="log" id="log" aria-live="polite" style="margin-top:14px"><div class="muted">Pick a scenario and run the simulation. Every line below is produced by the campaign logic, not scripted copy.</div></div></section></div><aside class="stack"><section class="panel"><h2>Segments <small>live counts</small></h2><div class="seg-list" id="segments"></div><div class="notice">Movements are labelled <b>simulated</b>. No conversion rate is claimed — the demo moves a fixed, deterministic subset to show the mechanism, not a result.</div></section><section class="panel"><h2>Campaign payload <small>template sent to the sender</small></h2><div class="json" id="payload">// pick a scenario to inspect the payload</div></section></aside></div></main><script>
 const root=document.documentElement,tbtn=document.getElementById('theme');
 const saved=localStorage.getItem('nm-theme');
 if(saved){root.dataset.theme=saved}else if(matchMedia('(prefers-color-scheme:light)').matches){root.dataset.theme='light'}
@@ -103,7 +103,7 @@ const SEGDEF=[['VIP','vip'],['Active','active'],['At risk','risk'],['Dormant','d
 const PILL={'VIP':'vip','Active':'active','At risk':'risk','Dormant':'dormant','Reactivated':'sim','Recovered':'sim','Onboarded':'sim'};
 const SCEN={
  winback:{name:'winback_email_sms',target:c=>c.seg==='Dormant',convert:c=>c.orders>=2,to:'Reactivated',
-  steps:[{day:0,ch:'email',tpl:'winback_offer',cp:'We miss you — 15% back'},{day:2,ch:'sms',tpl:'winback_reminder',cp:'Your code expires soon'},{day:5,ch:'email',tpl:'winback_lastcall',cp:'Last call before we close it'}]},
+  steps:[{day:0,ch:'email',tpl:'winback_offer',cp:'We miss you — 15% off'},{day:2,ch:'sms',tpl:'winback_reminder',cp:'Your code expires soon'},{day:5,ch:'email',tpl:'winback_lastcall',cp:'Last call before we close it'}]},
  onboarding:{name:'post_purchase_onboarding',target:c=>c.last<=18,convert:c=>c.orders<=1,to:'Onboarded',
   steps:[{day:0,ch:'email',tpl:'welcome_setup',cp:'Welcome — your setup guide'},{day:2,ch:'sms',tpl:'onboarding_tip',cp:'Quick tip + how to reach us'},{day:5,ch:'email',tpl:'onboarding_value',cp:'Get the most from your order'}]},
  abandoned:{name:'abandoned_checkout',target:c=>c.seg==='At risk',convert:c=>c.orders>=2,to:'Recovered',

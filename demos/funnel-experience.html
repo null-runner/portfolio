@@ -1,0 +1,420 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Live the funnel — what the founder actually gets</title><style>
+*{box-sizing:border-box}
+:root{--bg:#0a0e14;--panel:#111823;--panel2:#0d131c;--ink:#e2e9f2;--muted:#8b99ab;--acc:#3fd0e0;--acc-ink:#06222a;--acc-dim:#1c5560;--amber:#f0b23e;--red:#ef6b5e;--ok:#5fd08a;--line:#1e2937;--line2:#2c3b4f;--deep:#060a10;--mono:'JetBrains Mono','Cascadia Code',Consolas,monospace;--serif:'Segoe UI',system-ui,-apple-system,'Helvetica Neue',Arial,sans-serif}
+[data-theme="light"]{--bg:#f3f5f7;--panel:#ffffff;--panel2:#fafbfc;--ink:#121820;--muted:#5c6b7a;--acc:#0d7c8c;--acc-ink:#f3fbfc;--acc-dim:#9fc6cc;--amber:#a16207;--red:#b3402f;--ok:#15803d;--line:#dde3ea;--line2:#c3cdd8;--deep:#101823}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Verdana,Arial,sans-serif;line-height:1.55;transition:background-color .3s,color .3s}
+a{color:inherit;text-underline-offset:4px}
+button,select,input{font:inherit}
+button,.button{min-height:44px}
+a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+.wrap{width:min(1240px,calc(100% - 32px));margin:auto}
+.disclaimer{font-size:12px;color:var(--muted)}
+.demo-top{background:var(--deep);color:#e2e9f2;border-bottom:1px solid var(--line2)}
+.demo-top .wrap{min-height:54px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.demo-top a{font-size:13px;min-height:44px;display:inline-flex;align-items:center;font-family:var(--mono);text-decoration:none;color:#8b99ab}
+.demo-top a:hover{color:#3fd0e0}
+.demo-top .right{display:flex;gap:12px;align-items:center}
+#theme{border:1px solid #2c3b4f;background:transparent;color:#e2e9f2;min-height:32px;padding:2px 10px;cursor:pointer;font-size:14px}
+#theme:hover{border-color:#3fd0e0}
+.demo-head{border-bottom:1px solid var(--line);padding:22px 0;background:var(--panel2)}
+.eyebrow{font:700 11px var(--mono);letter-spacing:.15em;text-transform:uppercase;color:var(--acc)}
+.demo-head h1{font:700 clamp(26px,4vw,40px)/1.05 var(--serif);margin:7px 0;letter-spacing:-.02em}
+.explain{border-left:3px solid var(--amber);background:color-mix(in srgb,var(--amber) 9%,transparent);padding:12px 16px;margin:16px 0 0;font-size:14px;max-width:760px}
+.explain b{display:block;font:700 13px var(--serif);margin-bottom:4px}
+.tabs{display:flex;gap:4px;margin-top:20px;flex-wrap:wrap}
+.tab{border:1px solid var(--line2);border-bottom:none;background:var(--panel2);color:var(--muted);padding:11px 18px;cursor:pointer;font:700 13px var(--serif);border-radius:6px 6px 0 0}
+.tab[aria-selected="true"]{background:var(--panel);color:var(--ink);border-color:var(--acc);border-bottom:2px solid var(--panel);position:relative;top:1px}
+.workspace{padding:20px 0 48px}
+.view{display:none}.view.on{display:block}
+
+/* ---------- TAB 1 : browser frame + marketing funnel ---------- */
+.browser{border:1px solid var(--line2);border-radius:10px;overflow:hidden;box-shadow:0 8px 34px rgba(0,0,0,.28);background:#fff}
+.chrome{background:#e9edf2;border-bottom:1px solid #d3dae2;padding:9px 14px;display:flex;align-items:center;gap:12px}
+.dots{display:flex;gap:7px}.dots i{width:12px;height:12px;border-radius:50%;display:block}
+.dots i:nth-child(1){background:#ff5f57}.dots i:nth-child(2){background:#febc2e}.dots i:nth-child(3){background:#28c840}
+.urlbar{flex:1;background:#fff;border:1px solid #d3dae2;border-radius:16px;padding:6px 14px;font:12.5px var(--mono);color:#5c6b7a;display:flex;align-items:center;gap:8px;min-width:0}
+.urlbar .lock{color:#28a745;font-size:12px}
+.urlbar .u{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.reload{color:#8b99ab;font-size:15px}
+.viewport{background:#fbfcfe;color:#1a2230;font-family:'Segoe UI',system-ui,Arial,sans-serif;min-height:520px}
+.fpage{display:none;padding:0 0 34px}.fpage.on{display:block;animation:fade .35s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* marketing landing */
+.mk-hero{background:linear-gradient(160deg,#0f2f3a 0%,#123c4a 55%,#0c2530 100%);color:#eaf6f8;padding:40px 30px 46px;text-align:center}
+.mk-kicker{display:inline-block;background:rgba(245,178,62,.16);color:#f5c469;border:1px solid rgba(245,178,62,.4);padding:5px 14px;border-radius:20px;font:700 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase}
+.mk-hero h2{font:800 clamp(24px,3.4vw,38px)/1.12 'Segoe UI',system-ui,Arial,sans-serif;margin:16px auto 12px;max-width:660px;letter-spacing:-.01em}
+.mk-hero h2 em{color:#5fd08a;font-style:normal}
+.mk-hero p.sub{max-width:540px;margin:0 auto 24px;font-size:16px;color:#b9d3d8}
+.mk-video{max-width:600px;margin:0 auto;aspect-ratio:16/9;background:#06181e radial-gradient(circle at 50% 45%,rgba(63,208,224,.22),transparent 60%);border:1px solid rgba(120,190,200,.25);border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;cursor:pointer;position:relative}
+.mk-play{width:62px;height:62px;border-radius:50%;background:#f5844a;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 20px rgba(245,132,74,.5);transition:transform .2s}
+.mk-video:hover .mk-play{transform:scale(1.07)}
+.mk-play::after{content:"";border-left:20px solid #fff;border-top:12px solid transparent;border-bottom:12px solid transparent;margin-left:5px}
+.mk-video small{font:600 12px var(--mono);color:#8fb6bd;letter-spacing:.05em}
+.mk-vlabel{position:absolute;top:12px;left:14px;font:600 11px var(--mono);color:#7fa6ad;background:rgba(0,0,0,.35);padding:3px 8px;border-radius:4px}
+.mk-body{max-width:640px;margin:0 auto;padding:34px 30px 0}
+.mk-body h3{font:800 22px 'Segoe UI',system-ui,Arial,sans-serif;text-align:center;margin:0 0 20px}
+.mk-bullets{list-style:none;padding:0;margin:0 0 30px;display:grid;gap:12px}
+.mk-bullets li{display:flex;gap:12px;align-items:flex-start;background:#fff;border:1px solid #e4eaf0;border-radius:9px;padding:13px 16px;font-size:15px;box-shadow:0 1px 3px rgba(20,40,60,.05)}
+.mk-bullets .ck{flex:0 0 22px;width:22px;height:22px;border-radius:50%;background:#e4f7ec;color:#15803d;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;margin-top:1px}
+.mk-cta{text-align:center;padding:6px 30px 0}
+.mk-btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;background:linear-gradient(180deg,#ff9a4d,#f5751f);color:#fff;border:none;padding:17px 38px;border-radius:11px;font:800 17px 'Segoe UI',system-ui,Arial,sans-serif;cursor:pointer;box-shadow:0 8px 22px rgba(245,117,31,.36);letter-spacing:.01em}
+.mk-btn:hover{filter:brightness(1.05)}
+.mk-cta .trust{margin-top:12px;font-size:12.5px;color:#6b7a89}
+.mk-social{max-width:640px;margin:34px auto 0;padding:0 30px}
+.mk-quote{background:#fff;border:1px solid #e4eaf0;border-left:4px solid #5fd08a;border-radius:9px;padding:16px 18px;font-size:14.5px;font-style:italic;color:#334}
+.mk-quote span{display:block;font-style:normal;font-weight:700;font-size:12.5px;color:#6b7a89;margin-top:8px}
+
+/* opt-in */
+.mk-opt{max-width:460px;margin:0 auto;padding:44px 30px 0;text-align:center}
+.mk-opt h2{font:800 26px 'Segoe UI',system-ui,Arial,sans-serif;margin:0 0 8px}
+.mk-opt p.lead{color:#5c6b7a;font-size:15px;margin:0 0 26px}
+.mk-form{background:#fff;border:1px solid #e4eaf0;border-radius:12px;padding:24px;text-align:left;box-shadow:0 6px 22px rgba(20,40,60,.08)}
+.mk-form label{display:block;font:700 12px 'Segoe UI',system-ui,Arial,sans-serif;color:#3a4756;margin:0 0 6px;text-transform:uppercase;letter-spacing:.04em}
+.mk-form input[type=text],.mk-form input[type=email]{width:100%;padding:13px 14px;border:1.5px solid #d3dae2;border-radius:8px;font-size:15px;margin-bottom:4px;background:#fbfcfe;color:#1a2230}
+.mk-form input:focus{border-color:#f5844a;outline:none;box-shadow:0 0 0 3px rgba(245,132,74,.15)}
+.mk-field{margin-bottom:16px}
+.mk-err{color:#c0392b;font-size:12.5px;min-height:16px;display:block;margin-top:2px}
+.mk-consent{display:flex;gap:10px;align-items:flex-start;font-size:12.5px;color:#5c6b7a;margin-bottom:18px;line-height:1.45}
+.mk-consent input{margin-top:2px;width:17px;height:17px;flex:0 0 17px}
+.mk-form .mk-btn{width:100%}
+.mk-secure{text-align:center;font-size:11.5px;color:#8b99ab;margin-top:14px}
+
+/* thank you */
+.mk-ty{max-width:520px;margin:0 auto;padding:44px 30px 0;text-align:center}
+.mk-check{width:74px;height:74px;border-radius:50%;background:#e4f7ec;color:#15803d;font-size:40px;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;animation:pop .4s ease}
+@keyframes pop{0%{transform:scale(.4);opacity:0}60%{transform:scale(1.12)}100%{transform:scale(1);opacity:1}}
+.mk-ty h2{font:800 26px 'Segoe UI',system-ui,Arial,sans-serif;margin:0 0 10px}
+.mk-ty p.lead{color:#5c6b7a;font-size:15px;margin:0 0 24px}
+.mk-webcard{background:#fff;border:1px solid #e4eaf0;border-radius:12px;padding:22px;box-shadow:0 6px 22px rgba(20,40,60,.08)}
+.mk-webcard .wl{font:700 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#f5751f}
+.mk-webcard .wd{font:800 21px 'Segoe UI',system-ui,Arial,sans-serif;margin:6px 0 4px}
+.mk-webcard .wt{color:#5c6b7a;font-size:14px;margin-bottom:18px}
+.mk-count{display:flex;gap:10px;justify-content:center;margin-bottom:20px}
+.mk-count div{background:#0f2f3a;color:#eaf6f8;border-radius:9px;padding:12px 6px;min-width:66px}
+.mk-count b{display:block;font:800 26px var(--mono);line-height:1}
+.mk-count span{font:600 10px var(--mono);text-transform:uppercase;letter-spacing:.08em;color:#8fb6bd;margin-top:5px;display:block}
+.mk-cal{display:inline-flex;align-items:center;gap:8px;background:#0f2f3a;color:#eaf6f8;border:none;padding:13px 26px;border-radius:9px;font:700 14px 'Segoe UI',system-ui,Arial,sans-serif;cursor:pointer}
+.mk-cal:hover{background:#123c4a}
+.mk-caldone{color:#15803d;font-weight:700;font-size:13.5px;margin-top:12px;display:none}
+
+/* what just happened strip */
+.happened{margin-top:16px;border:1px solid var(--line);background:var(--panel);border-radius:10px;overflow:hidden}
+.happened h3{margin:0;padding:12px 16px;font:700 12px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--acc);border-bottom:1px solid var(--line);background:var(--panel2);display:flex;align-items:center;gap:10px}
+.happened h3 .dotlive{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 0 rgba(95,208,138,.6);animation:pulse 1.8s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(95,208,138,.5)}70%{box-shadow:0 0 0 8px rgba(95,208,138,0)}100%{box-shadow:0 0 0 0 rgba(95,208,138,0)}}
+.happened .hbody{padding:14px 16px;font-size:14px;color:var(--ink);min-height:52px}
+.happened .hbody .tech{display:block;margin-top:6px;font:12px var(--mono);color:var(--muted)}
+.stepdots{display:flex;gap:6px;margin-left:auto}
+.stepdots i{width:9px;height:9px;border-radius:50%;background:var(--line2);display:block}
+.stepdots i.on{background:var(--acc)}
+
+/* ---------- TAB 2 : GHL-style builder ---------- */
+.ghl{display:grid;grid-template-columns:210px minmax(0,1fr);border:1px solid var(--line2);border-radius:10px;overflow:hidden;min-height:560px}
+.ghl-side{background:#141b26;color:#c2cdda;padding:16px 12px;border-right:1px solid #232f3e}
+.ghl-brand{display:flex;align-items:center;gap:9px;padding:6px 8px 16px;border-bottom:1px solid #232f3e;margin-bottom:12px}
+.ghl-brand .logo{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#3fd0e0,#5fd08a);display:flex;align-items:center;justify-content:center;font:800 15px 'Segoe UI',Arial,sans-serif;color:#06222a}
+.ghl-brand .bt{font:700 14px 'Segoe UI',Arial,sans-serif;color:#eef3f8;line-height:1.1}
+.ghl-brand .bt small{display:block;font:600 10px var(--mono);color:#6b7a8c;letter-spacing:.04em}
+.ghl-nav{list-style:none;margin:0;padding:0}
+.ghl-nav li{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:7px;font:600 13px 'Segoe UI',Arial,sans-serif;color:#93a2b3;cursor:default}
+.ghl-nav li .ic{width:17px;text-align:center;opacity:.85}
+.ghl-nav li.act{background:#1e63e9;color:#fff}
+.ghl-nav li.act .ic{opacity:1}
+.ghl-main{background:var(--panel);padding:18px 20px}
+.ghl-bar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:16px}
+.ghl-bar h2{font:800 18px 'Segoe UI',Arial,sans-serif;margin:0}
+.ghl-switch{display:flex;gap:2px;background:var(--panel2);border:1px solid var(--line2);border-radius:8px;padding:3px;margin-left:auto}
+.ghl-switch button{border:none;background:transparent;color:var(--muted);padding:7px 15px;border-radius:6px;font:700 12.5px 'Segoe UI',Arial,sans-serif;cursor:pointer;min-height:36px}
+.ghl-switch button.on{background:#1e63e9;color:#fff}
+.ghl-panel{display:none}.ghl-panel.on{display:block;animation:fade .3s ease}
+
+/* funnel steps view */
+.stat3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
+.stat3 .s{border:1px solid var(--line);border-top:2px solid var(--acc);border-radius:8px;background:var(--panel2);padding:12px 14px}
+.stat3 .s b{font:800 22px 'Segoe UI',Arial,sans-serif;display:block}
+.stat3 .s span{font:600 10.5px var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:3px;display:block}
+.fsteps{display:flex;align-items:stretch;gap:0;flex-wrap:wrap}
+.fstep{flex:1;min-width:150px;border:1px solid var(--line2);border-radius:10px;background:var(--panel2);padding:14px;position:relative}
+.fstep .num{font:700 10px var(--mono);color:var(--muted)}
+.fstep h4{font:800 15px 'Segoe UI',Arial,sans-serif;margin:4px 0 10px}
+.fstep .thumb{height:64px;border-radius:6px;border:1px solid var(--line);margin-bottom:10px;background:linear-gradient(160deg,var(--panel),var(--panel2));display:flex;align-items:center;justify-content:center;font:600 10px var(--mono);color:var(--muted)}
+.fstep .cvr{font:800 20px 'Segoe UI',Arial,sans-serif;color:var(--ok)}
+.fstep .cvr small{font:600 11px var(--mono);color:var(--muted);display:block;text-transform:uppercase;letter-spacing:.05em}
+.farrow{align-self:center;color:var(--muted);font-size:22px;padding:0 6px}
+.fbar{height:7px;border-radius:4px;background:var(--line);margin-top:9px;overflow:hidden}
+.fbar i{display:block;height:100%;background:linear-gradient(90deg,#3fd0e0,#5fd08a)}
+
+/* automation view */
+.autohint{font-size:13px;color:var(--muted);margin:0 0 16px}
+.flow{display:flex;flex-direction:column;gap:0}
+.acard{border:1px solid var(--line2);border-radius:10px;background:var(--panel2);padding:13px 15px;display:flex;gap:13px;align-items:center;position:relative}
+.acard .ai{flex:0 0 40px;width:40px;height:40px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:19px}
+.acard.trigger{border-color:var(--amber);border-left-width:4px}
+.acard.trigger .ai{background:color-mix(in srgb,var(--amber) 18%,transparent)}
+.acard.action .ai{background:color-mix(in srgb,var(--acc) 15%,transparent)}
+.acard.delay{border-style:dashed}
+.acard.delay .ai{background:var(--panel)}
+.acard .atxt b{font:800 14px 'Segoe UI',Arial,sans-serif;display:block}
+.acard .atxt span{font-size:12.5px;color:var(--muted)}
+.acard .atag{margin-left:auto;font:700 10px var(--mono);text-transform:uppercase;letter-spacing:.06em;padding:3px 9px;border-radius:12px;border:1px solid var(--line2);color:var(--muted);white-space:nowrap}
+.acard.trigger .atag{color:var(--amber);border-color:var(--amber)}
+.aconn{width:2px;height:16px;background:var(--line2);margin-left:35px}
+.legend{margin-top:18px;padding-top:14px;border-top:1px solid var(--line);display:flex;gap:18px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+.legend i{width:11px;height:11px;border-radius:3px;display:block}
+
+@media(max-width:900px){
+ .demo-top .wrap{flex-direction:column;align-items:flex-start;padding:10px 0;gap:4px}
+ .ghl{grid-template-columns:1fr}
+ .ghl-side{display:flex;flex-wrap:wrap;gap:6px;border-right:none;border-bottom:1px solid #232f3e}
+ .ghl-brand{width:100%;border-bottom:1px solid #232f3e}
+ .ghl-nav{display:flex;flex-wrap:wrap;gap:4px}
+ .ghl-nav li{padding:7px 10px}
+ .stat3{grid-template-columns:1fr}
+ .fstep{min-width:100%}.farrow{transform:rotate(90deg);padding:4px 0}
+ .mk-count div{min-width:56px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head><body>
+<header class="demo-top"><div class="wrap"><a href="../START_HERE.html">← Back to portfolio</a><div class="right"><a href="funnel-experience.it.html" lang="it">IT</a><button id="theme" aria-label="Toggle theme">◐</button><span class="disclaimer">Synthetic interactive reconstruction based on real delivery patterns. No production or client data.</span></div></div></header>
+
+<section class="demo-head"><div class="wrap">
+<div class="eyebrow">Case 01 / the deliverable, made visible</div>
+<h1>Live the funnel</h1>
+<p class="disclaimer">Synthetic interactive reconstruction based on real delivery patterns. No production or client data.</p>
+<div class="explain"><b>What am I looking at?</b>This is the exact thing a lead sees when they land on a launch page, plus the automation running behind it. Click through the two pages below the way a customer would, then open the second tab to see the same funnel from the builder side, where the follow-up is wired up.</div>
+<div class="tabs" role="tablist">
+<button class="tab" id="tab-front" role="tab" aria-selected="true" aria-controls="view-front">The funnel (as a lead sees it)</button>
+<button class="tab" id="tab-back" role="tab" aria-selected="false" aria-controls="view-back">Behind the scenes (CRM builder)</button>
+</div>
+</div></section>
+
+<main class="workspace"><div class="wrap">
+
+<!-- ============ TAB 1 ============ -->
+<section class="view on" id="view-front" role="tabpanel" aria-labelledby="tab-front">
+<div class="browser">
+ <div class="chrome"><div class="dots"><i></i><i></i><i></i></div>
+  <div class="urlbar"><span class="lock">🔒</span><span class="u" id="url">demo-launch.example/vsl</span><span class="reload" style="margin-left:auto">⟳</span></div>
+ </div>
+ <div class="viewport">
+
+  <!-- PAGE A: landing / VSL -->
+  <div class="fpage on" id="pg-landing">
+   <div class="mk-hero">
+    <span class="mk-kicker">Free live masterclass</span>
+    <h2>Build a launch funnel that fills your webinar <em>while you sleep</em></h2>
+    <p class="sub">The Synthetic Launch Academy shows service founders the exact 3-page system that turns cold traffic into booked attendees, without an agency retainer.</p>
+    <div class="mk-video" id="playbtn"><span class="mk-vlabel">▶ 12:04 preview</span><div class="mk-play"></div><small>Click to play the 12-minute breakdown</small></div>
+   </div>
+   <div class="mk-body">
+    <h3>Here is what you will walk away with</h3>
+    <ul class="mk-bullets">
+     <li><span class="ck">✓</span><div>The page-by-page structure that took a cold audience to a 34% opt-in rate.</div></li>
+     <li><span class="ck">✓</span><div>The exact follow-up sequence that shows up for you automatically after every signup.</div></li>
+     <li><span class="ck">✓</span><div>How to route no-shows and attendees down two different paths without lifting a finger.</div></li>
+     <li><span class="ck">✓</span><div>A plug-and-play template you can copy into your own account this week.</div></li>
+    </ul>
+   </div>
+   <div class="mk-cta">
+    <button class="mk-btn" data-go="optin">Save my free seat →</button>
+    <div class="trust">No card required · 1,900+ founders have registered</div>
+   </div>
+   <div class="mk-social">
+    <div class="mk-quote">"I plugged this into my account on a Sunday and had 40 registrations before my next call. It just runs."<span>— demo testimonial, Synthetic Launch Academy</span></div>
+   </div>
+  </div>
+
+  <!-- PAGE B: opt-in -->
+  <div class="fpage" id="pg-optin">
+   <div class="mk-opt">
+    <h2>Almost there — save your seat</h2>
+    <p class="lead">Enter your details and we will send the access link plus a calendar hold.</p>
+    <form class="mk-form" id="optForm" novalidate>
+     <div class="mk-field">
+      <label for="f-name">First name</label>
+      <input type="text" id="f-name" autocomplete="off" placeholder="Alex">
+      <span class="mk-err" id="e-name"></span>
+     </div>
+     <div class="mk-field">
+      <label for="f-email">Email address</label>
+      <input type="email" id="f-email" autocomplete="off" placeholder="you@company.example">
+      <span class="mk-err" id="e-email"></span>
+     </div>
+     <label class="mk-consent"><input type="checkbox" id="f-gdpr"><span>I agree to receive the masterclass access link and related emails. I can unsubscribe at any time. (GDPR consent)</span></label>
+     <span class="mk-err" id="e-gdpr" style="margin:-12px 0 10px"></span>
+     <button class="mk-btn" type="submit">Reserve my seat →</button>
+     <div class="mk-secure">🔒 Your details are safe. This is a synthetic demo, no data is stored.</div>
+    </form>
+   </div>
+  </div>
+
+  <!-- PAGE C: thank you -->
+  <div class="fpage" id="pg-ty">
+   <div class="mk-ty">
+    <div class="mk-check">✓</div>
+    <h2>You are in, <span id="ty-name">friend</span>!</h2>
+    <p class="lead">We just emailed your access link to <b id="ty-email">you@company.example</b>. Add it to your calendar so you do not miss it.</p>
+    <div class="mk-webcard">
+     <div class="wl">Live masterclass</div>
+     <div class="wd">The 3-Page Launch Funnel</div>
+     <div class="wt">Thursday, July 30 · 6:00 PM CET · 60 minutes live</div>
+     <div class="mk-count" id="count"><div><b id="cd">03</b><span>days</span></div><div><b id="ch">08</b><span>hrs</span></div><div><b id="cm">42</b><span>min</span></div><div><b id="cs">10</b><span>sec</span></div></div>
+     <button class="mk-cal" id="calBtn">📅 Add to calendar</button>
+     <div class="mk-caldone" id="calDone">✓ Calendar hold created (demo)</div>
+    </div>
+   </div>
+  </div>
+
+ </div>
+</div>
+
+<div class="happened">
+ <h3><span class="dotlive"></span>What just happened<div class="stepdots" id="dots"><i class="on"></i><i></i><i></i></div></h3>
+ <div class="hbody" id="hexp">The lead landed on the sales page. Nothing has been captured yet, they are just watching the pitch. Click <b>Save my free seat</b> to move to the opt-in.<span class="tech">Behind it: a page view is tracked, the traffic source is remembered for attribution.</span></div>
+</div>
+</section>
+
+<!-- ============ TAB 2 ============ -->
+<section class="view" id="view-back" role="tabpanel" aria-labelledby="tab-back">
+<div class="ghl">
+ <div class="ghl-side">
+  <div class="ghl-brand"><div class="logo">S</div><div class="bt">SynthOps CRM<small>builder view · demo</small></div></div>
+  <ul class="ghl-nav">
+   <li><span class="ic">◱</span>Dashboard</li>
+   <li><span class="ic">👥</span>Contacts</li>
+   <li class="act"><span class="ic">⚡</span>Funnels &amp; Automation</li>
+   <li><span class="ic">✉</span>Email &amp; SMS</li>
+   <li><span class="ic">📅</span>Calendars</li>
+   <li><span class="ic">📊</span>Reporting</li>
+  </ul>
+ </div>
+ <div class="ghl-main">
+  <div class="ghl-bar">
+   <h2>July webinar launch</h2>
+   <div class="ghl-switch"><button class="on" data-gp="steps">Funnel steps</button><button data-gp="auto">Automation</button></div>
+  </div>
+
+  <div class="ghl-panel on" id="gp-steps">
+   <div class="stat3">
+    <div class="s"><b>4,820</b><span>Visitors (30d)</span></div>
+    <div class="s"><b>1,640</b><span>Leads captured</span></div>
+    <div class="s"><b>34.0%</b><span>Landing → opt-in</span></div>
+   </div>
+   <div class="fsteps">
+    <div class="fstep"><div class="num">STEP 1</div><h4>Landing / VSL</h4><div class="thumb">▶ sales video page</div><div class="cvr">100%<small>4,820 in</small></div><div class="fbar"><i style="width:100%"></i></div></div>
+    <div class="farrow">→</div>
+    <div class="fstep"><div class="num">STEP 2</div><h4>Opt-in form</h4><div class="thumb">✎ name + email</div><div class="cvr">34.0%<small>1,640 opt-ins</small></div><div class="fbar"><i style="width:34%"></i></div></div>
+    <div class="farrow">→</div>
+    <div class="fstep"><div class="num">STEP 3</div><h4>Thank you</h4><div class="thumb">✓ webinar confirmed</div><div class="cvr">31.6%<small>1,523 confirmed</small></div><div class="fbar"><i style="width:31.6%"></i></div></div>
+   </div>
+   <p class="autohint" style="margin-top:18px">These are the three pages from the first tab, shown as the builder sees them. Each card is one editable page; the percentage is how many visitors made it that far. Open <b>Automation</b> to see what fires the moment someone submits the form.</p>
+  </div>
+
+  <div class="ghl-panel" id="gp-auto">
+   <p class="autohint">This is the workflow that runs by itself after every opt-in. One trigger, then a chain of actions. No human touches it.</p>
+   <div class="flow">
+    <div class="acard trigger"><div class="ai">⚡</div><div class="atxt"><b>Form submitted</b><span>Trigger · opt-in form on the launch funnel</span></div><span class="atag">Trigger</span></div>
+    <div class="aconn"></div>
+    <div class="acard action"><div class="ai">🏷</div><div class="atxt"><b>Add tag: webinar-jul-lead</b><span>Marks the contact so reporting and segments stay clean</span></div><span class="atag">Action</span></div>
+    <div class="aconn"></div>
+    <div class="acard action"><div class="ai">✉</div><div class="atxt"><b>Send email · Day 0</b><span>"Your seat is confirmed" with the access link + calendar file</span></div><span class="atag">Action</span></div>
+    <div class="aconn"></div>
+    <div class="acard delay"><div class="ai">⏳</div><div class="atxt"><b>Wait 2 days</b><span>Pause the sequence until closer to the live date</span></div><span class="atag">Delay</span></div>
+    <div class="aconn"></div>
+    <div class="acard action"><div class="ai">💬</div><div class="atxt"><b>Send SMS · reminder</b><span>"We go live tomorrow at 6 PM CET, here is your link"</span></div><span class="atag">Action</span></div>
+    <div class="aconn"></div>
+    <div class="acard action"><div class="ai">🔀</div><div class="atxt"><b>Branch: attended vs no-show</b><span>After the webinar, split contacts down two different follow-ups</span></div><span class="atag">Action</span></div>
+   </div>
+   <div class="legend"><span><i style="background:var(--amber)"></i>Trigger (what starts it)</span><span><i style="background:var(--acc)"></i>Action (what it does)</span><span><i style="background:var(--line2)"></i>Delay (a timed pause)</span></div>
+  </div>
+
+ </div>
+</div>
+</section>
+
+</div></main>
+
+<script>
+const root=document.documentElement,tbtn=document.getElementById('theme');
+const saved=localStorage.getItem('nm-theme');
+if(saved){root.dataset.theme=saved}else if(matchMedia('(prefers-color-scheme:light)').matches){root.dataset.theme='light'}
+tbtn.onclick=()=>{const t=root.dataset.theme==='light'?'dark':'light';root.dataset.theme=t;localStorage.setItem('nm-theme',t)};
+
+/* top-level tabs */
+const tF=document.getElementById('tab-front'),tB=document.getElementById('tab-back');
+const vF=document.getElementById('view-front'),vB=document.getElementById('view-back');
+function selTab(front){
+ tF.setAttribute('aria-selected',front);tB.setAttribute('aria-selected',!front);
+ vF.classList.toggle('on',front);vB.classList.toggle('on',!front);
+}
+tF.onclick=()=>selTab(true);tB.onclick=()=>selTab(false);
+
+/* funnel page navigation + "what just happened" */
+const pages={landing:document.getElementById('pg-landing'),optin:document.getElementById('pg-optin'),ty:document.getElementById('pg-ty')};
+const urls={landing:'demo-launch.example/vsl',optin:'demo-launch.example/register',ty:'demo-launch.example/confirmed'};
+const dots=document.getElementById('dots').children;
+const hexp=document.getElementById('hexp');
+const EXP={
+ landing:'The lead landed on the sales page. Nothing has been captured yet, they are just watching the pitch. Click <b>Save my free seat</b> to move to the opt-in.<span class="tech">Behind it: a page view is tracked, the traffic source is remembered for attribution.</span>',
+ optin:'The lead is filling in the form. The email is validated live and consent is required before anything can be sent.<span class="tech">Behind it: nothing is stored until the form passes validation, so junk data never reaches the CRM.</span>',
+ ty:'The lead left their email, so the CRM created a contact and the follow-up sequence started automatically: confirmation email now, reminders before the live date.<span class="tech">Behind it: a new contact is tagged <b>webinar-jul-lead</b> and the automation from the second tab fires on its own.</span>'
+};
+function goto(page){
+ for(const k in pages)pages[k].classList.toggle('on',k===page);
+ document.getElementById('url').textContent=urls[page];
+ hexp.innerHTML=EXP[page];
+ const idx={landing:0,optin:1,ty:2}[page];
+ [...dots].forEach((d,i)=>d.classList.toggle('on',i<=idx));
+ document.querySelector('.viewport').scrollTop=0;
+ window.scrollTo({top:document.querySelector('.browser').offsetTop-70,behavior:'smooth'});
+}
+document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>goto(b.dataset.go));
+document.getElementById('playbtn').onclick=function(){this.querySelector('small').textContent='(demo video — playback is simulated)'};
+
+/* opt-in validation */
+const form=document.getElementById('optForm');
+function setErr(id,msg){document.getElementById(id).textContent=msg||''}
+form.onsubmit=e=>{
+ e.preventDefault();
+ const name=document.getElementById('f-name').value.trim();
+ const email=document.getElementById('f-email').value.trim();
+ const gdpr=document.getElementById('f-gdpr').checked;
+ let ok=true;
+ if(name.length<2){setErr('e-name','Please enter your first name.');ok=false}else setErr('e-name','');
+ if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){setErr('e-email','Please enter a valid email address.');ok=false}else setErr('e-email','');
+ if(!gdpr){setErr('e-gdpr','Please tick the consent box to continue.');ok=false}else setErr('e-gdpr','');
+ if(!ok)return;
+ document.getElementById('ty-name').textContent=name;
+ document.getElementById('ty-email').textContent=email;
+ goto('ty');
+ startCountdown();
+};
+
+/* countdown on thank-you */
+let cdTimer;
+function startCountdown(){
+ clearInterval(cdTimer);
+ let total=3*86400+8*3600+42*60+10;
+ const cd=document.getElementById('cd'),ch=document.getElementById('ch'),cm=document.getElementById('cm'),cs=document.getElementById('cs');
+ const pad=n=>String(n).padStart(2,'0');
+ cdTimer=setInterval(()=>{
+  if(total<=0){clearInterval(cdTimer);return}
+  total--;
+  cd.textContent=pad(Math.floor(total/86400));
+  ch.textContent=pad(Math.floor(total%86400/3600));
+  cm.textContent=pad(Math.floor(total%3600/60));
+  cs.textContent=pad(total%60);
+ },1000);
+}
+document.getElementById('calBtn').onclick=function(){this.style.display='none';document.getElementById('calDone').style.display='block'};
+
+/* GHL sub-switch */
+document.querySelectorAll('.ghl-switch button').forEach(b=>b.onclick=()=>{
+ document.querySelectorAll('.ghl-switch button').forEach(x=>x.classList.toggle('on',x===b));
+ document.getElementById('gp-steps').classList.toggle('on',b.dataset.gp==='steps');
+ document.getElementById('gp-auto').classList.toggle('on',b.dataset.gp==='auto');
+});
+</script>
+</body></html>
