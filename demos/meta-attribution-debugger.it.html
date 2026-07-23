@@ -80,7 +80,7 @@ a:focus-visible,button:focus-visible,select:focus-visible{outline:2px solid var(
 // i campi obbligatori mancanti sono evidenziati</div></section><section class="panel"><h2>Diagnosi <small>causa radice + fix</small></h2><div class="diag" id="diag"><div class="disclaimer">La diagnosi spiega perché l'attribuzione si rompe e cosa è stato cambiato per sistemarla. Passa a "Dopo il fix" per vedere il prima/dopo.</div></div><div class="notice">Tutte le identità, i click ID e i referrer sono sintetici (example.invalid). Nessun ID account ads, audience, spesa o fatturato è presente.</div></section></aside></div></main><script>
 const root=document.documentElement,tbtn=document.getElementById('theme');
 const saved=localStorage.getItem('nm-theme');
-if(saved){root.dataset.theme=saved}else if(matchMedia('(prefers-color-scheme:light)').matches){root.dataset.theme='light'}
+if(saved){root.dataset.theme=saved}else{root.dataset.theme='light'}
 tbtn.onclick=()=>{const t=root.dataset.theme==='light'?'dark':'light';root.dataset.theme=t;localStorage.setItem('nm-theme',t)};
 
 /* ---- Synthetic event streams per scenario ---- */

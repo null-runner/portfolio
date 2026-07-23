@@ -80,7 +80,7 @@ a:focus-visible,button:focus-visible,select:focus-visible{outline:2px solid var(
 // missing required fields are highlighted</div></section><section class="panel"><h2>Diagnosis <small>root cause + fix</small></h2><div class="diag" id="diag"><div class="disclaimer">The diagnosis explains why attribution breaks and what was changed to fix it. Switch to "After fix" to see the before/after.</div></div><div class="notice">All identities, click IDs and referrers are synthetic (example.invalid). No ad account IDs, audiences, spend or revenue are present.</div></section></aside></div></main><script>
 const root=document.documentElement,tbtn=document.getElementById('theme');
 const saved=localStorage.getItem('nm-theme');
-if(saved){root.dataset.theme=saved}else if(matchMedia('(prefers-color-scheme:light)').matches){root.dataset.theme='light'}
+if(saved){root.dataset.theme=saved}else{root.dataset.theme='light'}
 tbtn.onclick=()=>{const t=root.dataset.theme==='light'?'dark':'light';root.dataset.theme=t;localStorage.setItem('nm-theme',t)};
 
 /* ---- Synthetic event streams per scenario ---- */

@@ -164,7 +164,7 @@ a:focus-visible,button:focus-visible,select:focus-visible,textarea:focus-visible
 <script>
 const root=document.documentElement,tbtn=document.getElementById('theme');
 const saved=localStorage.getItem('nm-theme');
-if(saved){root.dataset.theme=saved}else if(matchMedia('(prefers-color-scheme:light)').matches){root.dataset.theme='light'}
+if(saved){root.dataset.theme=saved}else{root.dataset.theme='light'}
 tbtn.onclick=()=>{const t=root.dataset.theme==='light'?'dark':'light';root.dataset.theme=t;localStorage.setItem('nm-theme',t)};
 
 const MESSAGES=[
