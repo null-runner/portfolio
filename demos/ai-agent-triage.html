@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AI triage with a human on the leash — interactive demo</title><style>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AI triage with a human on the leash · interactive demo</title><style>
 *{box-sizing:border-box}
 :root{--bg:#0a0e14;--panel:#111823;--panel2:#0d131c;--ink:#e2e9f2;--muted:#8b99ab;--acc:#3fd0e0;--acc-ink:#06222a;--acc-dim:#1c5560;--amber:#f0b23e;--red:#ef6b5e;--ok:#5fd08a;--line:#1e2937;--line2:#2c3b4f;--deep:#060a10;--mono:'JetBrains Mono','Cascadia Code',Consolas,monospace;--serif:'Segoe UI',system-ui,-apple-system,'Helvetica Neue',Arial,sans-serif}
 [data-theme="light"]{--bg:#f3f5f7;--panel:#ffffff;--panel2:#fafbfc;--ink:#121820;--muted:#5c6b7a;--acc:#0d7c8c;--acc-ink:#f3fbfc;--acc-dim:#9fc6cc;--amber:#a16207;--red:#b3402f;--ok:#15803d;--line:#dde3ea;--line2:#c3cdd8;--deep:#101823}
@@ -104,7 +104,7 @@ a:focus-visible,button:focus-visible,select:focus-visible,textarea:focus-visible
 </style></head><body>
 <header class="demo-top"><div class="wrap"><a href="../START_HERE.html">&larr; Back to portfolio</a><div class="right"><a href="ai-agent-triage.it.html" lang="it">IT</a><button id="theme" aria-label="Toggle theme">&#9686;</button><span class="disclaimer">Synthetic interactive reconstruction based on real delivery patterns. No production or client data.</span></div></div></header>
 <section class="demo-head"><div class="wrap"><div class="eyebrow">Case 05 / AI agents with human control</div><h1>AI triage on a leash</h1><p class="disclaimer">Synthetic interactive reconstruction based on real delivery patterns. No production or client data.</p>
-<div class="explain"><b>What am I looking at?</b><p>An AI agent sorts your support and sales inbox by itself, but the delicate decisions (refunds, angry customers, anything it is unsure about) stop and wait for a person. Press "Process next" and watch where each message ends up: a department column, or the approval queue.</p></div>
+<div class="explain"><b>What am I looking at?</b><p>The AI handles the volume, you keep the judgment: routine requests flow through on their own, delicate ones stop and wait for a human. Press Process next and watch where each message ends up.</p></div>
 <div class="actions"><button class="button primary" id="next">Process next</button><button class="button" id="all">Process all</button><button class="button" id="reset">Reset</button></div>
 </div></section>
 <main class="workspace"><div class="wrap appgrid">
@@ -168,7 +168,7 @@ if(saved){root.dataset.theme=saved}else if(matchMedia('(prefers-color-scheme:lig
 tbtn.onclick=()=>{const t=root.dataset.theme==='light'?'dark':'light';root.dataset.theme=t;localStorage.setItem('nm-theme',t)};
 
 const MESSAGES=[
- {id:'M-01',from:'luca.b',subj:'Question about installments',body:"Hi, can I split the course payment into 3 monthly installments? I saw Klarna mentioned somewhere.",cat:'billing',intent:'payment_options',sent:'neutral',conf:0.93,draft:"Yes, the course supports 3 monthly installments via Klarna at checkout. I can walk you through enabling it."},
+ {id:'M-01',from:'matteo.b',subj:'Question about installments',body:"Hi, can I split the course payment into 3 monthly installments? I saw Klarna mentioned somewhere.",cat:'billing',intent:'payment_options',sent:'neutral',conf:0.93,draft:"Yes, the course supports 3 monthly installments via Klarna at checkout. I can walk you through enabling it."},
  {id:'M-02',from:'sara.m',subj:'I want a refund',body:"I bought the program last week and it is not for me. I would like a refund please.",cat:'billing',intent:'refund_request',sent:'neutral',conf:0.90,draft:"I am sorry it was not the right fit. Orders within 14 days qualify for a refund. Let me confirm your order details."},
  {id:'M-03',from:'marco.t',subj:'Ready to enroll',body:"Just watched the webinar, I am in. How do I pay and start today?",cat:'sales',intent:'purchase_intent',sent:'positive',conf:0.96,draft:"Fantastic. Here is your enrollment link, you can start right after checkout."},
  {id:'M-04',from:'noreply.promo',subj:'CONGRATS you won',body:"URGENT!! Claim your 1000 dollar gift card now, click the link before it expires!!!",cat:'spam',intent:'promotion_spam',sent:'neutral',conf:0.98,draft:null},

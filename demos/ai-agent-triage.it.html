@@ -104,7 +104,7 @@ a:focus-visible,button:focus-visible,select:focus-visible,textarea:focus-visible
 </style></head><body>
 <header class="demo-top"><div class="wrap"><a href="../START_HERE.it.html">&larr; Torna al portfolio</a><div class="right"><a href="ai-agent-triage.html" lang="en">EN</a><button id="theme" aria-label="Cambia tema">&#9686;</button><span class="disclaimer">Ricostruzione interattiva sintetica basata su pattern di delivery reali. Nessun dato di produzione o dei clienti.</span></div></div></header>
 <section class="demo-head"><div class="wrap"><div class="eyebrow">Caso 05 / agenti AI con controllo umano</div><h1>Triage AI al guinzaglio</h1><p class="disclaimer">Ricostruzione interattiva sintetica basata su pattern di delivery reali. Nessun dato di produzione o dei clienti.</p>
-<div class="explain"><b>Cosa sto guardando?</b><p>Un agente AI smista da solo la tua inbox di supporto e vendite, ma le decisioni delicate (rimborsi, clienti arrabbiati, tutto ciò di cui non è sicuro) si fermano e aspettano una persona. Premi "Elabora il prossimo" e guarda dove finisce ogni messaggio: una colonna di reparto, oppure la coda di approvazione.</p></div>
+<div class="explain"><b>Cosa sto guardando?</b><p>L'AI gestisce il volume, il giudizio resta a te: le richieste di routine scorrono da sole, quelle delicate si fermano e aspettano una persona. Premi Process next e guarda dove finisce ogni messaggio.</p></div>
 <div class="actions"><button class="button primary" id="next">Elabora il prossimo</button><button class="button" id="all">Elabora tutti</button><button class="button" id="reset">Reset</button></div>
 </div></section>
 <main class="workspace"><div class="wrap appgrid">
@@ -168,7 +168,7 @@ if(saved){root.dataset.theme=saved}else if(matchMedia('(prefers-color-scheme:lig
 tbtn.onclick=()=>{const t=root.dataset.theme==='light'?'dark':'light';root.dataset.theme=t;localStorage.setItem('nm-theme',t)};
 
 const MESSAGES=[
- {id:'M-01',from:'luca.b',subj:'Domanda sulle rate',body:"Ciao, posso dividere il pagamento del corso in 3 rate mensili? Ho visto Klarna citato da qualche parte.",cat:'billing',intent:'payment_options',sent:'neutral',conf:0.93,draft:"Sì, il corso supporta 3 rate mensili con Klarna al checkout. Posso guidarti passo passo per attivarle."},
+ {id:'M-01',from:'matteo.b',subj:'Domanda sulle rate',body:"Ciao, posso dividere il pagamento del corso in 3 rate mensili? Ho visto Klarna citato da qualche parte.",cat:'billing',intent:'payment_options',sent:'neutral',conf:0.93,draft:"Sì, il corso supporta 3 rate mensili con Klarna al checkout. Posso guidarti passo passo per attivarle."},
  {id:'M-02',from:'sara.m',subj:'Voglio un rimborso',body:"Ho comprato il programma la settimana scorsa e non fa per me. Vorrei un rimborso per favore.",cat:'billing',intent:'refund_request',sent:'neutral',conf:0.90,draft:"Mi dispiace che non fosse quello giusto. Gli ordini entro 14 giorni danno diritto al rimborso. Verifico i dettagli del tuo ordine."},
  {id:'M-03',from:'marco.t',subj:'Pronto a iscrivermi',body:"Ho appena visto il webinar, ci sto. Come pago e parto oggi stesso?",cat:'sales',intent:'purchase_intent',sent:'positive',conf:0.96,draft:"Fantastico. Ecco il tuo link di iscrizione, puoi partire subito dopo il checkout."},
  {id:'M-04',from:'noreply.promo',subj:'CONGRATULAZIONI hai vinto',body:"URGENTE!! Riscatta subito la tua gift card da 1000 euro, clicca il link prima che scada!!!",cat:'spam',intent:'promotion_spam',sent:'neutral',conf:0.98,draft:null},

@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Live the funnel — what the founder actually gets</title><style>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Live the funnel · what the founder actually gets</title><style>
 *{box-sizing:border-box}
 :root{--bg:#0a0e14;--panel:#111823;--panel2:#0d131c;--ink:#e2e9f2;--muted:#8b99ab;--acc:#3fd0e0;--acc-ink:#06222a;--acc-dim:#1c5560;--amber:#f0b23e;--red:#ef6b5e;--ok:#5fd08a;--line:#1e2937;--line2:#2c3b4f;--deep:#060a10;--mono:'JetBrains Mono','Cascadia Code',Consolas,monospace;--serif:'Segoe UI',system-ui,-apple-system,'Helvetica Neue',Arial,sans-serif}
 [data-theme="light"]{--bg:#f3f5f7;--panel:#ffffff;--panel2:#fafbfc;--ink:#121820;--muted:#5c6b7a;--acc:#0d7c8c;--acc-ink:#f3fbfc;--acc-dim:#9fc6cc;--amber:#a16207;--red:#b3402f;--ok:#15803d;--line:#dde3ea;--line2:#c3cdd8;--deep:#101823}
@@ -183,7 +183,7 @@ a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible{ou
 <div class="eyebrow">Case 01 / the deliverable, made visible</div>
 <h1>Live the funnel</h1>
 <p class="disclaimer">Synthetic interactive reconstruction based on real delivery patterns. No production or client data.</p>
-<div class="explain"><b>What am I looking at?</b>This is the exact thing a lead sees when they land on a launch page, plus the automation running behind it. Click through the two pages below the way a customer would, then open the second tab to see the same funnel from the builder side, where the follow-up is wired up.</div>
+<div class="explain"><b>What am I looking at?</b>This is what your customers would see: a launch funnel that sells while you sleep, live in three days. Click through it like a lead would, then open the second tab to see the machine behind it.</div>
 <div class="tabs" role="tablist">
 <button class="tab" id="tab-front" role="tab" aria-selected="true" aria-controls="view-front">The funnel (as a lead sees it)</button>
 <button class="tab" id="tab-back" role="tab" aria-selected="false" aria-controls="view-back">Behind the scenes (CRM builder)</button>
@@ -222,14 +222,14 @@ a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible{ou
     <div class="trust">No card required · 1,900+ founders have registered</div>
    </div>
    <div class="mk-social">
-    <div class="mk-quote">"I plugged this into my account on a Sunday and had 40 registrations before my next call. It just runs."<span>— demo testimonial, Synthetic Launch Academy</span></div>
+    <div class="mk-quote">"I plugged this into my account on a Sunday and had 40 registrations before my next call. It just runs."<span>- demo testimonial, Synthetic Launch Academy</span></div>
    </div>
   </div>
 
   <!-- PAGE B: opt-in -->
   <div class="fpage" id="pg-optin">
    <div class="mk-opt">
-    <h2>Almost there — save your seat</h2>
+    <h2>Almost there: save your seat</h2>
     <p class="lead">Enter your details and we will send the access link plus a calendar hold.</p>
     <form class="mk-form" id="optForm" novalidate>
      <div class="mk-field">
@@ -371,7 +371,7 @@ function goto(page){
  window.scrollTo({top:document.querySelector('.browser').offsetTop-70,behavior:'smooth'});
 }
 document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>goto(b.dataset.go));
-document.getElementById('playbtn').onclick=function(){this.querySelector('small').textContent='(demo video — playback is simulated)'};
+document.getElementById('playbtn').onclick=function(){this.querySelector('small').textContent='(demo video, playback is simulated)'};
 
 /* opt-in validation */
 const form=document.getElementById('optForm');
