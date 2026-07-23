@@ -1,1 +1,259 @@
-<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sistemi Airtable tra le business unit - demo interattiva</title><style>*{box-sizing:border-box}:root{--paper:#f2efe7;--ink:#16211d;--muted:#596660;--green:#155d48;--rust:#a84c2f;--line:#bac4bc;--white:#fffefa;--dark:#10221b}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:Verdana,Arial,sans-serif;line-height:1.55}a{color:inherit;text-underline-offset:4px}button,select,input{font:inherit}button,.button,select{min-height:44px}a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid var(--rust);outline-offset:3px}.wrap{width:min(1120px,calc(100% - 40px));margin:auto}.mono{font-family:Consolas,monospace}.eyebrow{font:700 12px Consolas,monospace;letter-spacing:.13em;text-transform:uppercase;color:var(--green)}.button{display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--ink);padding:10px 15px;text-decoration:none;background:var(--white);cursor:pointer;font-weight:700}.button.primary{background:var(--green);color:#fff;border-color:var(--green)}.button:hover{background:#e4e9e3}.button.primary:hover{background:#0d4737}.disclaimer{font-size:12px;color:var(--muted)}@media(max-width:640px){.wrap{width:calc(100% - 28px)}}body{background:#e8ece8}.demo-shell{min-height:100vh;display:grid;grid-template-rows:auto auto 1fr}.demo-top{background:var(--dark);color:#fff}.demo-top .wrap{min-height:58px;display:flex;align-items:center;justify-content:space-between;gap:18px}.demo-top a{font-size:13px;min-height:44px;display:inline-flex;align-items:center}.demo-head{background:var(--paper);border-bottom:1px solid var(--line);padding:24px 0}.demo-title{display:grid;grid-template-columns:1fr auto;gap:30px;align-items:end}.demo-title h1{font:400 clamp(30px,5vw,50px)/1.03 Georgia,serif;margin:7px 0}.controls{display:flex;gap:10px;flex-wrap:wrap}.controls label{font-size:12px;font-weight:700}.controls select{display:block;min-width:180px;margin-top:5px;padding:8px;border:1px solid var(--ink);background:var(--white)}.workspace{padding:22px 0 46px}.appgrid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(280px,.75fr);gap:18px}.panel{background:var(--white);border:1px solid var(--line);padding:18px;min-width:0}.panel h2{font:400 23px Georgia,serif;margin:0 0 14px}.status{display:inline-block;padding:5px 8px;background:#e0e9e2;color:#164c3a;font:700 12px Consolas,monospace}.status.error{background:#f6ddd4;color:#7e2816}.flow{display:flex;gap:8px;align-items:stretch;overflow-x:auto;padding-bottom:10px}.node{min-width:142px;flex:1;border:1px solid var(--line);padding:13px;background:#f7f6f1}.node.active{border:2px solid var(--green);background:#e4eee7}.node.error{border:2px solid var(--rust);background:#f9e7e1}.node b{display:block;font-size:13px}.node small{display:block;color:var(--muted);margin-top:4px}.log{height:300px;overflow:auto;background:#101a16;color:#d8e7de;padding:12px;font:13px/1.55 Consolas,monospace}.log div{padding:4px 0;border-bottom:1px solid #26352e}.log .ok{color:#9ee2b8}.log .bad{color:#ffad93}.log .muted{color:#94a59c}.table-wrap{overflow:auto}.table{width:100%;border-collapse:collapse;font-size:13px}.table th,.table td{text-align:left;padding:10px;border-bottom:1px solid var(--line);white-space:nowrap}.table th{font:700 11px Consolas,monospace;text-transform:uppercase;color:var(--green)}.record{display:grid;grid-template-columns:120px 1fr;gap:8px;font-size:13px}.record dt{color:var(--muted)}.record dd{margin:0;font-family:Consolas,monospace;overflow-wrap:anywhere}.metric-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.metric{border-top:3px solid var(--green);padding:11px;background:#f5f5ef}.metric b{font:400 23px Georgia,serif}.metric span{display:block;font-size:11px;color:var(--muted)}.notice{padding:11px;background:#fff1d9;border:1px solid #deb76c;font-size:13px}.hidden{display:none!important}@media(max-width:780px){.demo-title,.appgrid{grid-template-columns:1fr}.controls{align-items:end}.controls label{flex:1}.controls select{min-width:0;width:100%}.flow{display:grid;grid-template-columns:1fr 1fr}.node{min-width:0}.metric-row{grid-template-columns:1fr}.demo-top .wrap{align-items:flex-start;padding:12px 0;flex-direction:column;gap:5px}.record{grid-template-columns:100px 1fr}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}</style></head><body><div class="demo-shell"><header class="demo-top"><div class="wrap"><a href="../START_HERE.it.html">← Torna al portfolio</a><a href="airtable-explorer.html">EN</a><span class="disclaimer" style="color:#cad8d0">Ricostruzione interattiva sintetica basata su pattern di delivery reali. Nessun dato di produzione o dei clienti.</span></div></header><section class="demo-head"><div class="wrap demo-title"><div><div class="eyebrow">Caso 02 / esploratore database relazionale</div><h1>Esploratore operazioni Airtable</h1><p class="disclaimer">Ricostruzione interattiva sintetica basata su pattern di delivery reali. Nessun dato di produzione o dei clienti.</p></div><div class="controls"><label>Filtro ciclo di vita<select id="filter"><option>All</option><option>New</option><option>Qualified</option><option>Duplicate</option><option>Service</option></select></label><button class="button primary" id="dedupe">Esegui dedupe</button></div></div></section><main class="workspace"><div class="wrap appgrid"><section class="panel"><h2>Tabella lead</h2><div class="table-wrap"><table class="table"><thead><tr><th>ID</th><th>Nome</th><th>Sorgente</th><th>Fase</th><th>Unità</th><th>Candidatura</th></tr></thead><tbody id="rows"><tr data-stage="Qualified"><td><button class="button inspect" data-id="L-104" style="min-height:44px;padding:5px 8px">L-104</button></td><td>Ada Stone</td><td>paid_social</td><td>Qualified</td><td>Unità Nord</td><td>A-19</td></tr><tr data-stage="New"><td><button class="button inspect" data-id="L-105" style="min-height:44px;padding:5px 8px">L-105</button></td><td>Milo Hart</td><td>referral</td><td>New</td><td>Unità Sud</td><td>—</td></tr><tr data-stage="Duplicate"><td><button class="button inspect" data-id="L-104-D" style="min-height:44px;padding:5px 8px">L-104-D</button></td><td>Ada Stone</td><td>webinar</td><td>Duplicate</td><td>Unità Nord</td><td>A-19</td></tr><tr data-stage="Service"><td><button class="button inspect" data-id="L-106" style="min-height:44px;padding:5px 8px">L-106</button></td><td>Nora Lake</td><td>organic</td><td>Service</td><td>Unità Nord</td><td>—</td></tr></tbody></table></div><h2 style="margin-top:22px">Attività ciclo di vita</h2><div class="log" id="log" aria-live="polite"><div class="muted">Ispeziona un record, filtra il ciclo di vita o esegui il dedupe.</div></div></section><aside class="panel"><h2>Record collegato</h2><dl class="record" id="inspector"><dt>lead_id</dt><dd>L-104</dd><dt>business_unit</dt><dd>Unità Nord</dd><dt>application</dt><dd>A-19 → Colloquio</dd><dt>touchpoints</dt><dd>T-44 Webinar; T-45 Email</dd><dt>service_case</dt><dd>nessuno</dd><dt>first_source</dt><dd>paid_social (immutabile)</dd></dl><div class="notice" style="margin-top:18px">I record duplicati vengono uniti tramite una chiave sintetica stabile mantenendo il contesto della prima sorgente.</div></aside></div></main></div><script>const logEl=document.querySelector('#log');function log(m,c='ok'){let d=document.createElement('div');d.className=c;d.textContent=m;logEl.prepend(d)}filter.onchange=()=>{document.querySelectorAll('#rows tr').forEach(r=>r.hidden=filter.value!=='All'&&r.dataset.stage!==filter.value);log('Filtro applicato: '+filter.value)};document.querySelectorAll('.inspect').forEach(b=>b.onclick=()=>{const r=b.closest('tr').children;inspector.innerHTML='<dt>lead_id</dt><dd>'+r[0].innerText+'</dd><dt>name</dt><dd>'+r[1].innerText+'</dd><dt>source</dt><dd>'+r[2].innerText+'</dd><dt>lifecycle</dt><dd>'+r[3].innerText+'</dd><dt>business_unit</dt><dd>'+r[4].innerText+'</dd><dt>application</dt><dd>'+r[5].innerText+'</dd>';log('Ispezionato '+b.dataset.id)});dedupe.onclick=()=>{logEl.innerHTML='';log('Collisione chiave stabile: L-104-D ↔ L-104','bad');setTimeout(()=>log('Touchpoint ricollegati al canonico L-104'),250);setTimeout(()=>{document.querySelector('[data-id="L-104-D"]').closest('tr').hidden=true;log('DEDUP COMPLETATO · prima sorgente preservata')},500)};</script></body></html>
+<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sistemi Airtable tra le business unit - demo interattiva</title><style>
+*{box-sizing:border-box}
+:root{--bg:#0a0e14;--panel:#111823;--panel2:#0d131c;--ink:#e2e9f2;--muted:#8b99ab;--acc:#3fd0e0;--acc-ink:#06222a;--acc-dim:#1c5560;--amber:#f0b23e;--red:#ef6b5e;--ok:#5fd08a;--line:#1e2937;--line2:#2c3b4f;--deep:#060a10;--mono:'JetBrains Mono','Cascadia Code',Consolas,monospace;--serif:Georgia,'Times New Roman',serif}
+[data-theme="light"]{--bg:#f3f5f7;--panel:#ffffff;--panel2:#fafbfc;--ink:#121820;--muted:#5c6b7a;--acc:#0d7c8c;--acc-ink:#f3fbfc;--acc-dim:#9fc6cc;--amber:#a16207;--red:#b3402f;--ok:#15803d;--line:#dde3ea;--line2:#c3cdd8;--deep:#101823}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Verdana,Arial,sans-serif;line-height:1.55;transition:background-color .3s,color .3s}
+a{color:inherit;text-underline-offset:4px}
+button,select,input{font:inherit}
+button,.button,select{min-height:44px}
+a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+.wrap{width:min(1240px,calc(100% - 32px));margin:auto}
+.disclaimer{font-size:12px;color:var(--muted)}
+.demo-top{background:var(--deep);color:#e2e9f2;border-bottom:1px solid var(--line2)}
+.demo-top .wrap{min-height:54px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.demo-top a{font-size:13px;min-height:44px;display:inline-flex;align-items:center;font-family:var(--mono);text-decoration:none;color:#8b99ab}
+.demo-top a:hover{color:#3fd0e0}
+.demo-top .right{display:flex;gap:12px;align-items:center}
+#theme{border:1px solid #2c3b4f;background:transparent;color:#e2e9f2;min-height:32px;padding:2px 10px;cursor:pointer;font-size:14px}
+#theme:hover{border-color:#3fd0e0}
+.demo-head{border-bottom:1px solid var(--line);padding:22px 0;background:var(--panel2)}
+.demo-title{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:end}
+.eyebrow{font:700 11px var(--mono);letter-spacing:.15em;text-transform:uppercase;color:var(--acc)}
+.demo-title h1{font:400 clamp(26px,4vw,42px)/1.05 var(--serif);margin:7px 0;letter-spacing:-.02em}
+.tabbar{display:flex;gap:4px;flex-wrap:wrap;align-items:end;margin-bottom:-1px}
+.tab{display:inline-flex;flex-direction:column;gap:2px;border:1px solid var(--line2);border-bottom:none;padding:8px 14px;background:var(--panel2);color:var(--muted);cursor:pointer;font:700 12px var(--mono);min-height:44px}
+.tab b{font:700 13px var(--mono);color:var(--ink)}
+.tab small{font:600 9px var(--mono);letter-spacing:.06em;text-transform:uppercase}
+.tab.active{background:var(--panel);color:var(--acc);border-color:var(--acc)}
+.tab.active b{color:var(--acc)}
+.button{display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--line2);padding:10px 16px;background:var(--panel);color:var(--ink);cursor:pointer;font-weight:700;font-size:14px}
+.button:hover{border-color:var(--acc)}
+.workspace{padding:20px 0 48px}
+.appgrid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(320px,.85fr);gap:16px}
+.panel{background:var(--panel);border:1px solid var(--line);padding:16px;min-width:0}
+.panel h2{font:400 20px var(--serif);margin:0 0 12px;display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.panel h2 small{font:600 10px var(--mono);color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+.filterbar{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.filterbar label{font:700 10px var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--muted);display:flex;flex-direction:column;gap:5px}
+.filterbar select,.filterbar input{min-height:36px;padding:6px 9px;border:1px solid var(--line2);background:var(--panel2);color:var(--ink);font-size:13px;font-family:var(--mono)}
+.filterbar .count{margin-left:auto;font:700 11px var(--mono);color:var(--acc);padding-bottom:7px}
+.tbl-wrap{overflow:auto;border:1px solid var(--line);max-height:360px}
+.tbl{width:100%;border-collapse:collapse;font-size:12.5px;min-width:640px}
+.tbl th,.tbl td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap;font-family:var(--mono)}
+.tbl th{font:700 10px var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--acc);background:var(--panel2);position:sticky;top:0}
+.tbl tbody tr{cursor:pointer}
+.tbl tbody tr:hover{background:color-mix(in srgb,var(--acc) 8%,transparent)}
+.tbl tbody tr.sel{background:color-mix(in srgb,var(--acc) 17%,transparent)}
+.tbl tbody tr.dupe td:first-child{border-left:3px solid var(--amber)}
+.rid{color:var(--acc)}
+.pill{display:inline-block;padding:2px 8px;font:700 10px var(--mono);border:1px solid var(--line2);border-radius:10px}
+.pill.q{color:var(--ok);border-color:var(--ok)}.pill.n{color:var(--amber);border-color:var(--amber)}.pill.d{color:var(--acc);border-color:var(--acc)}.pill.r{color:var(--red);border-color:var(--red)}.pill.w{color:var(--muted)}
+.tag{display:inline-block;padding:1px 6px;font:700 9px var(--mono);border-radius:8px;background:color-mix(in srgb,var(--amber) 20%,transparent);color:var(--amber);border:1px solid var(--amber);margin-left:6px}
+.record dl{display:grid;grid-template-columns:120px 1fr;gap:6px 10px;margin:0;font-size:13px}
+.record dt{color:var(--muted);font-family:var(--mono);font-size:11px;padding-top:2px}
+.record dd{margin:0;font-family:var(--mono);font-size:12.5px;overflow-wrap:anywhere;padding:2px 4px}
+.linkchip{display:inline-flex;align-items:center;gap:5px;margin:2px 5px 2px 0;padding:4px 9px;border:1px solid var(--acc-dim);border-radius:3px;background:var(--panel2);color:var(--acc);cursor:pointer;font:700 11px var(--mono);min-height:30px}
+.linkchip:hover{border-color:var(--acc);background:color-mix(in srgb,var(--acc) 12%,transparent)}
+.linkchip .arrow{color:var(--muted)}
+.linkhead{font:700 10px var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:14px 0 6px}
+.emptychip{color:var(--muted);font:600 11px var(--mono)}
+.json{background:var(--deep);border:1px solid var(--line2);color:#c7d4e0;padding:12px;font:12px/1.55 var(--mono);overflow:auto;max-height:280px;white-space:pre;margin-top:14px}
+.json .k{color:#3fd0e0}.json .s{color:#a8d08a}.json .n{color:#f0b23e}
+.canvas-wrap{overflow-x:auto;border:1px solid var(--line);background:var(--panel2)}
+.canvas-wrap svg{display:block;min-width:500px;width:100%;height:240px}
+.s-box{fill:var(--panel);stroke:var(--line2);stroke-width:1.2;cursor:pointer}
+.s-box.hot{stroke:var(--acc);stroke-width:2}
+.s-title{font:700 11px var(--mono);fill:var(--ink);pointer-events:none}
+.s-field{font:600 9.5px var(--mono);fill:var(--muted);pointer-events:none}
+.s-field.key{fill:var(--acc)}
+.s-edge{stroke:var(--line2);stroke-width:1.5;fill:none;marker-end:url(#arr)}
+.s-edge.hot{stroke:var(--acc);stroke-width:2;marker-end:url(#arrh)}
+.notice{padding:10px 12px;background:color-mix(in srgb,var(--amber) 12%,transparent);border:1px solid var(--amber);font-size:12.5px;margin-top:14px}
+.metric-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+.metric{border:1px solid var(--line);border-top:2px solid var(--acc);padding:10px 12px;background:var(--panel2)}
+.metric b{font:600 19px var(--serif);display:block}
+.metric span{display:block;font:600 10px var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-top:3px}
+.stack{display:grid;gap:16px}
+.hint{font:600 11px var(--mono);color:var(--muted);margin-top:8px}
+@media(max-width:900px){.appgrid{grid-template-columns:1fr}.demo-title{grid-template-columns:1fr}.metric-row{grid-template-columns:1fr 1fr}.demo-top .wrap{flex-direction:column;align-items:flex-start;padding:10px 0;gap:4px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head><body><header class="demo-top"><div class="wrap"><a href="../START_HERE.it.html">← Torna al portfolio</a><div class="right"><a href="airtable-explorer.html" lang="en">EN</a><button id="theme" aria-label="Cambia tema">◐</button><span class="disclaimer">Ricostruzione interattiva sintetica basata su pattern di delivery reali. Nessun dato di produzione o dei clienti.</span></div></div></header><section class="demo-head"><div class="wrap demo-title"><div><div class="eyebrow">Caso 02 / esploratore base relazionale</div><h1>Sistemi Airtable tra le business unit</h1><p class="disclaimer">Ricostruzione interattiva sintetica basata su pattern di delivery reali. Nessun dato di produzione o dei clienti.</p></div></div></section><main class="workspace"><div class="wrap appgrid"><div class="stack"><div class="tabbar" id="tabs"></div><section class="panel"><h2><span id="tblTitle">Leads</span> <small id="tblMeta"></small></h2><div class="filterbar" id="filters"></div><div class="tbl-wrap"><table class="tbl" id="grid"><thead><tr id="ghead"></tr></thead><tbody id="gbody"></tbody></table></div><div class="metric-row"><div class="metric"><b id="m-rows">—</b><span>Righe mostrate</span></div><div class="metric"><b id="m-dupes">1</b><span>Flag dedupe</span></div><div class="metric"><b id="m-buyers">3</b><span>Acquirenti collegati</span></div><div class="metric"><b id="m-cash">€8,020</b><span>Cash collected</span></div></div><div class="notice">Due <b>Leads</b> condividono <b>giulia.demo@example.invalid</b> tra i touch TikTok e Instagram. La base contrassegna il secondo con un marcatore <span class="tag">dupe</span> e una back-reference <code>merge_into</code> a <code>recLD01</code>, così l'acquirente viene contato una sola volta e la sorgente first-touch è preservata.</div></section><section class="panel"><h2>Mappa dello schema <small>tabelle e relazioni</small></h2><div class="canvas-wrap"><svg id="schema" viewBox="0 0 500 240"><defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#8b99ab"/></marker><marker id="arrh" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#3fd0e0"/></marker></defs></svg></div><p class="hint">Clicca su un box tabella per aprirlo. Le frecce seguono i campi linked-record: Applications → Leads, Buyers → Applications, Touchpoints → Leads.</p></section></div><aside class="stack"><section class="panel record"><h2>Dettaglio record <small id="rdMeta">seleziona una riga</small></h2><dl id="rd"><dt>—</dt><dd>Clicca una riga qualsiasi per ispezionare il record completo, seguire i record collegati e leggere il JSON grezzo.</dd></dl><div id="rdLinks"></div><pre class="json" id="rdJson">// seleziona un record per ispezionarne i campi grezzi</pre></section></aside></div></main><script>
+const root=document.documentElement,tbtn=document.getElementById('theme');
+const saved=localStorage.getItem('nm-theme');
+if(saved){root.dataset.theme=saved}else if(matchMedia('(prefers-color-scheme:light)').matches){root.dataset.theme='light'}
+tbtn.onclick=()=>{const t=root.dataset.theme==='light'?'dark':'light';root.dataset.theme=t;localStorage.setItem('nm-theme',t)};
+
+const DB={
+ leads:{label:'Leads',biz:'LDP / Trading',
+  cols:['id','name','email','utm_source','utm_campaign','stage','owner','applications'],
+  rows:[
+   {id:'recLD01',name:'Giulia Ferri',email:'giulia.demo@example.invalid',utm_source:'tiktok',utm_campaign:'webinar_jul',stage:'Qualified',owner:'Sara R.',applications:['recAP01'],created:'2026-07-08'},
+   {id:'recLD02',name:'Giulia Ferri',email:'giulia.demo@example.invalid',utm_source:'ig',utm_campaign:'webinar_jul',stage:'Duplicate',owner:'Sara R.',applications:[],merge_into:'recLD01',created:'2026-07-11'},
+   {id:'recLD03',name:'Marco Bianchi',email:'marco.demo@example.invalid',utm_source:'fb',utm_campaign:'webinar_jul',stage:'Nurture',owner:'Luca P.',applications:[],created:'2026-07-09'},
+   {id:'recLD04',name:'Elena Costa',email:'elena.demo@example.invalid',utm_source:'ig',utm_campaign:'estate_profitto',stage:'Qualified',owner:'Sara R.',applications:['recAP02','recAP05'],created:'2026-07-10'},
+   {id:'recLD05',name:'Davide Neri',email:'davide.demo@example.invalid',utm_source:'google',utm_campaign:'brand_search',stage:'Booked',owner:'Luca P.',applications:['recAP03'],created:'2026-07-12'},
+   {id:'recLD06',name:'Sofia Greco',email:'sofia.demo@example.invalid',utm_source:'tiktok',utm_campaign:'estate_profitto',stage:'Nurture',owner:'Sara R.',applications:[],created:'2026-07-12'},
+   {id:'recLD07',name:'Paolo Rizzo',email:'paolo.demo@example.invalid',utm_source:'referral',utm_campaign:'affiliate_ab',stage:'Qualified',owner:'Luca P.',applications:['recAP04'],created:'2026-07-13'},
+   {id:'recLD08',name:'Chiara Moro',email:'chiara.demo@example.invalid',utm_source:'fb',utm_campaign:'webinar_jul',stage:'Disqualified',owner:'—',applications:[],created:'2026-07-13'}
+  ]},
+ applications:{label:'Applications',biz:'Pipeline vendite',
+  cols:['id','lead','call_slot','setter','status','score','buyer'],
+  rows:[
+   {id:'recAP01',lead:['recLD01'],call_slot:'2026-07-15 16:00',setter:'Sara R.',status:'Closed Won',score:82,buyer:['recBY01']},
+   {id:'recAP02',lead:['recLD04'],call_slot:'2026-07-16 11:00',setter:'Sara R.',status:'Closed Won',score:77,buyer:['recBY02']},
+   {id:'recAP03',lead:['recLD05'],call_slot:'2026-07-17 18:30',setter:'Luca P.',status:'No Show',score:40,buyer:[]},
+   {id:'recAP04',lead:['recLD07'],call_slot:'2026-07-18 15:00',setter:'Luca P.',status:'Closed Won',score:88,buyer:['recBY03']},
+   {id:'recAP05',lead:['recLD04'],call_slot:'2026-07-19 10:00',setter:'Sara R.',status:'In Attesa',score:61,buyer:[]}
+  ]},
+ buyers:{label:'Buyers',biz:'Ricavi',
+  cols:['id','application','product','cash_collected','payment','status'],
+  rows:[
+   {id:'recBY01',application:['recAP01'],product:'Coaching 1:1',cash_collected:3200,payment:'Stripe',status:'Paid'},
+   {id:'recBY02',application:['recAP02'],product:'Group Program',cash_collected:1800,payment:'Klarna 3x',status:'Installments'},
+   {id:'recBY03',application:['recAP04'],product:'Coaching 1:1',cash_collected:3020,payment:'Bonifico',status:'Paid'}
+  ]},
+ touchpoints:{label:'Touchpoints',biz:'Attribuzione',
+  cols:['id','lead','channel','event','utm_source','ts'],
+  rows:[
+   {id:'recTP01',lead:['recLD01'],channel:'ad',event:'click',utm_source:'tiktok',ts:'2026-07-08 09:12'},
+   {id:'recTP02',lead:['recLD01'],channel:'webinar',event:'attended',utm_source:'tiktok',ts:'2026-07-14 18:03'},
+   {id:'recTP03',lead:['recLD02'],channel:'ad',event:'click',utm_source:'ig',ts:'2026-07-11 20:41'},
+   {id:'recTP04',lead:['recLD03'],channel:'webinar',event:'no_show',utm_source:'fb',ts:'2026-07-14 18:00'},
+   {id:'recTP05',lead:['recLD04'],channel:'ad',event:'click',utm_source:'ig',ts:'2026-07-10 12:22'},
+   {id:'recTP06',lead:['recLD04'],channel:'email',event:'open',utm_source:'ig',ts:'2026-07-13 08:30'},
+   {id:'recTP07',lead:['recLD05'],channel:'search',event:'click',utm_source:'google',ts:'2026-07-12 14:05'},
+   {id:'recTP08',lead:['recLD06'],channel:'ad',event:'click',utm_source:'tiktok',ts:'2026-07-12 19:50'},
+   {id:'recTP09',lead:['recLD07'],channel:'referral',event:'signup',utm_source:'referral',ts:'2026-07-13 10:11'},
+   {id:'recTP10',lead:['recLD07'],channel:'webinar',event:'attended',utm_source:'referral',ts:'2026-07-14 18:07'}
+  ]}
+};
+// which table a linked-record field points into
+const LINK_TARGET={applications:'applications',lead:'leads',buyer:'buyers',application:'applications'};
+const STAGE_PILL={Qualified:'q',Nurture:'n',Duplicate:'d',Booked:'q',Disqualified:'r','Closed Won':'q','No Show':'r','In Attesa':'n',Paid:'q',Installments:'n'};
+const FILTERABLE={leads:'stage',applications:'status',buyers:'status',touchpoints:'event'};
+let curTable='leads',curFilter='',curSearch='',selId=null;
+
+const tabsEl=document.getElementById('tabs');
+Object.keys(DB).forEach(k=>{
+ const t=DB[k];const b=document.createElement('button');b.className='tab'+(k===curTable?' active':'');
+ b.innerHTML=`<b>${t.label}</b><small>${t.biz} · ${t.rows.length} rec</small>`;
+ b.onclick=()=>{curTable=k;curFilter='';curSearch='';selId=null;render()};tabsEl.appendChild(b);
+});
+function refreshTabs(){[...tabsEl.children].forEach((b,i)=>b.classList.toggle('active',Object.keys(DB)[i]===curTable))}
+
+function buildFilters(){
+ const fEl=document.getElementById('filters');fEl.innerHTML='';
+ const field=FILTERABLE[curTable];
+ const vals=[...new Set(DB[curTable].rows.map(r=>r[field]))];
+ const lab=document.createElement('label');lab.textContent='Filtra per '+field;
+ const sel=document.createElement('select');sel.innerHTML=`<option value="">Tutti (${DB[curTable].rows.length})</option>`+vals.map(v=>`<option${v===curFilter?' selected':''}>${v}</option>`).join('');
+ sel.onchange=()=>{curFilter=sel.value;render()};lab.appendChild(sel);
+ const slab=document.createElement('label');slab.textContent='Cerca';
+ const inp=document.createElement('input');inp.type='text';inp.placeholder='email, nome, id…';inp.value=curSearch;
+ inp.oninput=()=>{curSearch=inp.value;render()};slab.appendChild(inp);
+ const cnt=document.createElement('div');cnt.className='count';cnt.id='fcount';
+ fEl.append(lab,slab,cnt);
+ return field;
+}
+
+function currentRows(field){
+ return DB[curTable].rows.filter(r=>{
+  if(curFilter&&r[field]!==curFilter)return false;
+  if(curSearch){const q=curSearch.toLowerCase();return DB[curTable].cols.some(c=>String(r[c]??'').toLowerCase().includes(q))}
+  return true;
+ });
+}
+function cell(col,v,row){
+ if(v==null)return '<span class="emptychip">∅</span>';
+ if(Array.isArray(v))return v.length?v.map(id=>`<span class="rid">${id}</span>`).join(' '):'<span class="emptychip">[ ]</span>';
+ if(col==='id')return `<span class="rid">${v}</span>`+(row.merge_into?'<span class="tag">dupe</span>':'');
+ if(col==='cash_collected')return '€'+v.toLocaleString('en-US');
+ if(STAGE_PILL[v])return `<span class="pill ${STAGE_PILL[v]}">${v}</span>`;
+ return String(v);
+}
+function render(){
+ refreshTabs();
+ const t=DB[curTable];
+ document.getElementById('tblTitle').textContent=t.label;
+ document.getElementById('tblMeta').textContent=t.biz+' · base appLDPdemo';
+ const field=buildFilters();
+ const rows=currentRows(field);
+ document.getElementById('ghead').innerHTML=t.cols.map(c=>`<th>${c}</th>`).join('');
+ const gb=document.getElementById('gbody');gb.innerHTML='';
+ rows.forEach(r=>{
+  const tr=document.createElement('tr');
+  const cls=[];if(r.merge_into)cls.push('dupe');if(r.id===selId)cls.push('sel');tr.className=cls.join(' ');
+  tr.innerHTML=t.cols.map(c=>`<td>${cell(c,r[c],r)}</td>`).join('');
+  tr.onclick=()=>{selId=r.id;showRecord(curTable,r.id);highlightSel()};
+  gb.appendChild(tr);
+ });
+ document.getElementById('fcount').textContent=rows.length+' / '+t.rows.length+' righe';
+ document.getElementById('m-rows').textContent=rows.length;
+ drawSchema();
+}
+function highlightSel(){document.querySelectorAll('#gbody tr').forEach((tr,i)=>{const rid=tr.querySelector('.rid');tr.classList.toggle('sel',rid&&rid.textContent===selId)})}
+
+function findRow(table,id){return DB[table].rows.find(r=>r.id===id)}
+function jsonHtml(o){return JSON.stringify(o,null,2).replace(/"([^"]+)":/g,'<span class="k">"$1"</span>:').replace(/: "([^"]*)"/g,': <span class="s">"$1"</span>').replace(/: (\d+|true|false|null)/g,': <span class="n">$1</span>')}
+function showRecord(table,id){
+ const r=findRow(table,id);if(!r)return;
+ document.getElementById('rdMeta').textContent=table+' · '+id;
+ const dl=document.getElementById('rd');dl.innerHTML='';
+ const shown=DB[table].cols.concat(r.merge_into?['merge_into']:[]);
+ shown.forEach(c=>{
+  if(Array.isArray(r[c]))return;
+  const dt=document.createElement('dt');dt.textContent=c;
+  const dd=document.createElement('dd');dd.innerHTML=cell(c,r[c],r);
+  dl.append(dt,dd);
+ });
+ const lk=document.getElementById('rdLinks');lk.innerHTML='';
+ const links=[];
+ DB[table].cols.forEach(c=>{if(Array.isArray(r[c])&&LINK_TARGET[c]){r[c].forEach(tid=>links.push({field:c,target:LINK_TARGET[c],id:tid}))}});
+ if(r.merge_into)links.push({field:'merge_into',target:'leads',id:r.merge_into});
+ if(table==='leads'){DB.touchpoints.rows.filter(tp=>tp.lead[0]===id).forEach(tp=>links.push({field:'touchpoints ←',target:'touchpoints',id:tp.id}))}
+ if(table==='leads'){DB.leads.rows.filter(l=>l.merge_into===id).forEach(l=>links.push({field:'merged_from ←',target:'leads',id:l.id}))}
+ if(links.length){
+  const h=document.createElement('div');h.className='linkhead';h.textContent='Record collegati - clicca per seguire';lk.appendChild(h);
+  links.forEach(L=>{
+   const c=document.createElement('button');c.className='linkchip';
+   c.innerHTML=`${L.field} <span class="arrow">→</span> ${L.id}`;
+   c.onclick=()=>{curTable=L.target;curFilter='';curSearch='';selId=L.id;render();showRecord(L.target,L.id);highlightSel()};
+   lk.appendChild(c);
+  });
+ }
+ const raw={id:r.id,fields:{}};DB[table].cols.forEach(c=>{if(c!=='id')raw.fields[c]=r[c]});if(r.merge_into)raw.fields.merge_into=r.merge_into;raw.createdTime=r.created||r.call_slot||r.ts||null;
+ document.getElementById('rdJson').innerHTML=jsonHtml(raw);
+}
+
+const SCH=[
+ {k:'leads',x:18,y:18,fields:['id ●','email','utm_source','stage']},
+ {k:'touchpoints',x:18,y:135,fields:['id ●','lead ↗','channel','utm_source']},
+ {k:'applications',x:295,y:18,fields:['id ●','lead ↗','status','buyer ↗']},
+ {k:'buyers',x:295,y:135,fields:['id ●','application ↗','cash','status']}
+];
+const BOXW=180,BOXH=92;
+function drawSchema(){
+ const svg=document.getElementById('schema');const NS='http://www.w3.org/2000/svg';
+ [...svg.querySelectorAll('.dyn')].forEach(n=>n.remove());
+ function el(n,at,cls){const e=document.createElementNS(NS,n);for(const k in at)e.setAttribute(k,at[k]);let c='dyn';if(cls)c+=' '+cls;e.setAttribute('class',c);return e}
+ const pos={};SCH.forEach(b=>pos[b.k]={cx:b.x+BOXW/2,l:b.x,r:b.x+BOXW,t:b.y,b:b.y+BOXH});
+ const edges=[['applications','leads'],['buyers','applications'],['touchpoints','leads']];
+ edges.forEach(([a,b])=>{
+  const A=pos[a],B=pos[b];const hot=(a===curTable||b===curTable);
+  let d;
+  if(a==='applications'&&b==='leads')d=`M ${A.l} ${A.t+22} L ${B.r} ${B.t+22}`;
+  else if(a==='buyers'&&b==='applications')d=`M ${A.cx} ${A.t} L ${B.cx} ${B.b}`;
+  else d=`M ${A.cx} ${A.t} L ${B.cx} ${B.b}`;
+  svg.appendChild(el('path',{d},'s-edge'+(hot?' hot':'')));
+ });
+ SCH.forEach(b=>{
+  const hot=b.k===curTable;
+  const box=el('rect',{x:b.x,y:b.y,width:BOXW,height:BOXH,rx:3},'s-box'+(hot?' hot':''));
+  box.addEventListener('click',()=>{curTable=b.k;curFilter='';curSearch='';selId=null;render()});
+  svg.appendChild(box);
+  const tt=el('text',{x:b.x+9,y:b.y+18},'s-title');tt.textContent=DB[b.k].label+' ('+DB[b.k].rows.length+')';svg.appendChild(tt);
+  b.fields.forEach((f,i)=>{const key=f.includes('●');const ft=el('text',{x:b.x+9,y:b.y+37+i*13},'s-field'+(key?' key':''));ft.textContent=f;svg.appendChild(ft)});
+ });
+}
+render();
+</script></body></html>

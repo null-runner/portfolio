@@ -1,1 +1,210 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Self-hosted automation on Docker and VPS — interactive demo</title><style>*{box-sizing:border-box}:root{--paper:#f2efe7;--ink:#16211d;--muted:#596660;--green:#155d48;--rust:#a84c2f;--line:#bac4bc;--white:#fffefa;--dark:#10221b}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:Verdana,Arial,sans-serif;line-height:1.55}a{color:inherit;text-underline-offset:4px}button,select,input{font:inherit}button,.button,select{min-height:44px}a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid var(--rust);outline-offset:3px}.wrap{width:min(1120px,calc(100% - 40px));margin:auto}.mono{font-family:Consolas,monospace}.eyebrow{font:700 12px Consolas,monospace;letter-spacing:.13em;text-transform:uppercase;color:var(--green)}.button{display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--ink);padding:10px 15px;text-decoration:none;background:var(--white);cursor:pointer;font-weight:700}.button.primary{background:var(--green);color:#fff;border-color:var(--green)}.button:hover{background:#e4e9e3}.button.primary:hover{background:#0d4737}.disclaimer{font-size:12px;color:var(--muted)}@media(max-width:640px){.wrap{width:calc(100% - 28px)}}body{background:#e8ece8}.demo-shell{min-height:100vh;display:grid;grid-template-rows:auto auto 1fr}.demo-top{background:var(--dark);color:#fff}.demo-top .wrap{min-height:58px;display:flex;align-items:center;justify-content:space-between;gap:18px}.demo-top a{font-size:13px;min-height:44px;display:inline-flex;align-items:center}.demo-head{background:var(--paper);border-bottom:1px solid var(--line);padding:24px 0}.demo-title{display:grid;grid-template-columns:1fr auto;gap:30px;align-items:end}.demo-title h1{font:400 clamp(30px,5vw,50px)/1.03 Georgia,serif;margin:7px 0}.controls{display:flex;gap:10px;flex-wrap:wrap}.controls label{font-size:12px;font-weight:700}.controls select{display:block;min-width:180px;margin-top:5px;padding:8px;border:1px solid var(--ink);background:var(--white)}.workspace{padding:22px 0 46px}.appgrid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(280px,.75fr);gap:18px}.panel{background:var(--white);border:1px solid var(--line);padding:18px;min-width:0}.panel h2{font:400 23px Georgia,serif;margin:0 0 14px}.status{display:inline-block;padding:5px 8px;background:#e0e9e2;color:#164c3a;font:700 12px Consolas,monospace}.status.error{background:#f6ddd4;color:#7e2816}.flow{display:flex;gap:8px;align-items:stretch;overflow-x:auto;padding-bottom:10px}.node{min-width:142px;flex:1;border:1px solid var(--line);padding:13px;background:#f7f6f1}.node.active{border:2px solid var(--green);background:#e4eee7}.node.error{border:2px solid var(--rust);background:#f9e7e1}.node b{display:block;font-size:13px}.node small{display:block;color:var(--muted);margin-top:4px}.log{height:300px;overflow:auto;background:#101a16;color:#d8e7de;padding:12px;font:13px/1.55 Consolas,monospace}.log div{padding:4px 0;border-bottom:1px solid #26352e}.log .ok{color:#9ee2b8}.log .bad{color:#ffad93}.log .muted{color:#94a59c}.table-wrap{overflow:auto}.table{width:100%;border-collapse:collapse;font-size:13px}.table th,.table td{text-align:left;padding:10px;border-bottom:1px solid var(--line);white-space:nowrap}.table th{font:700 11px Consolas,monospace;text-transform:uppercase;color:var(--green)}.record{display:grid;grid-template-columns:120px 1fr;gap:8px;font-size:13px}.record dt{color:var(--muted)}.record dd{margin:0;font-family:Consolas,monospace;overflow-wrap:anywhere}.metric-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.metric{border-top:3px solid var(--green);padding:11px;background:#f5f5ef}.metric b{font:400 23px Georgia,serif}.metric span{display:block;font-size:11px;color:var(--muted)}.notice{padding:11px;background:#fff1d9;border:1px solid #deb76c;font-size:13px}.hidden{display:none!important}@media(max-width:780px){.demo-title,.appgrid{grid-template-columns:1fr}.controls{align-items:end}.controls label{flex:1}.controls select{min-width:0;width:100%}.flow{display:grid;grid-template-columns:1fr 1fr}.node{min-width:0}.metric-row{grid-template-columns:1fr}.demo-top .wrap{align-items:flex-start;padding:12px 0;flex-direction:column;gap:5px}.record{grid-template-columns:100px 1fr}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}</style></head><body><div class="demo-shell"><header class="demo-top"><div class="wrap"><span><a href="../START_HERE.html">← Back to portfolio</a> <a href="docker-n8n-ops.it.html" lang="it" style="font-size:13px">IT</a></span><span class="disclaimer" style="color:#cad8d0">Synthetic interactive reconstruction based on real delivery patterns. No production or client data.</span></div></header><section class="demo-head"><div class="wrap demo-title"><div><div class="eyebrow">Case 04 / workflow operations</div><h1>Docker and n8n operations console</h1><p class="disclaimer">Synthetic interactive reconstruction based on real delivery patterns. No production or client data.</p></div><div class="controls"><label>Run mode<select id="mode"><option value="success">Healthy run</option><option value="retry">API retry</option><option value="fail">Persistent failure</option></select></label><button class="button primary" id="run">Start workflow</button><button class="button" id="retry">Retry failed node</button></div></div></section><main class="workspace"><div class="wrap appgrid"><section class="panel"><h2>Reconciliation workflow</h2><div class="flow"><div class="node" data-node="trigger"><b>Cron</b><small>Nightly trigger</small></div><div class="node" data-node="fetch"><b>Fetch</b><small>Bounded window</small></div><div class="node" data-node="normalize"><b>Normalize</b><small>Stable keys</small></div><div class="node" data-node="compare"><b>Compare</b><small>Expected / actual</small></div><div class="node" data-node="write"><b>Write</b><small>Status + log</small></div></div><h2 style="margin-top:20px">Run log</h2><div class="log" id="log" aria-live="polite"><div class="muted">Select a run mode and start the workflow.</div></div></section><aside class="panel"><h2>Service status</h2><table class="table"><tr><th>Service</th><th>State</th></tr><tr><td>n8n</td><td><span class="status">healthy</span></td></tr><tr><td>Traefik</td><td><span class="status">healthy</span></td></tr><tr><td>Redis</td><td><span class="status">healthy</span></td></tr><tr><td>External API</td><td><span id="api" class="status">healthy</span></td></tr></table><dl class="record" style="margin-top:18px"><dt>run_id</dt><dd id="runid">—</dd><dt>attempt</dt><dd id="attempt">0</dd><dt>final state</dt><dd id="final">READY</dd><dt>queue</dt><dd id="queue">0</dd></dl><div class="notice" style="margin-top:18px">This is a synthetic operator view, not a production n8n screenshot.</div></aside></div></main></div><script>const logEl=document.querySelector('#log');let timer;function log(msg,cls=''){const d=document.createElement('div');d.className=cls;d.textContent=new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit',second:'2-digit'})+'  '+msg;logEl.prepend(d)}function resetNodes(){document.querySelectorAll('.node').forEach(n=>n.classList.remove('active','error'))}function step(items,done){clearInterval(timer);resetNodes();let i=0;logEl.innerHTML='';timer=setInterval(()=>{if(i>=items.length){clearInterval(timer);done();return}const x=items[i++],n=document.querySelector('[data-node="'+x.node+'"]');if(n)n.classList.add(x.cls||'active');log(x.msg,x.logcls||'ok')},360)}let attempts=0;function execute(force=false){attempts++;runid.textContent='RUN-'+String(Date.now()).slice(-5);attempt.textContent=attempts;final.textContent='RUNNING';let m=force?'success':mode.value;let ev=[['trigger','Workflow triggered'],['fetch',m==='success'?'API returned synthetic batch':'External API returned 503'],['normalize',m==='fail'?'Node waiting for input':'Stable keys generated'],['compare',m==='fail'?'Comparison skipped':'Synthetic records compared'],['write',m==='fail'?'Write skipped':'Outcome and audit log written']];if(m==='retry')ev.splice(2,0,['fetch','Retry 1/3 after backoff']);api.className='status'+(m==='fail'?' error':'');api.textContent=m==='fail'?'degraded':'healthy';queue.textContent=m==='fail'?1:0;step(ev.map((e,i)=>({node:e[0],msg:e[1],cls:(m==='fail'&&i>=1)?'error':'active',logcls:(m==='fail'&&i>=1)?'bad':'ok'})),()=>{final.textContent=m==='fail'?'ERROR':'SUCCESS';log('WORKFLOW FINAL STATE · '+final.textContent,m==='fail'?'bad':'ok')})}run.onclick=()=>{attempts=0;execute()};retry.onclick=()=>execute(true);</script></body></html>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Self-hosted automation on Docker and a VPS — interactive demo</title><style>
+*{box-sizing:border-box}
+:root{--bg:#0a0e14;--panel:#111823;--panel2:#0d131c;--ink:#e2e9f2;--muted:#8b99ab;--acc:#3fd0e0;--acc-ink:#06222a;--acc-dim:#1c5560;--amber:#f0b23e;--red:#ef6b5e;--ok:#5fd08a;--line:#1e2937;--line2:#2c3b4f;--deep:#060a10;--mono:'JetBrains Mono','Cascadia Code',Consolas,monospace;--serif:Georgia,'Times New Roman',serif}
+[data-theme="light"]{--bg:#f3f5f7;--panel:#ffffff;--panel2:#fafbfc;--ink:#121820;--muted:#5c6b7a;--acc:#0d7c8c;--acc-ink:#f3fbfc;--acc-dim:#9fc6cc;--amber:#a16207;--red:#b3402f;--ok:#15803d;--line:#dde3ea;--line2:#c3cdd8;--deep:#101823}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Verdana,Arial,sans-serif;line-height:1.55;transition:background-color .3s,color .3s}
+a{color:inherit;text-underline-offset:4px}
+button,select{font:inherit}
+button,.button,select{min-height:44px}
+a:focus-visible,button:focus-visible,select:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+.wrap{width:min(1240px,calc(100% - 32px));margin:auto}
+.disclaimer{font-size:12px;color:var(--muted)}
+.demo-top{background:var(--deep);color:#e2e9f2;border-bottom:1px solid var(--line2)}
+.demo-top .wrap{min-height:54px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.demo-top a{font-size:13px;min-height:44px;display:inline-flex;align-items:center;font-family:var(--mono);text-decoration:none;color:#8b99ab}
+.demo-top a:hover{color:#3fd0e0}
+.demo-top .right{display:flex;gap:12px;align-items:center}
+#theme{border:1px solid #2c3b4f;background:transparent;color:#e2e9f2;min-height:32px;padding:2px 10px;cursor:pointer;font-size:14px}
+#theme:hover{border-color:#3fd0e0}
+.demo-head{border-bottom:1px solid var(--line);padding:22px 0;background:var(--panel2)}
+.demo-title{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:end}
+.eyebrow{font:700 11px var(--mono);letter-spacing:.15em;text-transform:uppercase;color:var(--acc)}
+.demo-title h1{font:400 clamp(26px,4vw,42px)/1.05 var(--serif);margin:7px 0;letter-spacing:-.02em}
+.controls{display:flex;gap:10px;flex-wrap:wrap;align-items:end}
+.controls label{font:700 11px var(--mono);text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+.controls select{display:block;min-width:230px;margin-top:6px;padding:9px;border:1px solid var(--line2);background:var(--panel);color:var(--ink)}
+.button{display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--line2);padding:10px 16px;background:var(--panel);color:var(--ink);cursor:pointer;font-weight:700;font-size:14px}
+.button.primary{background:var(--acc);color:var(--acc-ink);border-color:var(--acc)}
+.button:hover{border-color:var(--acc)}
+.button:disabled{opacity:.5;cursor:not-allowed}
+.workspace{padding:20px 0 48px}
+.appgrid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(320px,.8fr);gap:16px}
+.panel{background:var(--panel);border:1px solid var(--line);padding:16px;min-width:0}
+.panel h2{font:400 20px var(--serif);margin:0 0 12px;display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.panel h2 small{font:600 10px var(--mono);color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+.metric-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+.metric{border:1px solid var(--line);border-top:2px solid var(--acc);padding:10px 12px;background:var(--panel2)}
+.metric b{font:600 19px var(--serif);display:block}
+.metric span{display:block;font:600 10px var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-top:3px}
+.log{height:250px;overflow:auto;background:var(--deep);color:#c7d4e0;padding:12px;font:12.5px/1.6 var(--mono);border:1px solid var(--line2)}
+.log div{padding:2px 0;border-bottom:1px solid rgba(140,160,180,.08)}
+.log .ok{color:#5fd08a}.log .bad{color:#ef8a7e}.log .warn{color:#f0b23e}.log .muted{color:#738699}
+.log .m{color:#3fd0e0}
+.tbl-wrap{overflow:auto;border:1px solid var(--line)}
+.tbl{width:100%;border-collapse:collapse;font-size:12.5px;min-width:520px}
+.tbl th,.tbl td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap;font-family:var(--mono)}
+.tbl th{font:700 10px var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--acc);background:var(--panel2)}
+.tbl tr.new td{animation:flash 1.2s ease}
+@keyframes flash{0%{background:color-mix(in srgb,var(--acc) 25%,transparent)}100%{background:transparent}}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:7px;vertical-align:middle}
+.dot.up{background:var(--ok);box-shadow:0 0 6px var(--ok)}
+.dot.warn{background:var(--amber);box-shadow:0 0 6px var(--amber)}
+.bar{height:5px;background:var(--line2);border-radius:3px;overflow:hidden;min-width:48px;display:inline-block;vertical-align:middle}
+.bar > i{display:block;height:100%;background:var(--acc)}
+.bar > i.hi{background:var(--amber)}
+.bar > i.crit{background:var(--red)}
+.pill{display:inline-block;padding:2px 8px;font:700 10px var(--mono);border:1px solid var(--line2);border-radius:10px}
+.pill.q{color:var(--ok);border-color:var(--ok)}.pill.n{color:var(--amber);border-color:var(--amber)}.pill.r{color:var(--red);border-color:var(--red)}
+.steps{list-style:none;margin:0;padding:0;font-family:var(--mono);font-size:12.5px}
+.steps li{display:flex;align-items:center;gap:10px;padding:9px 4px;border-bottom:1px solid var(--line)}
+.steps li:last-child{border-bottom:none}
+.steps .ic{width:20px;height:20px;flex:0 0 20px;border:1px solid var(--line2);border-radius:50%;display:grid;place-items:center;font-size:11px;color:var(--muted)}
+.steps li.run .ic{border-color:var(--acc);color:var(--acc);animation:pulse 1s ease infinite}
+.steps li.done .ic{border-color:var(--ok);color:var(--ok)}
+.steps li.warn .ic{border-color:var(--amber);color:var(--amber)}
+.steps li.wait{opacity:.45}
+.steps .lbl{flex:1}
+.steps .det{color:var(--muted);font-size:11px}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.notice{padding:10px 12px;background:color-mix(in srgb,var(--amber) 12%,transparent);border:1px solid var(--amber);font-size:12.5px;margin-top:14px}
+.stack{display:grid;gap:16px}
+@media(max-width:900px){.appgrid{grid-template-columns:1fr}.demo-title{grid-template-columns:1fr}.controls{align-items:end}.controls label{flex:1}.controls select{min-width:0;width:100%}.metric-row{grid-template-columns:1fr 1fr}.demo-top .wrap{flex-direction:column;align-items:flex-start;padding:10px 0;gap:4px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head><body><header class="demo-top"><div class="wrap"><a href="../START_HERE.html">← Back to portfolio</a><div class="right"><a href="docker-n8n-ops.it.html" lang="it">IT</a><button id="theme" aria-label="Toggle theme">◐</button><span class="disclaimer">Synthetic interactive reconstruction based on real delivery patterns. No production or client data.</span></div></div></header><section class="demo-head"><div class="wrap demo-title"><div><div class="eyebrow">Case 04 / infrastructure</div><h1>Self-hosted automation on Docker and a VPS</h1><p class="disclaimer">Synthetic interactive reconstruction based on real delivery patterns. No production or client data.</p></div><div class="controls"><label>Reconciliation scenario<select id="scenario"><option value="clean">Clean run</option><option value="rate">API rate-limited (429)</option><option value="unmatched">2 unmatched payments</option></select></label><button class="button primary" id="run">Trigger run</button></div></div></section><main class="workspace"><div class="wrap appgrid"><div class="stack"><section class="panel"><h2>Services <small>docker ps · host vps-hetzner-01</small></h2><div class="tbl-wrap"><table class="tbl" id="svc"><thead><tr><th>container</th><th>image</th><th>status</th><th>uptime</th><th>cpu</th><th>mem</th></tr></thead><tbody></tbody></table></div><div class="metric-row"><div class="metric"><b id="m-nights">143</b><span>Nights running since 2026-03</span></div><div class="metric"><b id="m-load">0.34</b><span>Host load (1m)</span></div><div class="metric"><b id="m-disk">38%</b><span>Disk /opt</span></div><div class="metric"><b id="m-state">idle</b><span>Reconciliation state</span></div></div></section><section class="panel"><h2>Nightly reconciliation <small>n8n workflow · 03:15 Europe/Rome</small></h2><ol class="steps" id="steps"><li data-k="fetch" class="wait"><span class="ic">1</span><span class="lbl">Fetch payments (provider API)</span><span class="det"></span></li><li data-k="match" class="wait"><span class="ic">2</span><span class="lbl">Match against CRM contacts</span><span class="det"></span></li><li data-k="disc" class="wait"><span class="ic">3</span><span class="lbl">Compute discrepancies</span><span class="det"></span></li><li data-k="report" class="wait"><span class="ic">4</span><span class="lbl">Write report + notify</span><span class="det"></span></li></ol></section><section class="panel"><h2>Discrepancies <small>rows needing review</small></h2><div class="tbl-wrap"><table class="tbl" id="disc"><thead><tr><th>payment_id</th><th>amount</th><th>email</th><th>issue</th><th>action</th></tr></thead><tbody><tr><td colspan="5" style="color:var(--muted)">Trigger a run to populate.</td></tr></tbody></table></div></section></div><aside class="stack"><section class="panel"><h2>Job log <small>tail -f /opt/recon/run.log</small></h2><div class="log" id="log" aria-live="polite"><div class="muted">Idle. Trigger a run to stream the job log. Every line is produced by the run logic, not scripted text.</div></div></section><section class="panel"><h2>Recent runs <small>last 5 nights</small></h2><div class="tbl-wrap"><table class="tbl" id="hist"><thead><tr><th>run</th><th>date</th><th>rows</th><th>disc.</th><th>ms</th><th>result</th></tr></thead><tbody></tbody></table></div><div class="notice">Services refresh every 2s with synthetic telemetry. The reconciliation job and its history are driven by the scenario you pick above.</div></section></aside></div></main><script>
+const root=document.documentElement,tbtn=document.getElementById('theme');
+const saved=localStorage.getItem('nm-theme');
+if(saved){root.dataset.theme=saved}else if(matchMedia('(prefers-color-scheme:light)').matches){root.dataset.theme='light'}
+tbtn.onclick=()=>{const t=root.dataset.theme==='light'?'dark':'light';root.dataset.theme=t;localStorage.setItem('nm-theme',t)};
+
+/* ---- Services telemetry (synthetic, refreshes every 2s) ---- */
+const SVC=[
+ {c:'n8n',img:'n8nio/n8n:1.62',base:{cpu:7,mem:41},up:'12d 04h'},
+ {c:'traefik',img:'traefik:v3.1',base:{cpu:2,mem:9},up:'31d 22h'},
+ {c:'redis',img:'redis:7-alpine',base:{cpu:1,mem:6},up:'31d 22h'},
+ {c:'postgres',img:'postgres:16',base:{cpu:4,mem:28},up:'31d 22h'},
+ {c:'cloudflared',img:'cloudflare/cloudflared',base:{cpu:1,mem:5},up:'18d 07h'}];
+const svcBody=document.querySelector('#svc tbody');
+let busyContainer=null;
+function jitter(v,spread){return Math.max(0,Math.round((v+(Math.random()*2-1)*spread)*10)/10)}
+function barCls(pct){return pct>80?'crit':pct>55?'hi':''}
+function renderSvc(){
+ svcBody.innerHTML='';let loadAcc=0;
+ SVC.forEach(s=>{
+  const hot=busyContainer===s.c;
+  const cpu=jitter(hot?s.base.cpu*6+18:s.base.cpu,hot?6:2);
+  const mem=jitter(hot?s.base.mem+9:s.base.mem,1.5);
+  loadAcc+=cpu;
+  const tr=document.createElement('tr');
+  tr.innerHTML=`<td><span class="dot ${hot?'warn':'up'}"></span>${s.c}</td><td>${s.img}</td><td><span class="pill ${hot?'n':'q'}">${hot?'Up · busy':'Up'}</span></td><td>${s.up}</td><td><span class="bar"><i class="${barCls(cpu)}" style="width:${Math.min(100,cpu)}%"></i></span> ${cpu}%</td><td><span class="bar"><i class="${barCls(mem)}" style="width:${Math.min(100,mem*2)}%"></i></span> ${mem}%</td>`;
+  svcBody.appendChild(tr);
+ });
+ document.getElementById('m-load').textContent=(loadAcc/100+0.11).toFixed(2);
+ document.getElementById('m-disk').textContent=(37+Math.round(Math.random()*3))+'%';
+}
+renderSvc();setInterval(renderSvc,2000);
+
+/* ---- Run history (synthetic seed) ---- */
+const histBody=document.querySelector('#hist tbody');
+let nights=143,runCounter=212;
+const hist=[
+ {run:'#0212',date:'07-22',rows:418,disc:0,ms:2140,res:'clean'},
+ {run:'#0211',date:'07-21',rows:401,disc:1,ms:2260,res:'clean'},
+ {run:'#0210',date:'07-20',rows:389,disc:0,ms:1980,res:'clean'},
+ {run:'#0209',date:'07-19',rows:377,disc:2,ms:3910,res:'review'},
+ {run:'#0208',date:'07-18',rows:362,disc:0,ms:2050,res:'clean'}];
+function renderHist(mark){
+ histBody.innerHTML='';
+ hist.slice(0,5).forEach((h,i)=>{
+  const tr=document.createElement('tr');if(mark&&i===0)tr.className='new';
+  const p=h.res==='clean'?'q':h.res==='rate'?'n':'r';
+  tr.innerHTML=`<td>${h.run}</td><td>${h.date}</td><td>${h.rows}</td><td>${h.disc}</td><td>${h.ms}</td><td><span class="pill ${p}">${h.res}</span></td>`;
+  histBody.appendChild(tr);
+ });
+}
+renderHist(false);
+
+/* ---- Reconciliation run ---- */
+const logEl=document.getElementById('log');
+function log(msg,cls=''){const d=document.createElement('div');d.className=cls;d.innerHTML=ts()+msg;logEl.prepend(d)}
+function ts(){return '<span class="muted">'+new Date().toLocaleTimeString([],{hour12:false})+'</span> '}
+function setStep(k,cls,det){const li=document.querySelector('.steps li[data-k="'+k+'"]');li.className=cls;li.querySelector('.det').textContent=det||''}
+function resetSteps(){['fetch','match','disc','report'].forEach(k=>setStep(k,'wait',''))}
+const discBody=document.querySelector('#disc tbody');
+const runBtn=document.getElementById('run'),scenSel=document.getElementById('scenario');
+let running=false;
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+
+async function runJob(){
+ if(running)return;running=true;runBtn.disabled=true;scenSel.disabled=true;
+ const kind=scenSel.value;
+ logEl.innerHTML='';resetSteps();busyContainer='n8n';
+ discBody.innerHTML='<tr><td colspan="5" style="color:var(--muted)">Running…</td></tr>';
+ document.getElementById('m-state').textContent='running';
+ const t0=performance.now();
+ const rows=418+Math.floor(Math.random()*20);
+
+ setStep('fetch','run','GET /v1/payments');
+ log('<span class="m">n8n</span> workflow "nightly-recon" triggered · execution '+(9200+Math.floor(Math.random()*99)));
+ await sleep(500);
+ log('fetch: <span class="m">GET /v1/payments?since=2026-07-22T00:00Z</span> · page 1/3 → <span class="ok">200</span>');
+ await sleep(420);
+ let retries=0;
+ if(kind==='rate'){
+  log('fetch: page 2 → <span class="warn">429 Too Many Requests</span> · Retry-After: 2s','warn');
+  setStep('fetch','warn','429 · backing off');
+  await sleep(650);log('fetch: backoff #1 → sleep 800ms, retry','warn');retries++;
+  await sleep(650);
+  log('fetch: page 2 → <span class="warn">429</span> again · backoff #2 → sleep 1600ms','warn');retries++;
+  await sleep(800);
+  log('fetch: page 2 → <span class="ok">200 OK</span> after '+retries+' retries');
+  await sleep(300);
+ }else{
+  log('fetch: page 2/3 → <span class="ok">200</span>');await sleep(300);
+ }
+ log('fetch: page 3/3 → <span class="ok">200</span> · '+rows+' payment records');
+ setStep('fetch','done',rows+' rows · '+retries+' retries');
+
+ setStep('match','run','SQL join on email+amount');
+ await sleep(520);
+ const unmatched=kind==='unmatched'?2:0;
+ const matched=rows-unmatched;
+ log('match: <span class="m">JOIN contacts c ON lower(p.email)=lower(c.email)</span> · '+rows+' probes');
+ await sleep(360);
+ log('match: '+matched+' matched · '+unmatched+' unmatched · '+rows+' CRM lookups');
+ setStep('match','done',matched+'/'+rows+' matched');
+
+ setStep('disc','run','diffing amount + status');
+ await sleep(480);
+ const discRows=[];
+ if(kind==='unmatched'){
+  discRows.push({id:'pay_9f2a71',amt:'€149,00',email:'lorenzo.demo@example.invalid',issue:'no CRM contact',action:'queue: create + notify'});
+  discRows.push({id:'pay_9f2b04',amt:'€49,00',email:'sara.demo@example.invalid',issue:'email domain typo',action:'queue: fuzzy-review'});
+ }
+ if(discRows.length){
+  discBody.innerHTML='';
+  discRows.forEach(d=>{const tr=document.createElement('tr');tr.className='new';tr.innerHTML=`<td>${d.id}</td><td>${d.amt}</td><td>${d.email}</td><td><span class="pill r">${d.issue}</span></td><td>${d.action}</td>`;discBody.appendChild(tr)});
+  log('discrepancies: <span class="bad">'+discRows.length+' rows</span> flagged for review','bad');
+  setStep('disc','warn',discRows.length+' flagged');
+ }else{
+  discBody.innerHTML='<tr><td colspan="5" style="color:var(--ok)">No discrepancies · ledger balanced.</td></tr>';
+  log('discrepancies: <span class="ok">0</span> · ledger balanced');
+  setStep('disc','done','0 flagged');
+ }
+
+ setStep('report','run','writing report');
+ await sleep(430);
+ log('report: wrote <span class="m">/opt/recon/2026-07-23.json</span> · Telegram notify → ops channel');
+ setStep('report','done','sent');
+ const ms=Math.round(performance.now()-t0);
+ const res=kind==='unmatched'?'review':kind==='rate'?'rate':'clean';
+ log('<span class="ok">RUN COMPLETE</span> · '+ms+'ms · '+matched+'/'+rows+' matched · '+discRows.length+' discrepancies');
+
+ nights++;document.getElementById('m-nights').textContent=nights;
+ document.getElementById('m-state').textContent=res==='clean'?'clean':res==='rate'?'rate-limited':'needs review';
+ runCounter++;
+ hist.unshift({run:'#'+String(runCounter).padStart(4,'0'),date:new Date().toLocaleDateString('en-CA').slice(5),rows,disc:discRows.length,ms,res});
+ renderHist(true);
+ busyContainer=null;running=false;runBtn.disabled=false;scenSel.disabled=false;
+}
+runBtn.onclick=runJob;
+</script></body></html>

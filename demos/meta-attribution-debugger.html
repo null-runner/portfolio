@@ -1,1 +1,215 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Meta tracking and funnel diagnostics — interactive demo</title><style>*{box-sizing:border-box}:root{--paper:#f2efe7;--ink:#16211d;--muted:#596660;--green:#155d48;--rust:#a84c2f;--line:#bac4bc;--white:#fffefa;--dark:#10221b}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:Verdana,Arial,sans-serif;line-height:1.55}a{color:inherit;text-underline-offset:4px}button,select,input{font:inherit}button,.button,select{min-height:44px}a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid var(--rust);outline-offset:3px}.wrap{width:min(1120px,calc(100% - 40px));margin:auto}.mono{font-family:Consolas,monospace}.eyebrow{font:700 12px Consolas,monospace;letter-spacing:.13em;text-transform:uppercase;color:var(--green)}.button{display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--ink);padding:10px 15px;text-decoration:none;background:var(--white);cursor:pointer;font-weight:700}.button.primary{background:var(--green);color:#fff;border-color:var(--green)}.button:hover{background:#e4e9e3}.button.primary:hover{background:#0d4737}.disclaimer{font-size:12px;color:var(--muted)}@media(max-width:640px){.wrap{width:calc(100% - 28px)}}body{background:#e8ece8}.demo-shell{min-height:100vh;display:grid;grid-template-rows:auto auto 1fr}.demo-top{background:var(--dark);color:#fff}.demo-top .wrap{min-height:58px;display:flex;align-items:center;justify-content:space-between;gap:18px}.demo-top a{font-size:13px;min-height:44px;display:inline-flex;align-items:center}.demo-head{background:var(--paper);border-bottom:1px solid var(--line);padding:24px 0}.demo-title{display:grid;grid-template-columns:1fr auto;gap:30px;align-items:end}.demo-title h1{font:400 clamp(30px,5vw,50px)/1.03 Georgia,serif;margin:7px 0}.controls{display:flex;gap:10px;flex-wrap:wrap}.controls label{font-size:12px;font-weight:700}.controls select{display:block;min-width:180px;margin-top:5px;padding:8px;border:1px solid var(--ink);background:var(--white)}.workspace{padding:22px 0 46px}.appgrid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(280px,.75fr);gap:18px}.panel{background:var(--white);border:1px solid var(--line);padding:18px;min-width:0}.panel h2{font:400 23px Georgia,serif;margin:0 0 14px}.status{display:inline-block;padding:5px 8px;background:#e0e9e2;color:#164c3a;font:700 12px Consolas,monospace}.status.error{background:#f6ddd4;color:#7e2816}.flow{display:flex;gap:8px;align-items:stretch;overflow-x:auto;padding-bottom:10px}.node{min-width:142px;flex:1;border:1px solid var(--line);padding:13px;background:#f7f6f1}.node.active{border:2px solid var(--green);background:#e4eee7}.node.error{border:2px solid var(--rust);background:#f9e7e1}.node b{display:block;font-size:13px}.node small{display:block;color:var(--muted);margin-top:4px}.log{height:300px;overflow:auto;background:#101a16;color:#d8e7de;padding:12px;font:13px/1.55 Consolas,monospace}.log div{padding:4px 0;border-bottom:1px solid #26352e}.log .ok{color:#9ee2b8}.log .bad{color:#ffad93}.log .muted{color:#94a59c}.table-wrap{overflow:auto}.table{width:100%;border-collapse:collapse;font-size:13px}.table th,.table td{text-align:left;padding:10px;border-bottom:1px solid var(--line);white-space:nowrap}.table th{font:700 11px Consolas,monospace;text-transform:uppercase;color:var(--green)}.record{display:grid;grid-template-columns:120px 1fr;gap:8px;font-size:13px}.record dt{color:var(--muted)}.record dd{margin:0;font-family:Consolas,monospace;overflow-wrap:anywhere}.metric-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.metric{border-top:3px solid var(--green);padding:11px;background:#f5f5ef}.metric b{font:400 23px Georgia,serif}.metric span{display:block;font-size:11px;color:var(--muted)}.notice{padding:11px;background:#fff1d9;border:1px solid #deb76c;font-size:13px}.hidden{display:none!important}@media(max-width:780px){.demo-title,.appgrid{grid-template-columns:1fr}.controls{align-items:end}.controls label{flex:1}.controls select{min-width:0;width:100%}.flow{display:grid;grid-template-columns:1fr 1fr}.node{min-width:0}.metric-row{grid-template-columns:1fr}.demo-top .wrap{align-items:flex-start;padding:12px 0;flex-direction:column;gap:5px}.record{grid-template-columns:100px 1fr}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}</style></head><body><div class="demo-shell"><header class="demo-top"><div class="wrap"><span><a href="../START_HERE.html">← Back to portfolio</a> <a href="meta-attribution-debugger.it.html" lang="it" style="font-size:13px">IT</a></span><span class="disclaimer" style="color:#cad8d0">Synthetic interactive reconstruction based on real delivery patterns. No production or client data.</span></div></header><section class="demo-head"><div class="wrap demo-title"><div><div class="eyebrow">Case 05 / event debugger</div><h1>Meta attribution debugger</h1><p class="disclaimer">Synthetic interactive reconstruction based on real delivery patterns. No production or client data.</p></div><div class="controls"><label>Trace<select id="trace"><option value="complete">Complete journey</option><option value="missing">Missing UTM</option><option value="mismatch">Owner mismatch</option></select></label><button class="button primary" id="run">Trace events</button></div></div></section><main class="workspace"><div class="wrap appgrid"><section class="panel"><h2>Attribution trace</h2><div class="flow"><div class="node" data-node="utm"><b>UTM</b><small>Click context</small></div><div class="node" data-node="pixel"><b>Pixel</b><small>Browser event</small></div><div class="node" data-node="custom"><b>Custom event</b><small>Lead / register</small></div><div class="node" data-node="crm"><b>CRM</b><small>Stage + owner</small></div><div class="node" data-node="attribute"><b>Attribution</b><small>First / last touch</small></div></div><h2 style="margin-top:20px">Debugger output</h2><div class="log" id="log" aria-live="polite"><div class="muted">Choose a synthetic trace and inspect the event chain.</div></div></section><aside class="panel"><h2>Event payload</h2><dl class="record"><dt>utm_source</dt><dd id="source">paid_social</dd><dt>utm_campaign</dt><dd>demo_launch_a</dd><dt>pixel_event</dt><dd>Lead</dd><dt>crm_stage</dt><dd id="crmstage">New</dd><dt>owner_route</dt><dd id="route">pending</dd><dt>first_touch</dt><dd id="first">pending</dd><dt>last_touch</dt><dd id="last">pending</dd></dl><div class="notice" style="margin-top:18px">No account IDs, audiences, spend, revenue or production event identifiers are present.</div></aside></div></main></div><script>const logEl=document.querySelector('#log');let timer;function log(msg,cls=''){const d=document.createElement('div');d.className=cls;d.textContent=new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit',second:'2-digit'})+'  '+msg;logEl.prepend(d)}function resetNodes(){document.querySelectorAll('.node').forEach(n=>n.classList.remove('active','error'))}function step(items,done){clearInterval(timer);resetNodes();let i=0;logEl.innerHTML='';timer=setInterval(()=>{if(i>=items.length){clearInterval(timer);done();return}const x=items[i++],n=document.querySelector('[data-node="'+x.node+'"]');if(n)n.classList.add(x.cls||'active');log(x.msg,x.logcls||'ok')},360)}const traces={complete:{src:'paid_social',stage:'Qualified',route:'Route B',first:'paid_social',last:'webinar',state:'PASS',ev:[['utm','UTM parameters parsed'],['pixel','PageView and Lead received'],['custom','Registration mapped'],['crm','CRM stage Qualified; owner Route B'],['attribute','First and last touch fields reconciled']]},missing:{src:'(missing)',stage:'New',route:'Exception queue',first:'direct',last:'direct',state:'REVIEW',ev:[['utm','No UTM found; fallback direct','error'],['pixel','Lead received without campaign context'],['custom','Registration mapped'],['crm','Lead sent to exception queue'],['attribute','Attribution marked incomplete']]},mismatch:{src:'paid_social',stage:'Qualified',route:'Corrected Route A',first:'paid_social',last:'email',state:'FIXED',ev:[['utm','UTM source paid_social parsed'],['pixel','Lead event received'],['custom','Qualified event mapped'],['crm','Owner mismatch detected','error'],['attribute','Route corrected; trace reconciled']]}};run.onclick=()=>{let s=traces[trace.value];source.textContent=s.src;crmstage.textContent='Tracing';route.textContent='…';step(s.ev.map(e=>({node:e[0],msg:e[1],cls:e[2]||'active',logcls:e[2]==='error'?'bad':'ok'})),()=>{crmstage.textContent=s.stage;route.textContent=s.route;first.textContent=s.first;last.textContent=s.last;log('ATTRIBUTION FINAL STATE · '+s.state,s.state==='PASS'?'ok':'bad')})};</script></body></html>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Meta tracking and funnel diagnostics — interactive demo</title><style>
+*{box-sizing:border-box}
+:root{--bg:#0a0e14;--panel:#111823;--panel2:#0d131c;--ink:#e2e9f2;--muted:#8b99ab;--acc:#3fd0e0;--acc-ink:#06222a;--acc-dim:#1c5560;--amber:#f0b23e;--red:#ef6b5e;--ok:#5fd08a;--line:#1e2937;--line2:#2c3b4f;--deep:#060a10;--mono:'JetBrains Mono','Cascadia Code',Consolas,monospace;--serif:Georgia,'Times New Roman',serif}
+[data-theme="light"]{--bg:#f3f5f7;--panel:#ffffff;--panel2:#fafbfc;--ink:#121820;--muted:#5c6b7a;--acc:#0d7c8c;--acc-ink:#f3fbfc;--acc-dim:#9fc6cc;--amber:#a16207;--red:#b3402f;--ok:#15803d;--line:#dde3ea;--line2:#c3cdd8;--deep:#101823}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Verdana,Arial,sans-serif;line-height:1.55;transition:background-color .3s,color .3s}
+a{color:inherit;text-underline-offset:4px}
+button,select{font:inherit}
+button,.button,select{min-height:44px}
+a:focus-visible,button:focus-visible,select:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+.wrap{width:min(1240px,calc(100% - 32px));margin:auto}
+.disclaimer{font-size:12px;color:var(--muted)}
+.demo-top{background:var(--deep);color:#e2e9f2;border-bottom:1px solid var(--line2)}
+.demo-top .wrap{min-height:54px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.demo-top a{font-size:13px;min-height:44px;display:inline-flex;align-items:center;font-family:var(--mono);text-decoration:none;color:#8b99ab}
+.demo-top a:hover{color:#3fd0e0}
+.demo-top .right{display:flex;gap:12px;align-items:center}
+#theme{border:1px solid #2c3b4f;background:transparent;color:#e2e9f2;min-height:32px;padding:2px 10px;cursor:pointer;font-size:14px}
+#theme:hover{border-color:#3fd0e0}
+.demo-head{border-bottom:1px solid var(--line);padding:22px 0;background:var(--panel2)}
+.demo-title{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:end}
+.eyebrow{font:700 11px var(--mono);letter-spacing:.15em;text-transform:uppercase;color:var(--acc)}
+.demo-title h1{font:400 clamp(26px,4vw,42px)/1.05 var(--serif);margin:7px 0;letter-spacing:-.02em}
+.controls{display:flex;gap:10px;flex-wrap:wrap;align-items:end}
+.controls label{font:700 11px var(--mono);text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+.controls select{display:block;min-width:250px;margin-top:6px;padding:9px;border:1px solid var(--line2);background:var(--panel);color:var(--ink)}
+.button{display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--line2);padding:10px 16px;background:var(--panel);color:var(--ink);cursor:pointer;font-weight:700;font-size:14px}
+.button.primary{background:var(--acc);color:var(--acc-ink);border-color:var(--acc)}
+.button:hover{border-color:var(--acc)}
+.button:disabled{opacity:.5;cursor:not-allowed}
+.workspace{padding:20px 0 48px}
+.appgrid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(320px,.8fr);gap:16px}
+.panel{background:var(--panel);border:1px solid var(--line);padding:16px;min-width:0}
+.panel h2{font:400 20px var(--serif);margin:0 0 12px;display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.panel h2 small{font:600 10px var(--mono);color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+.metric-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+.metric{border:1px solid var(--line);border-top:2px solid var(--acc);padding:10px 12px;background:var(--panel2)}
+.metric b{font:600 19px var(--serif);display:block}
+.metric span{display:block;font:600 10px var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-top:3px}
+.metric.warn{border-top-color:var(--red)}
+.tbl-wrap{overflow:auto;border:1px solid var(--line)}
+.tbl{width:100%;border-collapse:collapse;font-size:12.5px;min-width:560px}
+.tbl th,.tbl td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap;font-family:var(--mono)}
+.tbl th{font:700 10px var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--acc);background:var(--panel2)}
+.tbl tbody tr{cursor:pointer}
+.tbl tbody tr:hover{background:var(--panel2)}
+.tbl tbody tr.sel{background:color-mix(in srgb,var(--acc) 16%,transparent)}
+.tbl .miss{color:var(--red);font-weight:700}
+.tbl tr.new td{animation:flash 1.2s ease}
+@keyframes flash{0%{background:color-mix(in srgb,var(--acc) 25%,transparent)}100%{background:transparent}}
+.pill{display:inline-block;padding:2px 8px;font:700 10px var(--mono);border:1px solid var(--line2);border-radius:10px}
+.pill.q{color:var(--ok);border-color:var(--ok)}.pill.n{color:var(--amber);border-color:var(--amber)}.pill.r{color:var(--red);border-color:var(--red)}
+.attr{display:grid;gap:8px;font-family:var(--mono);font-size:12px}
+.attr .row{display:grid;grid-template-columns:96px 1fr 128px;gap:10px;align-items:center}
+.attr .src{color:var(--ink);font-weight:700}
+.attrbar{height:16px;background:var(--line2);border-radius:3px;overflow:hidden;display:flex}
+.attrbar > i{display:block;height:100%}
+.attrbar > i.a{background:var(--acc)}
+.attrbar > i.u{background:var(--red);opacity:.75}
+.attr .val{color:var(--muted);text-align:right}
+.attr .val b{color:var(--ink)}
+.json{background:var(--deep);border:1px solid var(--line2);color:#c7d4e0;padding:12px;font:12px/1.55 var(--mono);overflow:auto;max-height:280px;white-space:pre}
+.json .k{color:#3fd0e0}.json .s{color:#a8d08a}.json .n{color:#f0b23e}
+.json .null{color:#ef8a7e;font-weight:700}
+.diag{font-size:13px}
+.diag .head{font:700 11px var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:12px 0 6px}
+.diag ul{margin:0;padding-left:18px}
+.diag li{margin:5px 0}
+.diag .cause{border-left:3px solid var(--red);padding:8px 12px;background:color-mix(in srgb,var(--red) 8%,transparent);font-family:var(--mono);font-size:12px}
+.diag .fix{border-left:3px solid var(--ok);padding:8px 12px;background:color-mix(in srgb,var(--ok) 8%,transparent);font-family:var(--mono);font-size:12px;margin-top:8px}
+.diag .ba{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;font-family:var(--mono);font-size:12px}
+.diag .ba div{border:1px solid var(--line);padding:8px 10px;background:var(--panel2)}
+.diag .ba .lbl{font-size:10px;text-transform:uppercase;color:var(--muted);letter-spacing:.08em}
+.diag .ba .big{font:600 18px var(--serif)}
+.diag .ba .up{color:var(--ok)}.diag .ba .dn{color:var(--red)}
+.notice{padding:10px 12px;background:color-mix(in srgb,var(--amber) 12%,transparent);border:1px solid var(--amber);font-size:12.5px;margin-top:14px}
+.stack{display:grid;gap:16px}
+@media(max-width:900px){.appgrid{grid-template-columns:1fr}.demo-title{grid-template-columns:1fr}.controls{align-items:end}.controls label{flex:1}.controls select{min-width:0;width:100%}.metric-row{grid-template-columns:1fr}.diag .ba{grid-template-columns:1fr}.attr .row{grid-template-columns:80px 1fr 104px}.demo-top .wrap{flex-direction:column;align-items:flex-start;padding:10px 0;gap:4px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head><body><header class="demo-top"><div class="wrap"><a href="../START_HERE.html">← Back to portfolio</a><div class="right"><a href="meta-attribution-debugger.it.html" lang="it">IT</a><button id="theme" aria-label="Toggle theme">◐</button><span class="disclaimer">Synthetic interactive reconstruction based on real delivery patterns. No production or client data.</span></div></div></header><section class="demo-head"><div class="wrap demo-title"><div><div class="eyebrow">Case 05 / attribution debugger</div><h1>Meta tracking and funnel diagnostics</h1><p class="disclaimer">Synthetic interactive reconstruction based on real delivery patterns. No production or client data.</p></div><div class="controls"><label>Scenario<select id="scenario"><option value="healthy">Healthy tracking</option><option value="broken">Missing UTMs (broken redirect)</option><option value="fixed">After fix</option></select></label><button class="button primary" id="run">Run diagnosis</button></div></div></section><main class="workspace"><div class="wrap appgrid"><div class="stack"><section class="panel"><h2>Event stream <small>pixel + server events · click a row</small></h2><div class="tbl-wrap"><table class="tbl" id="ev"><thead><tr><th>event_id</th><th>type</th><th>utm_source</th><th>fbclid</th><th>referrer</th></tr></thead><tbody></tbody></table></div><div class="metric-row"><div class="metric"><b id="m-events">—</b><span>Events in window</span></div><div class="metric"><b id="m-attr">—</b><span>Attributed</span></div><div class="metric warn" id="m-unk-box"><b id="m-unk">—</b><span>Unknown source</span></div></div></section><section class="panel"><h2>Attribution table <small>after join events → CRM contacts</small></h2><div class="attr" id="attr"><div class="disclaimer">Run a diagnosis to join the event stream against CRM contacts and break attribution down by source.</div></div></section></div><aside class="stack"><section class="panel"><h2>Selected event <small>raw payload</small></h2><div class="json" id="json">// click a row in the event stream to inspect it
+// missing required fields are highlighted</div></section><section class="panel"><h2>Diagnosis <small>root cause + fix</small></h2><div class="diag" id="diag"><div class="disclaimer">The diagnosis explains why attribution breaks and what was changed to fix it. Switch to "After fix" to see the before/after.</div></div><div class="notice">All identities, click IDs and referrers are synthetic (example.invalid). No ad account IDs, audiences, spend or revenue are present.</div></section></aside></div></main><script>
+const root=document.documentElement,tbtn=document.getElementById('theme');
+const saved=localStorage.getItem('nm-theme');
+if(saved){root.dataset.theme=saved}else if(matchMedia('(prefers-color-scheme:light)').matches){root.dataset.theme='light'}
+tbtn.onclick=()=>{const t=root.dataset.theme==='light'?'dark':'light';root.dataset.theme=t;localStorage.setItem('nm-theme',t)};
+
+/* ---- Synthetic event streams per scenario ---- */
+// referrers: on a broken redirect, Cloudflare rule strips the query string, so
+// the landing page sees the redirector as referrer and utm_* never arrives.
+function mk(id,type,src,fbclid,ref){return {event_id:id,type,utm_source:src,fbclid,referrer:ref}}
+const HEALTHY=[
+ mk('ev_7a01','page_view','ig','fb.1.a7Kd..','l.instagram.com'),
+ mk('ev_7a02','lead_submit','ig','fb.1.a7Kd..','vsl.example.invalid'),
+ mk('ev_7a03','page_view','fb','fb.1.9Qmz..','l.facebook.com'),
+ mk('ev_7a04','lead_submit','fb','fb.1.9Qmz..','vsl.example.invalid'),
+ mk('ev_7a05','page_view','tiktok',null,'ads.tiktok.com'),
+ mk('ev_7a06','lead_submit','tiktok',null,'vsl.example.invalid'),
+ mk('ev_7a07','purchase','ig','fb.1.a7Kd..','checkout.example.invalid'),
+ mk('ev_7a08','purchase','fb','fb.1.9Qmz..','checkout.example.invalid')];
+// broken: paid events lose utm_source (query string dropped on redirect)
+const BROKEN=[
+ mk('ev_7b01','page_view',null,'fb.1.a7Kd..','go.example.invalid'),
+ mk('ev_7b02','lead_submit',null,'fb.1.a7Kd..','go.example.invalid'),
+ mk('ev_7b03','page_view',null,'fb.1.9Qmz..','go.example.invalid'),
+ mk('ev_7b04','lead_submit',null,'fb.1.9Qmz..','go.example.invalid'),
+ mk('ev_7b05','page_view','tiktok',null,'ads.tiktok.com'),
+ mk('ev_7b06','lead_submit','tiktok',null,'vsl.example.invalid'),
+ mk('ev_7b07','purchase',null,'fb.1.a7Kd..','checkout.example.invalid'),
+ mk('ev_7b08','purchase',null,'fb.1.9Qmz..','checkout.example.invalid')];
+// fixed: query string preserved again, utm_source back
+const FIXED=HEALTHY;
+
+const SCEN={
+ healthy:{events:HEALTHY,cause:null},
+ broken:{events:BROKEN,cause:'redirect'},
+ fixed:{events:FIXED,cause:'fixed'}};
+
+const evBody=document.querySelector('#ev tbody');
+const scenSel=document.getElementById('scenario'),runBtn=document.getElementById('run');
+let cur=[],selIdx=-1,diagnosed=false;
+
+function renderStream(events,fresh){
+ evBody.innerHTML='';
+ events.forEach((e,i)=>{
+  const tr=document.createElement('tr');tr.dataset.i=i;if(fresh)tr.className='new';
+  const src=e.utm_source==null?'<span class="miss">null</span>':e.utm_source;
+  const fb=e.fbclid==null?'<span class="miss">null</span>':e.fbclid;
+  tr.innerHTML=`<td>${e.event_id}</td><td>${e.type}</td><td>${src}</td><td>${fb}</td><td>${e.referrer}</td>`;
+  tr.onclick=()=>selectEvent(i);
+  evBody.appendChild(tr);
+ });
+}
+function selectEvent(i){
+ selIdx=i;
+ [...evBody.children].forEach(r=>r.classList.toggle('sel',+r.dataset.i===i));
+ const e=cur[i];
+ const required=['event_id','type','utm_source','utm_campaign','fbclid','referrer','email'];
+ const full={event_id:e.event_id,type:e.type,utm_source:e.utm_source,utm_campaign:e.utm_source==null?null:'webinar_jul',fbclid:e.fbclid,referrer:e.referrer,email:e.type==='page_view'?null:'lead.demo@example.invalid',ts:'2026-07-22T20:1'+(i)+':04Z'};
+ document.getElementById('json').innerHTML=jsonHtml(full);
+}
+function jsonHtml(o){
+ let s=JSON.stringify(o,null,2);
+ s=s.replace(/: null/g,': <span class="null">null</span>');
+ s=s.replace(/"([^"]+)":/g,'<span class="k">"$1"</span>:');
+ s=s.replace(/: "([^"]*)"/g,': <span class="s">"$1"</span>');
+ s=s.replace(/: (\d+)(,?)$/gm,': <span class="n">$1</span>$2');
+ return s;
+}
+
+function loadScenario(){
+ const s=SCEN[scenSel.value];
+ cur=s.events;selIdx=-1;diagnosed=false;
+ renderStream(cur,false);
+ const total=cur.length;
+ const unknown=cur.filter(e=>e.utm_source==null).length;
+ document.getElementById('m-events').textContent=total;
+ document.getElementById('m-attr').textContent=(total-unknown);
+ document.getElementById('m-unk').textContent=unknown;
+ document.getElementById('m-unk-box').style.display=unknown?'':'';
+ document.getElementById('attr').innerHTML='<div class="disclaimer">Stream loaded. Click "Run diagnosis" to join against CRM and break down attribution.</div>';
+ document.getElementById('json').innerHTML='// click a row in the event stream to inspect it\n// missing required fields are highlighted';
+ document.getElementById('diag').innerHTML='<div class="disclaimer">Run a diagnosis to see the root cause and fix.</div>';
+}
+scenSel.onchange=loadScenario;
+loadScenario();
+
+/* ---- Attribution table ---- */
+function buildAttribution(events){
+ // only conversions count as attributable leads (lead_submit + purchase)
+ const conv=events.filter(e=>e.type==='lead_submit'||e.type==='purchase');
+ const bySrc={};
+ conv.forEach(e=>{const k=e.utm_source==null?'unknown':e.utm_source;bySrc[k]=(bySrc[k]||0)+1});
+ return {bySrc,total:conv.length};
+}
+function renderAttribution(events){
+ const {bySrc,total}=buildAttribution(events);
+ const order=['ig','fb','tiktok','unknown'].filter(k=>bySrc[k]);
+ const el=document.getElementById('attr');el.innerHTML='';
+ order.forEach(src=>{
+  const n=bySrc[src];const pct=Math.round(n/total*100);
+  const isUnknown=src==='unknown';
+  const row=document.createElement('div');row.className='row';
+  row.innerHTML=`<span class="src" style="${isUnknown?'color:var(--red)':''}">${src}</span><span class="attrbar"><i class="${isUnknown?'u':'a'}" style="width:${pct}%"></i></span><span class="val"><b>${n}</b> leads · ${pct}%</span>`;
+  el.appendChild(row);
+ });
+ const unk=bySrc['unknown']||0;
+ const foot=document.createElement('div');foot.className='disclaimer';foot.style.marginTop='6px';
+ foot.textContent=unk?(unk+' of '+total+' conversions cannot be attributed to a paid source.'):'All conversions attributed to a source.';
+ el.appendChild(foot);
+}
+
+/* ---- Diagnosis ---- */
+function renderDiagnosis(kind){
+ const d=document.getElementById('diag');
+ if(kind==='healthy'){
+  d.innerHTML=`<div class="head">Join result</div><ul><li>8 events joined to 6 CRM contacts on <b>fbclid</b> + email.</li><li>Every conversion carries a <b>utm_source</b>; no fallback needed.</li></ul><div class="fix">No issue detected. Attribution is complete for this window.</div>`;
+  return;
+ }
+ if(kind==='broken'){
+  d.innerHTML=`<div class="head">Join result</div><ul><li>Joined 8 events → 6 CRM contacts on <b>fbclid</b>.</li><li><b>ig</b> and <b>fb</b> conversions arrive with <span class="miss">utm_source = null</span> but a valid <b>fbclid</b> and referrer <b>go.example.invalid</b>.</li></ul><div class="head">Root cause</div><div class="cause">The Cloudflare bulk redirect on <b>go.example.invalid</b> is configured with a static target URL. It rewrites the destination but <b>drops the query string</b>, so <code>?utm_source=ig&amp;utm_campaign=…</code> never reaches the landing page. The pixel fires with no UTM context. fbclid survives because it is re-appended by Meta on the click, which is why the events are recoverable.</div><div class="head">Fix to apply</div><div class="fix">Change the redirect rule to <b>"Preserve query string"</b> (Cloudflare: append <code>${'{'}http.request.uri.query${'}'}</code> to the target). Backfill the affected window by mapping <b>fbclid → campaign</b> from the ads click report. Re-run attribution.</div>`;
+  return;
+ }
+ // fixed
+ d.innerHTML=`<div class="head">Join result</div><ul><li>Redirect now preserves the query string; <b>utm_source</b> present on all conversions.</li><li>4 previously-unknown conversions reassigned to <b>ig</b> / <b>fb</b>.</li></ul><div class="fix">Redirect rule set to preserve query string + fbclid→campaign backfill applied.</div><div class="ba"><div><div class="lbl">Unknown source · before</div><div class="big dn">4 / 6</div></div><div><div class="lbl">Unknown source · after</div><div class="big up">0 / 6</div></div></div>`;
+}
+
+runBtn.onclick=()=>{
+ diagnosed=true;
+ renderStream(cur,true);
+ renderAttribution(cur);
+ renderDiagnosis(scenSel.value);
+ // refresh metrics highlight
+ const unknown=cur.filter(e=>(e.type==='lead_submit'||e.type==='purchase')&&e.utm_source==null).length;
+ document.getElementById('m-unk-box').classList.toggle('warn',unknown>0);
+};
+</script></body></html>
