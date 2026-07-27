@@ -1,4 +1,4 @@
-<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Strumenti di pagamento e analisi CRM · demo interattiva</title><style>
+<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Consolidamento CRM studi dentistici · demo interattiva</title><style>
 *{box-sizing:border-box}
 :root{--bg:#0a0e14;--panel:#111823;--panel2:#0d131c;--ink:#e2e9f2;--muted:#8b99ab;--acc:#3fd0e0;--acc-ink:#06222a;--acc-dim:#1c5560;--amber:#f0b23e;--red:#ef6b5e;--ok:#5fd08a;--line:#1e2937;--line2:#2c3b4f;--deep:#060a10;--mono:'JetBrains Mono','Cascadia Code',Consolas,monospace;--serif:'Segoe UI',system-ui,-apple-system,'Helvetica Neue',Arial,sans-serif}
 [data-theme="light"]{--bg:#f3f5f7;--panel:#ffffff;--panel2:#fafbfc;--ink:#121820;--muted:#5c6b7a;--acc:#0d7c8c;--acc-ink:#f3fbfc;--acc-dim:#9fc6cc;--amber:#a16207;--red:#b3402f;--ok:#15803d;--line:#dde3ea;--line2:#c3cdd8;--deep:#101823}
@@ -74,52 +74,76 @@ a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible{ou
 .subhead{font:700 10px var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:16px 0 6px}
 @media(max-width:900px){.appgrid{grid-template-columns:1fr}.demo-title{grid-template-columns:1fr}.controls{align-items:end}.controls label{flex:1}.controls select{min-width:0;width:100%}.pipeline{display:grid;grid-template-columns:1fr 1fr}.pnode{min-width:0}.metric-row{grid-template-columns:1fr}.demo-top .wrap{flex-direction:column;align-items:flex-start;padding:10px 0;gap:4px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-</style></head><body><header class="demo-top"><div class="wrap"><a href="../START_HERE.it.html">← Torna al portfolio</a><div class="right"><a href="dental-etl-lab.html" lang="en">EN</a><button id="theme" aria-label="Cambia tema">◐</button><span class="disclaimer">Ricostruzione interattiva sintetica basata su pattern di delivery reali. Nessun dato di produzione o dei clienti.</span></div></div></header><section class="demo-head"><div class="wrap demo-title"><div><div class="eyebrow">Case 03 / laboratorio ETL e QA</div><h1>Strumenti di pagamento e analisi CRM</h1><p class="disclaimer">Ricostruzione interattiva sintetica basata su pattern di delivery reali. Nessun dato di produzione o dei clienti.</p><div class="explain"><b>Cosa sto guardando?</b> I soldi smettono di perdersi per strada: 180 fogli disordinati diventano un'unica tabella pulita di chi ha pagato e chi è indietro. Premi Run pipeline e guarda la pulizia in diretta.</div></div><div class="controls"><button class="button primary" id="run">Avvia pipeline</button><button class="button" id="reset">Reset</button></div></div></section><main class="workspace"><div class="wrap appgrid"><div class="stack"><section class="panel"><h2>Pipeline <small id="pmeta">inattiva</small></h2><div class="pipeline" id="pipe"></div></section><section class="panel"><h2>File sorgente <small>grezzi · 3 sistemi</small></h2><div class="srcgrid" id="sources"></div><p class="disclaimer" style="margin-top:10px">Tre export da strumenti diversi: un CSV di prenotazioni (date italiane, decimali con virgola), un dump di pagamenti (date ISO, decimali con punto) e un registro tenuto a mano (misto, alcune righe malformate). Nomi di colonna e formati sono discordanti di proposito.</p></section><section class="panel"><h2>Log di esecuzione <small>discover → map → normalize → QA</small></h2><div class="log" id="log" aria-live="polite"><div class="muted">Premi "Avvia pipeline" per scoprire le sorgenti, mappare le colonne, normalizzare i valori e produrre il report QA.</div></div></section><section class="panel"><h2>Output normalizzato <small id="ometa">ancora nessuna riga</small></h2><div class="tbl-wrap"><table class="tbl" id="out"><thead><tr><th>patient_ref</th><th>source</th><th>booking_date</th><th>amount_eur</th><th>plan_status</th><th>method</th></tr></thead><tbody id="obody"><tr><td colspan="6" class="muted" style="color:var(--muted)">avvia la pipeline per materializzare la tabella unificata</td></tr></tbody></table></div></section></div><aside class="stack"><section class="panel"><h2>Report QA <small id="qmeta">in attesa</small></h2><div class="qa"><div class="lab"><span>Copertura campi</span><span id="covtxt">- / -</span></div><div class="bar"><i id="covbar"></i></div></div><div class="metric-row"><div class="metric"><b id="m-src">3</b><span>Sorgenti</span></div><div class="metric"><b id="m-rows">180</b><span>Righe in input</span></div><div class="metric"><b id="m-clean">-</b><span>Righe pulite</span></div></div><div class="subhead">Righe scartate</div><div id="drops"><p class="disclaimer">Le righe rifiutate compaiono qui con il motivo per cui non hanno passato la QA.</p></div><div class="notice">Copertura e conteggi descrivono questo campione sintetico, non un risultato di un cliente. Non viene generato alcun valore paziente o PII.</div></section><section class="panel"><h2>Regole di mapping <small>colonna → campo</small></h2><pre class="json" id="rules">// generate durante lo step "map columns"</pre></section></aside></div></main><script>
+</style></head><body><header class="demo-top"><div class="wrap"><a href="../START_HERE.it.html">← Torna al portfolio</a><div class="right"><a href="dental-etl-lab.html" lang="en">EN</a><button id="theme" aria-label="Cambia tema">◐</button><span class="disclaimer">Ricostruzione interattiva sintetica basata su pattern di delivery reali. Nessun dato di produzione o dei clienti.</span></div></div></header><section class="demo-head"><div class="wrap demo-title"><div><div class="eyebrow">Case 03 / laboratorio ETL e QA</div><h1>Consolidamento CRM studi dentistici</h1><p class="disclaimer">Ricostruzione interattiva sintetica basata su pattern di delivery reali. Nessun dato di produzione o dei clienti.</p><div class="explain"><b>Cosa sto guardando?</b> Ogni studio cliente tiene i suoi lead nel proprio foglio CRM, con nomi di colonna e formati diversi. La pipeline consolida 180 di questi fogli in un'unica tabella, così l'agency può pilotare setter e campagne: chi fissa, chi si presenta, quale campagna porta gli appuntamenti. Premi Avvia pipeline e guarda la pulizia in diretta.</div></div><div class="controls"><button class="button primary" id="run">Avvia pipeline</button><button class="button" id="reset">Reset</button></div></div></section><main class="workspace"><div class="wrap appgrid"><div class="stack"><section class="panel"><h2>Pipeline <small id="pmeta">inattiva</small></h2><div class="pipeline" id="pipe"></div></section><section class="panel"><h2>Fogli sorgente <small>grezzi · 3 studi clienti</small></h2><div class="srcgrid" id="sources"></div><p class="disclaimer" style="margin-top:10px">Tre fogli CRM appartenenti a tre studi clienti: un Google Sheet con date italiane e decimali con virgola, un XLSX esportato dal gestionale con timestamp ISO e un CSV tenuto a mano con formati misti. Nomi degli header, vocabolari dei valori e colonne disponibili sono discordanti di proposito.</p></section><section class="panel"><h2>Log di esecuzione <small>discover → map → normalize → QA</small></h2><div class="log" id="log" aria-live="polite"><div class="muted">Premi "Avvia pipeline" per scoprire le sorgenti, mappare le colonne, normalizzare i valori e produrre il report QA.</div></div></section><section class="panel"><h2>Output normalizzato <small id="ometa">ancora nessuna riga</small></h2><div class="tbl-wrap"><table class="tbl" id="out"><thead><tr><th>id_studio</th><th>nome_cognome</th><th>telefono</th><th>setter</th><th>esito_chiamata</th><th>data_appuntamento</th><th>ora_appuntamento</th><th>presentato</th><th>ad_name</th><th>totale_preventivo</th></tr></thead><tbody id="obody"><tr><td colspan="10" class="muted" style="color:var(--muted)">avvia la pipeline per materializzare la tabella unificata</td></tr></tbody></table></div></section></div><aside class="stack"><section class="panel"><h2>Report QA <small id="qmeta">in attesa</small></h2><div class="qa"><div class="lab"><span>Copertura fonti</span><span id="covtxt">- / -</span></div><div class="bar"><i id="covbar"></i></div></div><div class="metric-row"><div class="metric"><b id="m-src">12</b><span>Studi clienti</span></div><div class="metric"><b id="m-rows">180</b><span>Fogli CRM</span></div><div class="metric"><b id="m-clean">-</b><span>Righe pulite (campione)</span></div></div><div class="subhead">Righe scartate</div><div id="drops"><p class="disclaimer">Le righe rifiutate compaiono qui con il motivo per cui non hanno passato la QA.</p></div><div class="notice">Copertura e conteggi descrivono questo campione sintetico, non un risultato di un cliente. ID degli studi, nomi dei lead, numeri di telefono e importi sono inventati: nessun dato reale o PII.</div></section><section class="panel"><h2>Regole di mapping <small>per studio · colonna → campo</small></h2><pre class="json" id="rules">// generate durante lo step "map columns"</pre></section></aside></div></main><script>
 const root=document.documentElement,tbtn=document.getElementById('theme');
 const saved=localStorage.getItem('nm-theme');
 if(saved){root.dataset.theme=saved}else{root.dataset.theme='light'}
 tbtn.onclick=()=>{const t=root.dataset.theme==='light'?'dark':'light';root.dataset.theme=t;localStorage.setItem('nm-theme',t)};
 
-// ---- synthetic dirty sources ---------------------------------------------
+// ---- synthetic dirty sources: un foglio CRM per studio cliente -----------
 const SOURCES=[
- {id:'bookings_studio_a.csv',fmt:'CSV · UTF-8',sys:'Booking tool',
-  cols:['Rif Paziente','Data Appuntamento','Importo Piano','Stato','Pagamento'],
+ {id:'STUDIO-023 · CRM',fmt:'Google Sheet · date IT',sys:'tenuto dalla segreteria',
+  cols:['Data Acquisizione','Nome e Cognome','Telefono','Setter','Esito Chiamata','Data Appuntamento','Ora','Presentato','Preventivo'],
+  map:{data_acquisizione:0,nome_cognome:1,telefono:2,setter:3,esito_chiamata:4,data_appuntamento:5,ora_appuntamento:6,presentato:7,totale_preventivo:8},
   rows:[
-   ['PZ-1001','14/07/2026','1.200,00','confermato','carta'],
-   ['PZ-1002','15/07/2026','2.450,50','in attesa','bonifico'],
-   ['PZ-1003','16/07/2026','980,00','confermato','klarna'],
-   ['PZ-1004','','1.100,00','confermato','carta']
+   ['14/07/2026','Giulia Ferrari','+39 340 118 22 41','Marta','fissato','21/07/2026','10:30','SI','2.400,00'],
+   ['15/07/2026','Andrea Rossi','3391104477','marta','richiamare','','','',''],
+   ['15/07/2026','Chiara Bianchi','+39 347 220 99 10','Luca','fissato','22/07/2026','16:00','NO',''],
+   ['16/07/2026','','340 555 12 03','','','','','','']
   ]},
- {id:'payments_export.tsv',fmt:'TSV · ISO',sys:'Payment gateway',
-  cols:['patient_id','date','amount','status','channel'],
+ {id:'STUDIO-035 · CRM_Milano',fmt:'XLSX · datetime ISO',sys:'export dal gestionale',
+  cols:['acquisition_date','contact_date','lead_name','phone','setter_name','call_outcome','appt_datetime','show','appt_result','ad_name','quote_total'],
+  map:{data_acquisizione:0,data_contatto:1,nome_cognome:2,telefono:3,setter:4,esito_chiamata:5,appt:6,presentato:7,esito_appuntamento:8,ad_name:9,totale_preventivo:10},
   rows:[
-   ['PZ-2001','2026-07-14','1450.00','paid','stripe'],
-   ['PZ-2002','2026-07-15','3200.00','installment','klarna'],
-   ['PZ-2003','2026-07-16','0.00','refunded','stripe'],
-   ['PZ-2004','2026-07-17','2100.75','paid','bank_transfer']
+   ['2026-07-14','2026-07-14','Marco Greco','+393401882277','S. Conti','booked','2026-07-21 09:15','Show','preventivo accettato','ADV_Impianti_Lookalike','3200.00'],
+   ['2026-07-15','2026-07-16','Elena Vitale','+393356677201','S. Conti','booked','2026-07-23 18:00','No Show','','ADV_Ortodonzia_Retarget',''],
+   ['2026-07-16','2026-07-16','Paolo De Santis','+393281100455','G. Neri','not_interested','','','','ADV_Impianti_Lookalike',''],
+   ['2026-07-17','','Sara Lombardi','+393475512088','G. Neri','booked','2026-07-24 11:45','Show','in valutazione','ADV_Sbiancamento_Broad','1450.50']
   ]},
- {id:'ledger_manual.csv',fmt:'CSV · mixed',sys:'Hand-kept ledger',
-  cols:['ref','when','eur','plan','pay'],
+ {id:'STUDIO-048 · CRM Siracusa',fmt:'CSV · formati misti',sys:'export tenuto a mano',
+  cols:['data','nominativo','cell','operatore','esito','appuntamento','presentato?','esito visita','campagna','totale'],
+  map:{data_acquisizione:0,nome_cognome:1,telefono:2,setter:3,esito_chiamata:4,appt:5,presentato:6,esito_appuntamento:7,ad_name:8,totale_preventivo:9},
   rows:[
-   ['pz-3001','2026/07/14','1.900,00','confirmed','card'],
-   ['PZ 3002','17-07-2026','€1750','confirmed','transfer'],
-   ['PZ-3003','n/d','abc','','contanti'],
-   ['PZ-3004','//','n/d','','']
+   ['2026/07/14','rossi anna','+39 333 44 55 667','Ilaria','APP FISSATO','18-07-2026 15,30','OK','chiuso','fb_impianti_luglio','€1.980'],
+   ['17-07-2026','T. Nicolosi','3299087766','ilaria','app fissato','//','','','fb_invisalign','n/d'],
+   ['18/07/2026','Davide Puglisi','+39 320 771 44 12','Mimmo','non risponde','','','','fb_impianti_luglio',''],
+   ['n/d','','','','','','','','','']
   ]}
 ];
-// mapping: which source header maps to which canonical field + transform note
+// mapping per studio: quale header del foglio alimenta quale campo canonico
 const MAP_RULES={
- patient_ref:{from:['Rif Paziente','patient_id','ref'],rule:'trim; uppercase; space→dash'},
- booking_date:{from:['Data Appuntamento','date','when'],rule:'DD/MM/YYYY | YYYY/MM/DD | DD-MM-YYYY → ISO-8601'},
- amount_eur:{from:['Importo Piano','amount','eur'],rule:'strip €; 1.200,00|1200.00 → 1200.00'},
- plan_status:{from:['Stato','status','plan'],rule:'controlled vocab {confirmed,pending,paid,installment,refunded}'},
- method:{from:['Pagamento','channel','pay'],rule:'lowercase; map to {card,transfer,stripe,klarna,cash}'}
+ 'STUDIO-023 · CRM':{
+  'Data Acquisizione':'data_acquisizione','Nome e Cognome':'nome_cognome','Telefono':'telefono','Setter':'setter',
+  'Esito Chiamata':'esito_chiamata','Data Appuntamento':'data_appuntamento','Ora':'ora_appuntamento',
+  'Presentato':'presentato','Preventivo':'totale_preventivo',
+  '_mancanti':['data_contatto','esito_appuntamento','ad_name'],
+  '_formati':'date DD/MM/YYYY · importi 1.200,00 · flag presentato SI|NO'},
+ 'STUDIO-035 · CRM_Milano':{
+  acquisition_date:'data_acquisizione',contact_date:'data_contatto',lead_name:'nome_cognome',phone:'telefono',
+  setter_name:'setter',call_outcome:'esito_chiamata',appt_datetime:'data_appuntamento + ora_appuntamento',
+  show:'presentato',appt_result:'esito_appuntamento',ad_name:'ad_name',quote_total:'totale_preventivo',
+  '_mancanti':[],
+  '_formati':'date ISO-8601 · datetime diviso sullo spazio · importi 3200.00 · flag presentato Show|No Show'},
+ 'STUDIO-048 · CRM Siracusa':{
+  data:'data_acquisizione',nominativo:'nome_cognome',cell:'telefono',operatore:'setter',esito:'esito_chiamata',
+  appuntamento:'data_appuntamento + ora_appuntamento','presentato?':'presentato','esito visita':'esito_appuntamento',
+  campagna:'ad_name',totale:'totale_preventivo',
+  '_mancanti':['data_contatto'],
+  '_formati':'date miste YYYY/MM/DD|DD-MM-YYYY · ora 15,30 · importi €1.980 · flag presentato OK'},
+ '_derivati':{id_studio:'dal nome del foglio (STUDIO-nnn)'},
+ '_trasformazioni':{
+  telefono:'rimuove spazi e punti → E.164 (+39…)',
+  setter:'trim; iniziali maiuscole',
+  esito_chiamata:'vocabolario controllato {appointment_set,callback,no_answer,not_interested}',
+  presentato:'vocabolario controllato {show,no_show}',
+  ad_name:'minuscolo; spazi → underscore',
+  totale_preventivo:'rimuove €; 1.200,00 | 1200.00 → 1200.00'}
 };
-const STATUS_MAP={confermato:'confirmed','in attesa':'pending',confirmed:'confirmed',paid:'paid',installment:'installment',refunded:'refunded'};
-const METHOD_MAP={carta:'card',bonifico:'transfer',klarna:'klarna',stripe:'stripe',bank_transfer:'transfer',card:'card',transfer:'transfer',contanti:'cash'};
-const PIPE=[{id:'discover',t:'Discover',s:'scansiona sorgenti'},{id:'map',t:'Map columns',s:'header → campo'},{id:'normalize',t:'Normalize',s:'date + importi'},{id:'qa',t:'QA',s:'coverage + scarti'}];
-// The visible source tables are a representative sample of a larger synthetic batch.
-const BATCH_IN=180; // total input rows across the three exports
+const CALL_MAP={fissato:'appointment_set','app fissato':'appointment_set',booked:'appointment_set',richiamare:'callback','da richiamare':'callback','non risponde':'no_answer',no_answer:'no_answer',not_interested:'not_interested','non interessato':'not_interested'};
+const SHOW_MAP={si:'show','sì':'show',ok:'show',show:'show',presentato:'show',no:'no_show','no show':'no_show',assente:'no_show'};
+const PIPE=[{id:'discover',t:'Discover',s:'scansiona fogli CRM'},{id:'map',t:'Map columns',s:'header → campo'},{id:'normalize',t:'Normalize',s:'date + telefoni + importi'},{id:'qa',t:'QA',s:'coverage + scarti'}];
+// I fogli visibili sono un campione rappresentativo dell'intera base clienti.
+const PRACTICES=12,SHEETS=180,SHEETS_MAPPED=178;
 
 // ---- render static UI -----------------------------------------------------
 const pipeEl=document.getElementById('pipe');
@@ -129,7 +153,7 @@ SOURCES.forEach(s=>{
  const box=document.createElement('div');box.className='src';
  let head=`<div class="shead"><span>${s.id}</span><span class="fmt">${s.fmt} · ${s.sys}</span></div>`;
  let th=s.cols.map(c=>`<th>${c}</th>`).join('');
- let body=s.rows.map(r=>'<tr>'+r.map(c=>`<td${(c===''||c==='n/d'||c==='abc')?' class="bad"':''}>${c===''?'∅':c}</td>`).join('')+'</tr>').join('');
+ let body=s.rows.map(r=>'<tr>'+r.map(c=>`<td${(c===''||c==='n/d'||c==='//')?' class="bad"':''}>${c===''?'∅':c}</td>`).join('')+'</tr>').join('');
  box.innerHTML=head+`<div class="tbl-wrap"><table class="tbl"><thead><tr>${th}</tr></thead><tbody>${body}</tbody></table></div>`;
  srcEl.appendChild(box);
 });
@@ -149,24 +173,53 @@ function parseDate(v){
  if(m=v.match(/^(\d{2})[/-](\d{2})[/-](\d{4})$/))return `${m[3]}-${m[2]}-${m[1]}`;
  return null;
 }
+function parseTime(v){
+ v=(v||'').trim().replace(',',':');if(!v)return null;
+ const m=v.match(/^(\d{1,2}):(\d{2})$/);if(!m)return null;
+ return String(m[1]).padStart(2,'0')+':'+m[2];
+}
 function parseAmount(v){
- v=v.trim().replace(/€/g,'').replace(/\s/g,'');
+ v=(v||'').trim().replace(/€/g,'').replace(/\s/g,'');
  if(!/[0-9]/.test(v))return null;
  if(v.includes(',')&&v.includes('.'))v=v.replace(/\./g,'').replace(',','.');
  else if(v.includes(','))v=v.replace(',','.');
+ else if(/^\d{1,3}(\.\d{3})+$/.test(v))v=v.replace(/\./g,''); // separatore migliaia IT
  const n=parseFloat(v);return isNaN(n)?null:n;
 }
-function normRef(v){return v.trim().toUpperCase().replace(/\s+/g,'-')}
+function normPhone(v){
+ const d=(v||'').replace(/[^\d+]/g,'');
+ if(d.replace(/\D/g,'').length<9)return null;
+ if(d.startsWith('+'))return d;
+ if(d.startsWith('39'))return '+'+d;
+ return '+39'+d;
+}
+function titleCase(v){return (v||'').trim().toLowerCase().replace(/(^|[\s.])([a-zà-ù])/g,(m,a,b)=>a+b.toUpperCase())}
+function normAd(v){return (v||'').trim()?v.trim().toLowerCase().replace(/\s+/g,'_'):null}
+function key(v){return (v||'').trim().toLowerCase()}
 
 function buildRows(){
  const out=[],drops=[];
  SOURCES.forEach(s=>{
-  s.rows.forEach((r,i)=>{
-   const rec={patient_ref:normRef(r[0]),source:s.id,booking_date:parseDate(r[1]),amount_eur:parseAmount(r[2]),plan_status:STATUS_MAP[(r[3]||'').trim().toLowerCase()]||null,method:METHOD_MAP[(r[4]||'').trim().toLowerCase()]||null};
+  s.rows.forEach(r=>{
+   const g=f=>s.map[f]==null?'':(r[s.map[f]]||'');
+   let d=parseDate(g('data_appuntamento')),h=parseTime(g('ora_appuntamento'));
+   if(s.map.appt!=null){const p=(r[s.map.appt]||'').trim().split(/\s+/);d=parseDate(p[0]||'');h=parseTime(p[1]||'')}
+   const rec={
+    id_studio:s.id.split(' ')[0],
+    nome_cognome:titleCase(g('nome_cognome')),
+    telefono:normPhone(g('telefono')),
+    setter:titleCase(g('setter'))||null,
+    esito_chiamata:CALL_MAP[key(g('esito_chiamata'))]||null,
+    data_appuntamento:d,ora_appuntamento:h,
+    presentato:SHOW_MAP[key(g('presentato'))]||null,
+    esito_appuntamento:key(g('esito_appuntamento'))||null,
+    ad_name:normAd(g('ad_name')),
+    totale_preventivo:parseAmount(g('totale_preventivo'))
+   };
    const missing=[];
-   if(!rec.booking_date)missing.push('booking_date');
-   if(rec.amount_eur==null)missing.push('amount_eur');
-   if(missing.length>=2){drops.push({ref:rec.patient_ref,source:s.id,reason:missing.join(' + ')+' non interpretabile'});return}
+   if(!rec.nome_cognome)missing.push('nome_cognome');
+   if(!rec.telefono)missing.push('telefono');
+   if(missing.length){drops.push({ref:rec.nome_cognome||'(lead senza nome)',source:s.id,reason:'manca '+missing.join(' + ')+' → lead non identificabile'});return}
    out.push(rec);
   });
  });
@@ -177,27 +230,29 @@ function run(){
  clearInterval(timer);resetNodes();logEl.innerHTML='';
  document.getElementById('run').disabled=true;
  document.getElementById('pmeta').textContent='in corso';
- document.getElementById('obody').innerHTML='<tr><td colspan="6" style="color:var(--muted)">materializzazione…</td></tr>';
+ document.getElementById('obody').innerHTML='<tr><td colspan="10" style="color:var(--muted)">materializzazione…</td></tr>';
  document.getElementById('rules').textContent='// mapping…';
  document.getElementById('covbar').style.width='0';
  const {out,drops}=buildRows();
- const totalIn=BATCH_IN;
- const clean=BATCH_IN-drops.length;
+ const clean=out.length;
  const steps=[
-  ()=>{setNode('discover','active','scan');log(ts()+'discover: <span class="m">3</span> file sorgente · '+totalIn+' righe grezze · formati {CSV, TSV, mixed}')},
-  ()=>{setNode('discover','done','3 ok');setNode('map','active','align');
-   log(ts()+'map: risolti <span class="m">5</span> campi canonici da 15 header distinti');
-   log(ts()+'map: <span class="warn">header discordanti</span> Rif Paziente | patient_id | ref → <span class="m">patient_ref</span>','');
+  ()=>{setNode('discover','active','scan');log(ts()+'discover: <span class="m">'+PRACTICES+'</span> studi clienti · <span class="m">'+SHEETS+'</span> fogli e tab CRM · formati {Google Sheet, XLSX, CSV} · 3 mostrati qui come campione')},
+  ()=>{setNode('discover','done',SHEETS_MAPPED+'/'+SHEETS);setNode('map','active','align');
+   log(ts()+'map: risolti <span class="m">12</span> campi canonici da 30 header distinti · id_studio derivato dal nome del foglio');
+   log(ts()+'map: <span class="warn">header discordanti</span> Nome e Cognome | lead_name | nominativo → <span class="m">nome_cognome</span>','');
+   log(ts()+'map: <span class="warn">colonne mancanti</span> STUDIO-023 non ha ad_name · STUDIO-048 non ha data_contatto','');
    document.getElementById('rules').innerHTML=jsonHtml(MAP_RULES);},
-  ()=>{setNode('map','done','5 fields');setNode('normalize','active','parse');
-   log(ts()+'normalize: date → ISO-8601 (3 pattern in input) · importi → decimale (€, virgola, punto)');
-   log(ts()+'normalize: '+clean+' righe materializzate · '+drops.length+' inviate alla coda scarti QA','ok');},
+  ()=>{setNode('map','done','12 fields');setNode('normalize','active','parse');
+   log(ts()+'normalize: date → ISO-8601 (4 pattern in input) · datetime diviso in data + ora · telefoni → E.164 · importi → decimale (€, virgola, punto)');
+   log(ts()+'normalize: vocabolario {appointment_set, callback, no_answer, not_interested} · flag presentato {SI/NO, Show/No Show, OK} → {show, no_show}');
+   log(ts()+'normalize: '+clean+' righe campione materializzate · '+drops.length+' inviate alla coda scarti QA','ok');},
   ()=>{setNode('normalize','done',clean+' rows');setNode('qa','active','check');
-   log(ts()+'qa: controllo copertura su '+clean+'/'+totalIn+' righe');
+   log(ts()+'qa: copertura fonti '+SHEETS_MAPPED+'/'+SHEETS+' fogli CRM documentati e mappati');
+   log(ts()+'qa: <span class="warn">2 fogli esclusi</span> STUDIO-011 tab archiviata · STUDIO-072 file protetto, nessun accesso in lettura','');
    drops.forEach(d=>log(ts()+'qa: <span class="bad">SCARTO</span> '+d.ref+' ('+d.source+') - '+d.reason,'bad'));},
   ()=>{setNode('qa','done','pass');
-   renderOutput(out);renderQA(out,drops,totalIn,clean);
-   log(ts()+'<span class="ok">PIPELINE COMPLETATA</span> · '+clean+'/'+totalIn+' righe hanno passato la QA','ok');
+   renderOutput(out);renderQA(drops,clean);
+   log(ts()+'<span class="ok">PIPELINE COMPLETATA</span> · '+SHEETS_MAPPED+'/'+SHEETS+' fonti documentate · '+clean+' righe campione hanno passato la QA','ok');
    document.getElementById('pmeta').textContent='completata';
    document.getElementById('run').disabled=false;}
  ];
@@ -206,13 +261,14 @@ function run(){
 
 function renderOutput(out){
  const b=document.getElementById('obody');b.innerHTML='';
- out.forEach(r=>{const tr=document.createElement('tr');tr.className='new';tr.innerHTML=`<td>${r.patient_ref}</td><td>${r.source.split('_')[0]}</td><td>${r.booking_date}</td><td>€${r.amount_eur.toLocaleString('it-IT',{minimumFractionDigits:2})}</td><td>${r.plan_status||'∅'}</td><td>${r.method||'∅'}</td>`;b.appendChild(tr)});
+ const f=v=>v==null||v===''?'∅':v;
+ out.forEach(r=>{const tr=document.createElement('tr');tr.className='new';tr.innerHTML=`<td>${r.id_studio}</td><td>${r.nome_cognome}</td><td>${r.telefono}</td><td>${f(r.setter)}</td><td>${f(r.esito_chiamata)}</td><td>${f(r.data_appuntamento)}</td><td>${f(r.ora_appuntamento)}</td><td>${f(r.presentato)}</td><td>${f(r.ad_name)}</td><td>${r.totale_preventivo==null?'∅':'€'+r.totale_preventivo.toLocaleString('it-IT',{minimumFractionDigits:2})}</td>`;b.appendChild(tr)});
  document.getElementById('ometa').textContent='campione di righe unificate';
 }
-function renderQA(out,drops,totalIn,clean){
- // row-level coverage across the full batch
- const pct=(clean/totalIn*100);
- document.getElementById('covtxt').textContent=clean+' / '+totalIn;
+function renderQA(drops,clean){
+ // la copertura si misura sulle fonti documentate (fogli CRM), non sulle righe
+ const pct=(SHEETS_MAPPED/SHEETS*100);
+ document.getElementById('covtxt').textContent=SHEETS_MAPPED+' / '+SHEETS;
  document.getElementById('covbar').style.width=pct.toFixed(1)+'%';
  document.getElementById('qmeta').textContent=pct.toFixed(1)+'% copertura';
  document.getElementById('m-clean').textContent=clean;
@@ -224,7 +280,7 @@ function renderQA(out,drops,totalIn,clean){
 document.getElementById('run').onclick=run;
 document.getElementById('reset').onclick=()=>{
  clearInterval(timer);resetNodes();logEl.innerHTML='<div class="muted">Reset. Premi "Avvia pipeline" per ricominciare.</div>';
- document.getElementById('obody').innerHTML='<tr><td colspan="6" style="color:var(--muted)">avvia la pipeline per materializzare la tabella unificata</td></tr>';
+ document.getElementById('obody').innerHTML='<tr><td colspan="10" style="color:var(--muted)">avvia la pipeline per materializzare la tabella unificata</td></tr>';
  document.getElementById('rules').textContent='// generate durante lo step "map columns"';
  document.getElementById('covbar').style.width='0';document.getElementById('covtxt').textContent='- / -';
  document.getElementById('qmeta').textContent='in attesa';document.getElementById('pmeta').textContent='inattiva';

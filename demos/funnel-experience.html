@@ -2,11 +2,11 @@
 *{box-sizing:border-box}
 :root{--bg:#0a0e14;--panel:#111823;--panel2:#0d131c;--ink:#e2e9f2;--muted:#8b99ab;--acc:#3fd0e0;--acc-ink:#06222a;--acc-dim:#1c5560;--amber:#f0b23e;--red:#ef6b5e;--ok:#5fd08a;--line:#1e2937;--line2:#2c3b4f;--deep:#060a10;--mono:'JetBrains Mono','Cascadia Code',Consolas,monospace;--serif:'Segoe UI',system-ui,-apple-system,'Helvetica Neue',Arial,sans-serif}
 [data-theme="light"]{--bg:#f3f5f7;--panel:#ffffff;--panel2:#fafbfc;--ink:#121820;--muted:#5c6b7a;--acc:#0d7c8c;--acc-ink:#f3fbfc;--acc-dim:#9fc6cc;--amber:#a16207;--red:#b3402f;--ok:#15803d;--line:#dde3ea;--line2:#c3cdd8;--deep:#101823}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:Verdana,Arial,sans-serif;line-height:1.55;transition:background-color .3s,color .3s}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Verdana,Arial,sans-serif;line-height:1.55;transition:background-color .3s,color .3s;overflow-x:hidden}
 a{color:inherit;text-underline-offset:4px}
 button,select,input{font:inherit}
 button,.button{min-height:44px}
-a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
 .wrap{width:min(1240px,calc(100% - 32px));margin:auto}
 .disclaimer{font-size:12px;color:var(--muted)}
 .demo-top{background:var(--deep);color:#e2e9f2;border-bottom:1px solid var(--line2)}
@@ -17,136 +17,329 @@ a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible{ou
 #theme{border:1px solid #2c3b4f;background:transparent;color:#e2e9f2;min-height:32px;padding:2px 10px;cursor:pointer;font-size:14px}
 #theme:hover{border-color:#3fd0e0}
 .demo-head{border-bottom:1px solid var(--line);padding:22px 0;background:var(--panel2)}
-.eyebrow{font:700 11px var(--mono);letter-spacing:.15em;text-transform:uppercase;color:var(--acc)}
+.eyebrow{font:700 14px var(--mono);letter-spacing:.15em;text-transform:uppercase;color:var(--acc)}
 .demo-head h1{font:700 clamp(26px,4vw,40px)/1.05 var(--serif);margin:7px 0;letter-spacing:-.02em}
 .explain{border-left:3px solid var(--amber);background:color-mix(in srgb,var(--amber) 9%,transparent);padding:12px 16px;margin:16px 0 0;font-size:14px;max-width:760px}
-.explain b{display:block;font:700 13px var(--serif);margin-bottom:4px}
+.explain b{display:block;font:700 14px var(--serif);margin-bottom:4px}
 .tabs{display:flex;gap:4px;margin-top:20px;flex-wrap:wrap}
-.tab{border:1px solid var(--line2);border-bottom:none;background:var(--panel2);color:var(--muted);padding:11px 18px;cursor:pointer;font:700 13px var(--serif);border-radius:6px 6px 0 0}
+.tab{border:1px solid var(--line2);border-bottom:none;background:var(--panel2);color:var(--muted);padding:11px 18px;cursor:pointer;font:700 14px var(--serif);border-radius:6px 6px 0 0}
 .tab[aria-selected="true"]{background:var(--panel);color:var(--ink);border-color:var(--acc);border-bottom:2px solid var(--panel);position:relative;top:1px}
 .workspace{padding:20px 0 48px}
 .view{display:none}.view.on{display:block}
 
-/* ---------- TAB 1 : browser frame + marketing funnel ---------- */
+/* ---------- TAB 1 : browser frame ---------- */
 .browser{border:1px solid var(--line2);border-radius:10px;overflow:hidden;box-shadow:0 8px 34px rgba(0,0,0,.28);background:#fff}
 .chrome{background:#e9edf2;border-bottom:1px solid #d3dae2;padding:9px 14px;display:flex;align-items:center;gap:12px}
 .dots{display:flex;gap:7px}.dots i{width:12px;height:12px;border-radius:50%;display:block}
 .dots i:nth-child(1){background:#ff5f57}.dots i:nth-child(2){background:#febc2e}.dots i:nth-child(3){background:#28c840}
-.urlbar{flex:1;background:#fff;border:1px solid #d3dae2;border-radius:16px;padding:6px 14px;font:12.5px var(--mono);color:#5c6b7a;display:flex;align-items:center;gap:8px;min-width:0}
-.urlbar .lock{color:#28a745;font-size:12px}
+.urlbar{flex:1;background:#fff;border:1px solid #d3dae2;border-radius:16px;padding:6px 14px;font:14px var(--mono);color:#5c6b7a;display:flex;align-items:center;gap:8px;min-width:0}
+.urlbar .lock{color:#28a745;font-size:14px}
 .urlbar .u{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .reload{color:#8b99ab;font-size:15px}
-.viewport{background:#fbfcfe;color:#1a2230;font-family:'Segoe UI',system-ui,Arial,sans-serif;min-height:520px}
-.fpage{display:none;padding:0 0 34px}.fpage.on{display:block;animation:fade .35s ease}
+.viewport{background:#fbfcfe;color:#1a2230;font-family:'Segoe UI',system-ui,Arial,sans-serif;min-height:520px;max-height:min(780px,80vh);overflow-y:auto;overflow-x:hidden;position:relative}
+.fpage{display:none}.fpage.on{display:block;animation:fade .35s ease}
 @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .6s cubic-bezier(.2,.7,.3,1),transform .6s cubic-bezier(.2,.7,.3,1)}
+.reveal.in{opacity:1;transform:none}
 
-/* marketing landing */
-.mk-hero{background:linear-gradient(160deg,#0f2f3a 0%,#123c4a 55%,#0c2530 100%);color:#eaf6f8;padding:40px 30px 46px;text-align:center}
-.mk-kicker{display:inline-block;background:rgba(245,178,62,.16);color:#f5c469;border:1px solid rgba(245,178,62,.4);padding:5px 14px;border-radius:20px;font:700 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase}
-.mk-hero h2{font:800 clamp(24px,3.4vw,38px)/1.12 'Segoe UI',system-ui,Arial,sans-serif;margin:16px auto 12px;max-width:660px;letter-spacing:-.01em}
-.mk-hero h2 em{color:#5fd08a;font-style:normal}
-.mk-hero p.sub{max-width:540px;margin:0 auto 24px;font-size:16px;color:#b9d3d8}
-.mk-video{max-width:600px;margin:0 auto;aspect-ratio:16/9;background:#06181e radial-gradient(circle at 50% 45%,rgba(63,208,224,.22),transparent 60%);border:1px solid rgba(120,190,200,.25);border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;cursor:pointer;position:relative}
-.mk-play{width:62px;height:62px;border-radius:50%;background:#f5844a;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 20px rgba(245,132,74,.5);transition:transform .2s}
-.mk-video:hover .mk-play{transform:scale(1.07)}
-.mk-play::after{content:"";border-left:20px solid #fff;border-top:12px solid transparent;border-bottom:12px solid transparent;margin-left:5px}
-.mk-video small{font:600 12px var(--mono);color:#8fb6bd;letter-spacing:.05em}
-.mk-vlabel{position:absolute;top:12px;left:14px;font:600 11px var(--mono);color:#7fa6ad;background:rgba(0,0,0,.35);padding:3px 8px;border-radius:4px}
-.mk-body{max-width:640px;margin:0 auto;padding:34px 30px 0}
-.mk-body h3{font:800 22px 'Segoe UI',system-ui,Arial,sans-serif;text-align:center;margin:0 0 20px}
-.mk-bullets{list-style:none;padding:0;margin:0 0 30px;display:grid;gap:12px}
-.mk-bullets li{display:flex;gap:12px;align-items:flex-start;background:#fff;border:1px solid #e4eaf0;border-radius:9px;padding:13px 16px;font-size:15px;box-shadow:0 1px 3px rgba(20,40,60,.05)}
-.mk-bullets .ck{flex:0 0 22px;width:22px;height:22px;border-radius:50%;background:#e4f7ec;color:#15803d;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;margin-top:1px}
-.mk-cta{text-align:center;padding:6px 30px 0}
-.mk-btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;background:linear-gradient(180deg,#ff9a4d,#f5751f);color:#fff;border:none;padding:17px 38px;border-radius:11px;font:800 17px 'Segoe UI',system-ui,Arial,sans-serif;cursor:pointer;box-shadow:0 8px 22px rgba(245,117,31,.36);letter-spacing:.01em}
-.mk-btn:hover{filter:brightness(1.05)}
-.mk-cta .trust{margin-top:12px;font-size:12.5px;color:#6b7a89}
-.mk-social{max-width:640px;margin:34px auto 0;padding:0 30px}
-.mk-quote{background:#fff;border:1px solid #e4eaf0;border-left:4px solid #5fd08a;border-radius:9px;padding:16px 18px;font-size:14.5px;font-style:italic;color:#334}
-.mk-quote span{display:block;font-style:normal;font-weight:700;font-size:12.5px;color:#6b7a89;margin-top:8px}
+/* ---------- premium landing ---------- */
+.lp{--ink0:#0d1622;--ink1:#33465c;--ink2:#5f7186;--edge:#e3e9f0;--brand:#0f2f3a;--brand2:#15505f;--pop:#f5751f;--pop2:#ff9a4d;--mint:#12805a}
+.lp *{font-family:'Segoe UI',system-ui,-apple-system,Arial,sans-serif}
+.lp-sec{padding:56px 34px;max-width:1000px;margin:0 auto}
+.lp-sec h3{font:800 clamp(22px,2.6vw,31px)/1.18 'Segoe UI',system-ui,Arial,sans-serif;margin:0 0 12px;letter-spacing:-.015em;color:var(--ink0)}
+.lp-sec .lead{font-size:16px;color:var(--ink2);max-width:620px;margin:0 0 30px}
+.lp-eyebrow{display:inline-block;font:700 14px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:#0d7c8c;margin-bottom:10px}
+.lp-center{text-align:center}
+.lp-center .lead{margin-left:auto;margin-right:auto}
+
+/* sticky in-frame nav */
+.lp-nav{position:sticky;top:0;z-index:20;background:rgba(252,253,255,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--edge);display:flex;align-items:center;gap:18px;padding:12px 26px}
+.lp-logo{display:flex;align-items:center;gap:10px;font:800 16px 'Segoe UI',system-ui,Arial,sans-serif;color:var(--ink0);letter-spacing:-.01em}
+.lp-logo .mark{width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,#0f2f3a,#1a7c8c);color:#eafcff;display:flex;align-items:center;justify-content:center;font:800 15px var(--mono);box-shadow:0 4px 12px rgba(15,47,58,.28)}
+.lp-logo small{display:block;font:600 14px var(--mono);color:var(--ink2);letter-spacing:.02em}
+.lp-links{display:flex;gap:20px;margin-left:auto;font-size:14px;color:var(--ink1);font-weight:600}
+.lp-links a{text-decoration:none}
+.lp-links a:hover{color:var(--pop)}
+.lp-navcta{background:linear-gradient(180deg,var(--pop2),var(--pop));color:#fff;border:none;border-radius:9px;padding:10px 18px;font:700 14px 'Segoe UI',system-ui,Arial,sans-serif;cursor:pointer;min-height:40px;box-shadow:0 4px 14px rgba(245,117,31,.32)}
+.lp-navcta:hover{filter:brightness(1.06)}
+
+/* hero */
+.lp-hero{position:relative;background:radial-gradient(120% 90% at 15% 0%,#164a5c 0%,#0f2f3a 45%,#081c25 100%);color:#eaf6f8;padding:52px 34px 60px;overflow:hidden}
+.lp-hero::after{content:"";position:absolute;inset:auto -10% -55% 30%;height:70%;background:radial-gradient(circle,rgba(63,208,224,.20),transparent 65%);pointer-events:none}
+.lp-hero-in{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1.18fr) minmax(0,.82fr);gap:36px;align-items:center;position:relative;z-index:1}
+.lp-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(245,178,62,.14);color:#ffd489;border:1px solid rgba(245,178,62,.42);padding:7px 15px;border-radius:22px;font:700 14px var(--mono);letter-spacing:.06em;text-transform:uppercase}
+.lp-badge .liv{width:8px;height:8px;border-radius:50%;background:#ffb43e;box-shadow:0 0 0 0 rgba(255,180,62,.7);animation:pulse 2s infinite}
+.lp-hero h2{font:800 clamp(27px,3.2vw,39px)/1.1 'Segoe UI',system-ui,Arial,sans-serif;margin:18px 0 14px;letter-spacing:-.025em}
+.lp-hero h2 em{display:block;font-style:normal;background:linear-gradient(90deg,#5fd08a,#3fd0e0);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lp-hero .sub{font-size:17px;color:#b7d2d8;margin:0 0 26px;max-width:520px}
+.lp-heroactions{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.lp-btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;background:linear-gradient(180deg,var(--pop2),var(--pop));color:#fff;border:none;padding:17px 34px;border-radius:12px;font:800 17px 'Segoe UI',system-ui,Arial,sans-serif;cursor:pointer;box-shadow:0 10px 26px rgba(245,117,31,.4);letter-spacing:.01em}
+.lp-btn:hover{filter:brightness(1.06);transform:translateY(-1px)}
+.lp-btn.ghost{background:transparent;border:1px solid rgba(190,220,226,.4);color:#dff0f3;box-shadow:none;font-weight:700;font-size:15px;padding:15px 24px}
+.lp-btn.ghost:hover{border-color:#3fd0e0;filter:none}
+.lp-proof{display:flex;align-items:center;gap:14px;margin-top:24px;flex-wrap:wrap}
+.lp-faces{display:flex}
+.lp-faces span{width:34px;height:34px;border-radius:50%;border:2px solid #0f2f3a;margin-left:-10px;display:flex;align-items:center;justify-content:center;font:700 14px 'Segoe UI',system-ui,Arial,sans-serif;color:#06222a}
+.lp-faces span:first-child{margin-left:0}
+.lp-proof .pt{font-size:14px;color:#b7d2d8}
+.lp-proof .pt b{color:#eaf6f8;display:block;font-size:15px}
+.lp-stars{color:#ffc247;letter-spacing:2px;font-size:15px}
+
+/* fake VSL */
+.lp-vsl{position:relative;border-radius:14px;overflow:hidden;border:1px solid rgba(140,200,210,.28);background:#06181e;box-shadow:0 22px 50px rgba(0,0,0,.45);cursor:pointer}
+.lp-slide{aspect-ratio:16/9;background:linear-gradient(150deg,#10323d,#071b23);padding:22px;display:flex;flex-direction:column;gap:10px;position:relative}
+.lp-slide .st{font:800 16px 'Segoe UI',system-ui,Arial,sans-serif;color:#dff0f3}
+.lp-slide .sb{font:600 14px var(--mono);color:#6fa1ab;letter-spacing:.06em;text-transform:uppercase}
+.lp-slidebars{display:flex;align-items:flex-end;gap:8px;height:58px;margin-top:auto;opacity:.5}
+.lp-slidebars i{flex:1;border-radius:3px 3px 0 0;background:linear-gradient(180deg,#3fd0e0,#1a6f7d);display:block}
+.lp-vsl .scrim{position:absolute;inset:0;background:radial-gradient(circle at 50% 46%,rgba(3,15,20,.42),rgba(3,15,20,.82));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.lp-play{width:70px;height:70px;border-radius:50%;background:var(--pop);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 26px rgba(245,132,74,.55);transition:transform .2s}
+.lp-vsl:hover .lp-play{transform:scale(1.08)}
+.lp-play::after{content:"";border-left:22px solid #fff;border-top:13px solid transparent;border-bottom:13px solid transparent;margin-left:6px}
+.lp-vsl .vhint{font:600 14px var(--mono);color:#cfe6ea;text-shadow:0 1px 6px rgba(0,0,0,.6)}
+.lp-vbar{position:absolute;left:0;right:0;bottom:0;padding:10px 14px;display:flex;align-items:center;gap:10px;background:linear-gradient(0deg,rgba(3,12,16,.9),transparent)}
+.lp-vbar .track{flex:1;height:4px;border-radius:3px;background:rgba(230,245,248,.25);overflow:hidden}
+.lp-vbar .track i{display:block;height:100%;width:14%;background:var(--pop)}
+.lp-vbar .tm{font:600 14px var(--mono);color:#cfe6ea}
+.lp-vtag{position:absolute;top:12px;right:12px;background:rgba(4,16,21,.72);border:1px solid rgba(150,200,210,.3);color:#cfe6ea;font:600 14px var(--mono);padding:4px 10px;border-radius:6px;z-index:2}
+
+/* trust bar */
+.lp-trustbar{background:#0b1c24;border-top:1px solid rgba(140,200,210,.14);padding:20px 34px}
+.lp-trustbar .in{max-width:1000px;margin:0 auto;display:flex;align-items:center;gap:26px;flex-wrap:wrap;justify-content:center}
+.lp-trustbar .tl{font:700 14px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:#6a8f99}
+.lp-wm{font:800 17px 'Segoe UI',system-ui,Arial,sans-serif;color:#88aeb7;letter-spacing:-.01em;opacity:.9;display:inline-flex;align-items:center;gap:7px}
+.lp-wm i{font-style:normal;font-weight:400;color:#3fd0e0}
+.lp-wm.w2{font-family:var(--mono);font-weight:700;font-size:15px;letter-spacing:.06em;text-transform:uppercase}
+.lp-wm.w3{font-style:italic;font-weight:700}
+
+/* pillars */
+.lp-pillars{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:16px}
+.lp-pill{background:#fff;border:1px solid var(--edge);border-radius:14px;padding:22px 20px;box-shadow:0 2px 10px rgba(20,40,60,.05);transition:transform .25s,box-shadow .25s}
+.lp-pill:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(20,40,60,.1)}
+.lp-pill .pi{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:21px;margin-bottom:14px;background:linear-gradient(140deg,#e6f7fa,#d3eef3);color:#0d5c6b}
+.lp-pill h4{font:800 17px 'Segoe UI',system-ui,Arial,sans-serif;margin:0 0 7px;color:var(--ink0)}
+.lp-pill p{margin:0;font-size:15px;color:var(--ink2)}
+
+/* accordions */
+.lp-acc{border:1px solid var(--edge);border-radius:12px;background:#fff;overflow:hidden;box-shadow:0 2px 12px rgba(20,40,60,.05)}
+.lp-acc details{border-bottom:1px solid var(--edge)}
+.lp-acc details:last-child{border-bottom:none}
+.lp-acc summary{list-style:none;cursor:pointer;padding:17px 20px;display:flex;align-items:center;gap:14px;font:700 16px 'Segoe UI',system-ui,Arial,sans-serif;color:var(--ink0);min-height:44px}
+.lp-acc summary::-webkit-details-marker{display:none}
+.lp-acc summary:hover{background:#f7fafc}
+.lp-acc .mno{flex:0 0 34px;width:34px;height:34px;border-radius:9px;background:#eef6f8;color:#0d5c6b;display:flex;align-items:center;justify-content:center;font:800 14px var(--mono)}
+.lp-acc .chev{margin-left:auto;color:var(--ink2);font-size:15px;transition:transform .25s}
+.lp-acc details[open] .chev{transform:rotate(180deg)}
+.lp-acc details[open] summary{background:#f7fafc}
+.lp-acc .body{padding:0 20px 18px 68px;font-size:15px;color:var(--ink1)}
+.lp-acc .body ul{margin:0;padding-left:18px}
+.lp-acc .body li{margin-bottom:6px}
+.lp-acc .mtime{font:600 14px var(--mono);color:var(--ink2);margin-left:8px;font-weight:600}
+
+/* host bio */
+.lp-host{display:grid;grid-template-columns:190px minmax(0,1fr);gap:28px;align-items:start;background:#fff;border:1px solid var(--edge);border-radius:16px;padding:28px;box-shadow:0 4px 18px rgba(20,40,60,.06)}
+.lp-av{width:150px;height:150px;border-radius:18px;background:linear-gradient(140deg,#0f2f3a,#1a7c8c);color:#eafcff;display:flex;align-items:center;justify-content:center;font:800 46px 'Segoe UI',system-ui,Arial,sans-serif;letter-spacing:.02em;box-shadow:0 12px 26px rgba(15,47,58,.28)}
+.lp-host h4{font:800 21px 'Segoe UI',system-ui,Arial,sans-serif;margin:0 0 4px;color:var(--ink0)}
+.lp-host .role{font:600 15px var(--mono);color:#0d7c8c;margin-bottom:14px}
+.lp-host p{font-size:15px;color:var(--ink1);margin:0 0 12px}
+.lp-cred{display:flex;flex-wrap:wrap;gap:8px}
+.lp-cred span{font:600 14px 'Segoe UI',system-ui,Arial,sans-serif;background:#eef6f8;color:#0d5c6b;border-radius:20px;padding:6px 13px}
+
+/* testimonials */
+.lp-testi{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
+.lp-tc{background:#fff;border:1px solid var(--edge);border-radius:14px;padding:22px;box-shadow:0 2px 12px rgba(20,40,60,.05);display:flex;flex-direction:column;gap:14px}
+.lp-tc .qs{color:#ffc247;letter-spacing:2px;font-size:15px}
+.lp-tc p{margin:0;font-size:15px;color:var(--ink1);flex:1}
+.lp-tc .who{display:flex;align-items:center;gap:11px;border-top:1px solid var(--edge);padding-top:14px}
+.lp-tc .ini{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font:800 14px 'Segoe UI',system-ui,Arial,sans-serif;color:#06222a}
+.lp-tc .who b{display:block;font-size:15px;color:var(--ink0)}
+.lp-tc .who span{font-size:14px;color:var(--ink2)}
+
+/* numbers */
+.lp-nums{background:linear-gradient(150deg,#0f2f3a,#0b2129);color:#eaf6f8;border-radius:18px;padding:34px 30px}
+.lp-numgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:20px;text-align:center}
+.lp-numgrid b{display:block;font:800 clamp(28px,3.6vw,38px)/1 'Segoe UI',system-ui,Arial,sans-serif;background:linear-gradient(90deg,#5fd08a,#3fd0e0);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lp-numgrid span{display:block;font:600 14px var(--mono);text-transform:uppercase;letter-spacing:.08em;color:#8fb6bd;margin-top:9px}
+.lp-numnote{text-align:center;font:600 14px var(--mono);color:#6a8f99;margin-top:22px}
+
+/* guarantee */
+.lp-guar{display:flex;gap:22px;align-items:center;background:#fff;border:1px solid var(--edge);border-left:5px solid var(--mint);border-radius:14px;padding:26px;box-shadow:0 4px 18px rgba(20,40,60,.06)}
+.lp-seal{flex:0 0 84px;width:84px;height:84px;border-radius:50%;background:#e4f7ec;color:var(--mint);display:flex;align-items:center;justify-content:center;font-size:36px}
+.lp-guar h4{margin:0 0 7px;font:800 19px 'Segoe UI',system-ui,Arial,sans-serif;color:var(--ink0)}
+.lp-guar p{margin:0;font-size:15px;color:var(--ink1)}
+
+/* final cta */
+.lp-final{background:radial-gradient(110% 120% at 50% 0%,#164a5c,#0c242e 70%);color:#eaf6f8;text-align:center;padding:58px 30px}
+.lp-final h3{color:#eaf6f8;font:800 clamp(24px,3vw,34px)/1.15 'Segoe UI',system-ui,Arial,sans-serif;margin:0 0 12px;letter-spacing:-.02em}
+.lp-final p{color:#b7d2d8;font-size:16px;max-width:520px;margin:0 auto 26px}
+.lp-final .tiny{font-size:14px;color:#8fb6bd;margin-top:14px}
+
+/* footer */
+.lp-foot{background:#081920;color:#7f9ba3;padding:34px 34px 26px;font-size:14px}
+.lp-foot .in{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1.4fr) repeat(3,minmax(0,1fr));gap:26px}
+.lp-foot h5{font:700 14px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:#cfe6ea;margin:0 0 12px}
+.lp-foot ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.lp-foot li{color:#7f9ba3}
+.lp-foot .fbrand{font:800 17px 'Segoe UI',system-ui,Arial,sans-serif;color:#dff0f3;margin-bottom:10px;display:flex;align-items:center;gap:9px}
+.lp-foot .fbrand .mark{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#0f2f3a,#1a7c8c);color:#eafcff;display:flex;align-items:center;justify-content:center;font:800 14px var(--mono);border:1px solid rgba(140,200,210,.3)}
+.lp-foot .fine{max-width:1000px;margin:26px auto 0;border-top:1px solid rgba(140,200,210,.16);padding-top:16px;font-size:14px;color:#6a8b93}
 
 /* opt-in */
-.mk-opt{max-width:460px;margin:0 auto;padding:44px 30px 0;text-align:center}
-.mk-opt h2{font:800 26px 'Segoe UI',system-ui,Arial,sans-serif;margin:0 0 8px}
-.mk-opt p.lead{color:#5c6b7a;font-size:15px;margin:0 0 26px}
-.mk-form{background:#fff;border:1px solid #e4eaf0;border-radius:12px;padding:24px;text-align:left;box-shadow:0 6px 22px rgba(20,40,60,.08)}
-.mk-form label{display:block;font:700 12px 'Segoe UI',system-ui,Arial,sans-serif;color:#3a4756;margin:0 0 6px;text-transform:uppercase;letter-spacing:.04em}
-.mk-form input[type=text],.mk-form input[type=email]{width:100%;padding:13px 14px;border:1.5px solid #d3dae2;border-radius:8px;font-size:15px;margin-bottom:4px;background:#fbfcfe;color:#1a2230}
+.mk-opt{max-width:470px;margin:0 auto;padding:52px 30px 40px;text-align:center}
+.mk-opt h2{font:800 27px 'Segoe UI',system-ui,Arial,sans-serif;margin:0 0 8px;color:#0d1622}
+.mk-opt p.lead{color:#5f7186;font-size:15px;margin:0 0 26px}
+.mk-steps{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:26px;font:600 14px var(--mono);color:#8b99ab}
+.mk-steps b{color:#0d7c8c}
+.mk-form{background:#fff;border:1px solid #e3e9f0;border-radius:14px;padding:26px;text-align:left;box-shadow:0 10px 30px rgba(20,40,60,.09)}
+.mk-form label{display:block;font:700 14px 'Segoe UI',system-ui,Arial,sans-serif;color:#3a4756;margin:0 0 6px;text-transform:uppercase;letter-spacing:.04em}
+.mk-form input[type=text],.mk-form input[type=email]{width:100%;padding:14px;border:1.5px solid #d3dae2;border-radius:9px;font-size:15px;margin-bottom:4px;background:#fbfcfe;color:#1a2230}
 .mk-form input:focus{border-color:#f5844a;outline:none;box-shadow:0 0 0 3px rgba(245,132,74,.15)}
 .mk-field{margin-bottom:16px}
-.mk-err{color:#c0392b;font-size:12.5px;min-height:16px;display:block;margin-top:2px}
-.mk-consent{display:flex;gap:10px;align-items:flex-start;font-size:12.5px;color:#5c6b7a;margin-bottom:18px;line-height:1.45}
-.mk-consent input{margin-top:2px;width:17px;height:17px;flex:0 0 17px}
-.mk-form .mk-btn{width:100%}
-.mk-secure{text-align:center;font-size:11.5px;color:#8b99ab;margin-top:14px}
+.mk-err{color:#c0392b;font-size:14px;min-height:18px;display:block;margin-top:2px}
+.mk-consent{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:#5f7186;margin-bottom:18px;line-height:1.45}
+.mk-consent input{margin-top:2px;width:18px;height:18px;flex:0 0 18px}
+.mk-form .lp-btn{width:100%}
+.mk-secure{text-align:center;font-size:14px;color:#8b99ab;margin-top:14px}
 
 /* thank you */
-.mk-ty{max-width:520px;margin:0 auto;padding:44px 30px 0;text-align:center}
-.mk-check{width:74px;height:74px;border-radius:50%;background:#e4f7ec;color:#15803d;font-size:40px;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;animation:pop .4s ease}
+.mk-ty{max-width:540px;margin:0 auto;padding:52px 30px 40px;text-align:center}
+.mk-check{width:78px;height:78px;border-radius:50%;background:#e4f7ec;color:#12805a;font-size:42px;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;animation:pop .4s ease}
 @keyframes pop{0%{transform:scale(.4);opacity:0}60%{transform:scale(1.12)}100%{transform:scale(1);opacity:1}}
-.mk-ty h2{font:800 26px 'Segoe UI',system-ui,Arial,sans-serif;margin:0 0 10px}
-.mk-ty p.lead{color:#5c6b7a;font-size:15px;margin:0 0 24px}
-.mk-webcard{background:#fff;border:1px solid #e4eaf0;border-radius:12px;padding:22px;box-shadow:0 6px 22px rgba(20,40,60,.08)}
-.mk-webcard .wl{font:700 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#f5751f}
-.mk-webcard .wd{font:800 21px 'Segoe UI',system-ui,Arial,sans-serif;margin:6px 0 4px}
-.mk-webcard .wt{color:#5c6b7a;font-size:14px;margin-bottom:18px}
+.mk-ty h2{font:800 27px 'Segoe UI',system-ui,Arial,sans-serif;margin:0 0 10px;color:#0d1622}
+.mk-ty p.lead{color:#5f7186;font-size:15px;margin:0 0 24px}
+.mk-webcard{background:#fff;border:1px solid #e3e9f0;border-radius:14px;padding:24px;box-shadow:0 10px 30px rgba(20,40,60,.09)}
+.mk-webcard .wl{font:700 14px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#f5751f}
+.mk-webcard .wd{font:800 22px 'Segoe UI',system-ui,Arial,sans-serif;margin:6px 0 4px;color:#0d1622}
+.mk-webcard .wt{color:#5f7186;font-size:15px;margin-bottom:18px}
 .mk-count{display:flex;gap:10px;justify-content:center;margin-bottom:20px}
-.mk-count div{background:#0f2f3a;color:#eaf6f8;border-radius:9px;padding:12px 6px;min-width:66px}
-.mk-count b{display:block;font:800 26px var(--mono);line-height:1}
-.mk-count span{font:600 10px var(--mono);text-transform:uppercase;letter-spacing:.08em;color:#8fb6bd;margin-top:5px;display:block}
-.mk-cal{display:inline-flex;align-items:center;gap:8px;background:#0f2f3a;color:#eaf6f8;border:none;padding:13px 26px;border-radius:9px;font:700 14px 'Segoe UI',system-ui,Arial,sans-serif;cursor:pointer}
+.mk-count div{background:#0f2f3a;color:#eaf6f8;border-radius:10px;padding:12px 6px;min-width:70px}
+.mk-count b{display:block;font:800 27px var(--mono);line-height:1}
+.mk-count span{font:600 14px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:#8fb6bd;margin-top:5px;display:block}
+.mk-cal{display:inline-flex;align-items:center;gap:8px;background:#0f2f3a;color:#eaf6f8;border:none;padding:14px 26px;border-radius:10px;font:700 15px 'Segoe UI',system-ui,Arial,sans-serif;cursor:pointer}
 .mk-cal:hover{background:#123c4a}
-.mk-caldone{color:#15803d;font-weight:700;font-size:13.5px;margin-top:12px;display:none}
+.mk-caldone{color:#12805a;font-weight:700;font-size:14px;margin-top:12px;display:none}
+.mk-next{margin-top:22px;font-size:14px;color:#5f7186}
 
 /* what just happened strip */
 .happened{margin-top:16px;border:1px solid var(--line);background:var(--panel);border-radius:10px;overflow:hidden}
-.happened h3{margin:0;padding:12px 16px;font:700 12px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--acc);border-bottom:1px solid var(--line);background:var(--panel2);display:flex;align-items:center;gap:10px}
+.happened h3{margin:0;padding:12px 16px;font:700 14px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--acc);border-bottom:1px solid var(--line);background:var(--panel2);display:flex;align-items:center;gap:10px}
 .happened h3 .dotlive{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 0 rgba(95,208,138,.6);animation:pulse 1.8s infinite}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(95,208,138,.5)}70%{box-shadow:0 0 0 8px rgba(95,208,138,0)}100%{box-shadow:0 0 0 0 rgba(95,208,138,0)}}
 .happened .hbody{padding:14px 16px;font-size:14px;color:var(--ink);min-height:52px}
-.happened .hbody .tech{display:block;margin-top:6px;font:12px var(--mono);color:var(--muted)}
+.happened .hbody .tech{display:block;margin-top:6px;font:14px var(--mono);color:var(--muted)}
 .stepdots{display:flex;gap:6px;margin-left:auto}
 .stepdots i{width:9px;height:9px;border-radius:50%;background:var(--line2);display:block}
 .stepdots i.on{background:var(--acc)}
 
-/* ---------- TAB 2 : GHL-style builder ---------- */
-.ghl{display:grid;grid-template-columns:210px minmax(0,1fr);border:1px solid var(--line2);border-radius:10px;overflow:hidden;min-height:560px}
+/* ---------- TAB 2 : CRM builder ---------- */
+.ghl{display:grid;grid-template-columns:242px minmax(0,1fr);border:1px solid var(--line2);border-radius:10px;overflow:hidden;min-height:600px;position:relative}
 .ghl-side{background:#141b26;color:#c2cdda;padding:16px 12px;border-right:1px solid #232f3e}
 .ghl-brand{display:flex;align-items:center;gap:9px;padding:6px 8px 16px;border-bottom:1px solid #232f3e;margin-bottom:12px}
 .ghl-brand .logo{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#3fd0e0,#5fd08a);display:flex;align-items:center;justify-content:center;font:800 15px 'Segoe UI',Arial,sans-serif;color:#06222a}
-.ghl-brand .bt{font:700 14px 'Segoe UI',Arial,sans-serif;color:#eef3f8;line-height:1.1}
-.ghl-brand .bt small{display:block;font:600 10px var(--mono);color:#6b7a8c;letter-spacing:.04em}
-.ghl-nav{list-style:none;margin:0;padding:0}
-.ghl-nav li{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:7px;font:600 13px 'Segoe UI',Arial,sans-serif;color:#93a2b3;cursor:default}
-.ghl-nav li .ic{width:17px;text-align:center;opacity:.85}
-.ghl-nav li.act{background:#1e63e9;color:#fff}
-.ghl-nav li.act .ic{opacity:1}
-.ghl-main{background:var(--panel);padding:18px 20px}
-.ghl-bar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:16px}
-.ghl-bar h2{font:800 18px 'Segoe UI',Arial,sans-serif;margin:0}
+.ghl-brand .bt{font:700 15px 'Segoe UI',Arial,sans-serif;color:#eef3f8;line-height:1.15}
+.ghl-brand .bt small{display:block;font:600 14px var(--mono);color:#6b7a8c;letter-spacing:0;white-space:nowrap}
+.ghl-nav{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+.ghl-nav button{width:100%;display:flex;align-items:center;gap:10px;padding:10px;border-radius:8px;font:600 14px 'Segoe UI',Arial,sans-serif;color:#93a2b3;cursor:pointer;background:transparent;border:none;text-align:left;min-height:42px;transition:background .18s,color .18s}
+.ghl-nav button:hover{background:#1b2432;color:#dbe4ee}
+.ghl-nav button .ic{width:19px;text-align:center;opacity:.85;font-size:15px}
+.ghl-nav button.act{background:#1e63e9;color:#fff;box-shadow:0 4px 14px rgba(30,99,233,.35)}
+.ghl-nav button.act .ic{opacity:1}
+.ghl-nav .navlabel{font:700 14px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:#5c6b7d;padding:12px 10px 6px}
+.ghl-main{background:var(--panel);padding:18px 20px;min-width:0}
+.ghl-bar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:18px}
+.ghl-bar h2{font:800 19px 'Segoe UI',Arial,sans-serif;margin:0}
+.ghl-bar .sub{font:600 14px var(--mono);color:var(--muted)}
 .ghl-switch{display:flex;gap:2px;background:var(--panel2);border:1px solid var(--line2);border-radius:8px;padding:3px;margin-left:auto}
-.ghl-switch button{border:none;background:transparent;color:var(--muted);padding:7px 15px;border-radius:6px;font:700 12.5px 'Segoe UI',Arial,sans-serif;cursor:pointer;min-height:36px}
+.ghl-switch button{border:none;background:transparent;color:var(--muted);padding:7px 15px;border-radius:6px;font:700 14px 'Segoe UI',Arial,sans-serif;cursor:pointer;min-height:36px}
 .ghl-switch button.on{background:#1e63e9;color:#fff}
 .ghl-panel{display:none}.ghl-panel.on{display:block;animation:fade .3s ease}
+.crm-view{display:none}.crm-view.on{display:block;animation:fade .28s ease}
+.autohint{font-size:14px;color:var(--muted);margin:0 0 16px}
 
-/* funnel steps view */
+/* KPI tiles */
+.kpi4{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:18px}
+.kpi{border:1px solid var(--line);border-top:2px solid var(--acc);border-radius:9px;background:var(--panel2);padding:14px}
+.kpi .kl{font:600 14px var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.kpi b{font:800 26px 'Segoe UI',Arial,sans-serif;display:block;margin:6px 0 4px}
+.kpi .kd{font-size:14px;color:var(--ok);font-weight:700}
+.kpi .kd.down{color:var(--red)}
+
+.cardbox{border:1px solid var(--line);border-radius:10px;background:var(--panel2);padding:16px;margin-bottom:16px}
+.cardbox h4{margin:0 0 4px;font:800 16px 'Segoe UI',Arial,sans-serif}
+.cardbox .ch{font-size:14px;color:var(--muted);margin:0 0 14px}
+.chartwrap{overflow-x:auto}
+.chartwrap svg{display:block;width:100%;min-width:420px;height:auto}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;align-items:start}
+
+/* activity feed */
+.feed{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+.feed li{display:flex;gap:12px;align-items:flex-start;padding:11px 4px;border-bottom:1px solid var(--line);font-size:14px}
+.feed li:last-child{border-bottom:none}
+.feed .fi{flex:0 0 32px;width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:15px;background:color-mix(in srgb,var(--acc) 14%,transparent)}
+.feed .ft{flex:1;min-width:0}
+.feed .ft b{display:block;font-weight:700}
+.feed .ft span{color:var(--muted);font-size:14px}
+.feed .fw{font:600 14px var(--mono);color:var(--muted);white-space:nowrap}
+
+/* tables */
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--panel2)}
+table.dt{width:100%;border-collapse:collapse;font-size:14px;min-width:640px}
+table.dt th{text-align:left;font:700 14px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding:11px 14px;border-bottom:1px solid var(--line2);background:var(--panel);white-space:nowrap}
+table.dt td{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:middle}
+table.dt tr:last-child td{border-bottom:none}
+table.dt tbody tr{cursor:pointer;transition:background .15s}
+table.dt tbody tr:hover{background:color-mix(in srgb,var(--acc) 8%,transparent)}
+table.dt.static tbody tr{cursor:default}
+table.dt.static tbody tr:hover{background:transparent}
+.who2{display:flex;align-items:center;gap:10px}
+.ini{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font:800 14px 'Segoe UI',Arial,sans-serif;color:#06222a;flex:0 0 34px}
+.who2 b{display:block;font-weight:700}
+.who2 span{color:var(--muted);font-size:14px}
+.pill{display:inline-block;font:700 14px 'Segoe UI',Arial,sans-serif;padding:4px 11px;border-radius:20px;border:1px solid;white-space:nowrap}
+.pill.lead{color:var(--acc);border-color:var(--acc-dim);background:color-mix(in srgb,var(--acc) 12%,transparent)}
+.pill.reg{color:var(--amber);border-color:var(--amber);background:color-mix(in srgb,var(--amber) 12%,transparent)}
+.pill.att{color:var(--ok);border-color:var(--ok);background:color-mix(in srgb,var(--ok) 13%,transparent)}
+.pill.no{color:var(--red);border-color:var(--red);background:color-mix(in srgb,var(--red) 12%,transparent)}
+.pill.cust{color:#a06bf0;border-color:#a06bf0;background:rgba(160,107,240,.12)}
+.searchrow{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.searchrow input{flex:1;min-width:200px;padding:11px 14px;border:1px solid var(--line2);border-radius:9px;background:var(--panel2);color:var(--ink);font-size:14px}
+.searchrow input:focus{outline:none;border-color:var(--acc)}
+.searchrow .cnt{font:600 14px var(--mono);color:var(--muted)}
+.emptyrow{padding:22px 14px;text-align:center;color:var(--muted);font-size:14px}
+
+/* drawer */
+.drawer{position:absolute;top:0;right:0;bottom:0;width:min(390px,92%);background:var(--panel);border-left:1px solid var(--line2);box-shadow:-18px 0 40px rgba(0,0,0,.3);transform:translateX(102%);transition:transform .32s cubic-bezier(.2,.7,.3,1);z-index:30;overflow-y:auto;padding:18px}
+.drawer.open{transform:none}
+.drawer .dclose{position:absolute;top:12px;right:12px;background:transparent;border:1px solid var(--line2);color:var(--muted);border-radius:8px;min-height:34px;padding:2px 11px;cursor:pointer;font-size:15px}
+.drawer .dclose:hover{border-color:var(--acc);color:var(--acc)}
+.dhead{display:flex;gap:13px;align-items:center;margin-bottom:16px;padding-right:44px}
+.dhead .ini{width:52px;height:52px;flex:0 0 52px;font-size:18px}
+.dhead b{display:block;font:800 18px 'Segoe UI',Arial,sans-serif}
+.dhead span{font-size:14px;color:var(--muted)}
+.drow{display:flex;justify-content:space-between;gap:14px;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}
+.drow .dk{color:var(--muted);font:600 14px var(--mono)}
+.drow .dv{text-align:right;font-weight:700}
+.dsec{font:700 14px var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--acc);margin:20px 0 10px}
+.dtags{display:flex;flex-wrap:wrap;gap:7px}
+.dtags span{font:600 14px var(--mono);background:var(--panel2);border:1px solid var(--line2);color:var(--muted);border-radius:14px;padding:4px 10px}
+
+/* funnel steps */
 .stat3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
 .stat3 .s{border:1px solid var(--line);border-top:2px solid var(--acc);border-radius:8px;background:var(--panel2);padding:12px 14px}
 .stat3 .s b{font:800 22px 'Segoe UI',Arial,sans-serif;display:block}
-.stat3 .s span{font:600 10.5px var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:3px;display:block}
+.stat3 .s span{font:600 14px var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:3px;display:block}
 .fsteps{display:flex;align-items:stretch;gap:0;flex-wrap:wrap}
 .fstep{flex:1;min-width:150px;border:1px solid var(--line2);border-radius:10px;background:var(--panel2);padding:14px;position:relative}
-.fstep .num{font:700 10px var(--mono);color:var(--muted)}
-.fstep h4{font:800 15px 'Segoe UI',Arial,sans-serif;margin:4px 0 10px}
-.fstep .thumb{height:64px;border-radius:6px;border:1px solid var(--line);margin-bottom:10px;background:linear-gradient(160deg,var(--panel),var(--panel2));display:flex;align-items:center;justify-content:center;font:600 10px var(--mono);color:var(--muted)}
-.fstep .cvr{font:800 20px 'Segoe UI',Arial,sans-serif;color:var(--ok)}
-.fstep .cvr small{font:600 11px var(--mono);color:var(--muted);display:block;text-transform:uppercase;letter-spacing:.05em}
+.fstep .num{font:700 14px var(--mono);color:var(--muted)}
+.fstep h4{font:800 16px 'Segoe UI',Arial,sans-serif;margin:4px 0 10px}
+.fstep .thumb{height:64px;border-radius:6px;border:1px solid var(--line);margin-bottom:10px;background:linear-gradient(160deg,var(--panel),var(--panel2));display:flex;align-items:center;justify-content:center;font:600 14px var(--mono);color:var(--muted)}
+.fstep .cvr{font:800 21px 'Segoe UI',Arial,sans-serif;color:var(--ok)}
+.fstep .cvr small{font:600 14px var(--mono);color:var(--muted);display:block;text-transform:uppercase;letter-spacing:.05em}
 .farrow{align-self:center;color:var(--muted);font-size:22px;padding:0 6px}
 .fbar{height:7px;border-radius:4px;background:var(--line);margin-top:9px;overflow:hidden}
 .fbar i{display:block;height:100%;background:linear-gradient(90deg,#3fd0e0,#5fd08a)}
 
-/* automation view */
-.autohint{font-size:13px;color:var(--muted);margin:0 0 16px}
+/* automation */
 .flow{display:flex;flex-direction:column;gap:0}
 .acard{border:1px solid var(--line2);border-radius:10px;background:var(--panel2);padding:13px 15px;display:flex;gap:13px;align-items:center;position:relative}
 .acard .ai{flex:0 0 40px;width:40px;height:40px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:19px}
@@ -155,27 +348,85 @@ a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible{ou
 .acard.action .ai{background:color-mix(in srgb,var(--acc) 15%,transparent)}
 .acard.delay{border-style:dashed}
 .acard.delay .ai{background:var(--panel)}
-.acard .atxt b{font:800 14px 'Segoe UI',Arial,sans-serif;display:block}
-.acard .atxt span{font-size:12.5px;color:var(--muted)}
-.acard .atag{margin-left:auto;font:700 10px var(--mono);text-transform:uppercase;letter-spacing:.06em;padding:3px 9px;border-radius:12px;border:1px solid var(--line2);color:var(--muted);white-space:nowrap}
+.acard .atxt b{font:800 15px 'Segoe UI',Arial,sans-serif;display:block}
+.acard .atxt span{font-size:14px;color:var(--muted)}
+.acard .atag{margin-left:auto;font:700 14px var(--mono);text-transform:uppercase;letter-spacing:.05em;padding:3px 9px;border-radius:12px;border:1px solid var(--line2);color:var(--muted);white-space:nowrap}
 .acard.trigger .atag{color:var(--amber);border-color:var(--amber)}
 .aconn{width:2px;height:16px;background:var(--line2);margin-left:35px}
-.legend{margin-top:18px;padding-top:14px;border-top:1px solid var(--line);display:flex;gap:18px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.legend{margin-top:18px;padding-top:14px;border-top:1px solid var(--line);display:flex;gap:18px;flex-wrap:wrap;font-size:14px;color:var(--muted)}
 .legend span{display:inline-flex;align-items:center;gap:7px}
 .legend i{width:11px;height:11px;border-radius:3px;display:block}
 
+/* email & sms */
+.seqlist{display:grid;gap:10px}
+.seqrow{display:flex;align-items:center;gap:14px;border:1px solid var(--line2);border-radius:10px;background:var(--panel2);padding:13px 15px;cursor:pointer;text-align:left;width:100%;color:inherit;transition:border-color .18s,background .18s}
+.seqrow:hover{border-color:var(--acc)}
+.seqrow.sel{border-color:var(--acc);background:color-mix(in srgb,var(--acc) 9%,transparent)}
+.seqrow .si{flex:0 0 40px;width:40px;height:40px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;background:color-mix(in srgb,var(--acc) 14%,transparent)}
+.seqrow .st{flex:1;min-width:0}
+.seqrow .st b{display:block;font:800 15px 'Segoe UI',Arial,sans-serif}
+.seqrow .st span{display:block;font-size:14px;color:var(--muted)}
+.seqmetrics{margin-left:auto;display:flex;gap:16px;text-align:right;flex:0 0 auto}
+.seqmetrics>span{display:block;min-width:64px}
+.seqmetrics>span b{display:block;font:800 16px 'Segoe UI',Arial,sans-serif}
+.seqmetrics>span span{display:block;font:600 14px var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.mailprev{border:1px solid var(--line2);border-radius:10px;overflow:hidden;background:var(--panel2)}
+.mailprev .mh{background:var(--panel);border-bottom:1px solid var(--line);padding:12px 15px;font-size:14px}
+.mailprev .mh b{display:block;font-size:15px}
+.mailprev .mh span{color:var(--muted)}
+.mailbody{padding:20px;background:#ffffff;color:#1a2230;font-family:'Segoe UI',system-ui,Arial,sans-serif;font-size:15px}
+.mailbody h5{margin:0 0 12px;font:800 19px 'Segoe UI',Arial,sans-serif;color:#0d1622}
+.mailbody p{margin:0 0 12px}
+.mailbody .mbtn{display:inline-block;background:linear-gradient(180deg,#ff9a4d,#f5751f);color:#fff;padding:12px 24px;border-radius:9px;font-weight:800;font-size:15px}
+.mailbody .msig{margin-top:16px;color:#5f7186;font-size:14px;border-top:1px solid #e3e9f0;padding-top:12px}
+
+/* calendar */
+.calgrid{display:grid;grid-template-columns:74px repeat(5,minmax(0,1fr));border:1px solid var(--line);border-radius:10px;overflow:hidden;min-width:640px}
+.calwrap{overflow-x:auto}
+.calgrid .ch2{background:var(--panel2);border-bottom:1px solid var(--line2);padding:10px 8px;font:700 14px 'Segoe UI',Arial,sans-serif;text-align:center}
+.calgrid .ch2 span{display:block;font:600 14px var(--mono);color:var(--muted)}
+.calgrid .hr{background:var(--panel2);border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:10px 8px;font:600 14px var(--mono);color:var(--muted);text-align:right}
+.calgrid .cell{border-right:1px solid var(--line);border-bottom:1px solid var(--line);min-height:56px;padding:5px}
+.slot{border-radius:7px;padding:7px 9px;font-size:14px;line-height:1.3;height:100%;display:flex;flex-direction:column;justify-content:center}
+.slot b{display:block;font-weight:700}
+.slot span{font:600 14px var(--mono);opacity:.85}
+.slot.s1{background:color-mix(in srgb,var(--acc) 18%,transparent);border-left:3px solid var(--acc)}
+.slot.s2{background:color-mix(in srgb,var(--ok) 18%,transparent);border-left:3px solid var(--ok)}
+.slot.s3{background:color-mix(in srgb,var(--amber) 18%,transparent);border-left:3px solid var(--amber)}
+.slot.s4{background:rgba(160,107,240,.16);border-left:3px solid #a06bf0}
+.callegend{display:flex;gap:18px;flex-wrap:wrap;margin-top:14px;font-size:14px;color:var(--muted)}
+.callegend span{display:inline-flex;align-items:center;gap:7px}
+.callegend i{width:11px;height:11px;border-radius:3px;display:block}
+
 @media(max-width:900px){
  .demo-top .wrap{flex-direction:column;align-items:flex-start;padding:10px 0;gap:4px}
+ .viewport{max-height:none}
+ .lp-hero-in{grid-template-columns:1fr;gap:26px}
+ .lp-sec{padding:40px 20px}
+ .lp-hero{padding:34px 20px 40px}
+ .lp-nav{padding:10px 16px;gap:10px}
+ .lp-links{display:none}
+ .lp-navcta{margin-left:auto}
+ .lp-host{grid-template-columns:1fr;text-align:center;justify-items:center}
+ .lp-av{margin:0 auto}
+ .lp-cred{justify-content:center}
+ .lp-guar{flex-direction:column;text-align:center}
+ .lp-foot .in{grid-template-columns:1fr 1fr}
+ .lp-trustbar .in{gap:16px}
  .ghl{grid-template-columns:1fr}
- .ghl-side{display:flex;flex-wrap:wrap;gap:6px;border-right:none;border-bottom:1px solid #232f3e}
- .ghl-brand{width:100%;border-bottom:1px solid #232f3e}
- .ghl-nav{display:flex;flex-wrap:wrap;gap:4px}
- .ghl-nav li{padding:7px 10px}
+ .ghl-side{display:block;border-right:none;border-bottom:1px solid #232f3e}
+ .ghl-brand{width:100%}
+ .ghl-nav{display:flex;flex-wrap:wrap;gap:6px}
+ .ghl-nav li{flex:1 1 auto}
+ .ghl-nav .navlabel{display:none}
+ .ghl-nav button{padding:8px 12px;min-height:40px}
  .stat3{grid-template-columns:1fr}
  .fstep{min-width:100%}.farrow{transform:rotate(90deg);padding:4px 0}
- .mk-count div{min-width:56px}
+ .mk-count div{min-width:58px}
+ .seqrow{flex-wrap:wrap}
+ .seqmetrics{margin-left:0;width:100%}
 }
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
 </style></head><body>
 <header class="demo-top"><div class="wrap"><a href="../START_HERE.html">← Back to portfolio</a><div class="right"><a href="funnel-experience.it.html" lang="it">IT</a><button id="theme" aria-label="Toggle theme">◐</button><span class="disclaimer">Synthetic interactive reconstruction based on real delivery patterns. No production or client data.</span></div></div></header>
 
@@ -198,37 +449,168 @@ a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible{ou
  <div class="chrome"><div class="dots"><i></i><i></i><i></i></div>
   <div class="urlbar"><span class="lock">🔒</span><span class="u" id="url">demo-launch.example/vsl</span><span class="reload" style="margin-left:auto">⟳</span></div>
  </div>
- <div class="viewport">
+ <div class="viewport" id="viewport">
 
-  <!-- PAGE A: landing / VSL -->
-  <div class="fpage on" id="pg-landing">
-   <div class="mk-hero">
-    <span class="mk-kicker">Free live masterclass</span>
-    <h2>Build a launch funnel that fills your webinar <em>while you sleep</em></h2>
-    <p class="sub">The Synthetic Launch Academy shows service founders the exact 3-page system that turns cold traffic into booked attendees, without an agency retainer.</p>
-    <div class="mk-video" id="playbtn"><span class="mk-vlabel">▶ 12:04 preview</span><div class="mk-play"></div><small>Click to play the 12-minute breakdown</small></div>
-   </div>
-   <div class="mk-body">
-    <h3>Here is what you will walk away with</h3>
-    <ul class="mk-bullets">
-     <li><span class="ck">✓</span><div>The page-by-page structure that took a cold audience to a 34% opt-in rate.</div></li>
-     <li><span class="ck">✓</span><div>The exact follow-up sequence that shows up for you automatically after every signup.</div></li>
-     <li><span class="ck">✓</span><div>How to route no-shows and attendees down two different paths without lifting a finger.</div></li>
-     <li><span class="ck">✓</span><div>A plug-and-play template you can copy into your own account this week.</div></li>
-    </ul>
-   </div>
-   <div class="mk-cta">
-    <button class="mk-btn" data-go="optin">Save my free seat →</button>
-    <div class="trust">No card required · 1,900+ founders have registered</div>
-   </div>
-   <div class="mk-social">
-    <div class="mk-quote">"I plugged this into my account on a Sunday and had 40 registrations before my next call. It just runs."<span>- demo testimonial, Synthetic Launch Academy</span></div>
-   </div>
+  <!-- PAGE A: landing -->
+  <div class="fpage on lp" id="pg-landing">
+
+   <nav class="lp-nav">
+    <div class="lp-logo"><span class="mark">SL</span><span>Synthetic Launch<small>Academy · demo brand</small></span></div>
+    <div class="lp-links"><a href="#lp-learn">What you learn</a><a href="#lp-modules">Curriculum</a><a href="#lp-host">Host</a><a href="#lp-faq">FAQ</a></div>
+    <button class="lp-navcta" data-go="optin">Save my seat</button>
+   </nav>
+
+   <header class="lp-hero">
+    <div class="lp-hero-in">
+     <div>
+      <span class="lp-badge"><i class="liv"></i>Free live masterclass · Thu 6 PM CET</span>
+      <h2>Build a launch funnel that fills your webinar <em>while you sleep</em></h2>
+      <p class="sub">The exact 3-page system that turns cold traffic into booked attendees, with the follow-up running itself. Built for service founders who do not want an agency retainer.</p>
+      <div class="lp-heroactions">
+       <button class="lp-btn" data-go="optin">Save my free seat →</button>
+       <button class="lp-btn ghost" id="watchBtn">▶ Watch the 12-min preview</button>
+      </div>
+      <div class="lp-proof">
+       <div class="lp-faces"><span style="background:#8fd7c4">AR</span><span style="background:#f2c98a">MK</span><span style="background:#b7c2f0">DS</span><span style="background:#f0a9a0">LT</span><span style="background:#a9e0f0">GV</span></div>
+       <div class="pt"><b>1,904 founders registered</b><span class="lp-stars">★★★★★</span> 4.8 average rating (synthetic)</div>
+      </div>
+     </div>
+     <div class="lp-vsl" id="playbtn">
+      <span class="lp-vtag">12:04</span>
+      <div class="lp-slide">
+       <div class="sb">Module 02 · the opt-in page</div>
+       <div class="st">Why 3 fields beat 7 every single time</div>
+       <div class="lp-slidebars"><i style="height:38%"></i><i style="height:56%"></i><i style="height:44%"></i><i style="height:72%"></i><i style="height:61%"></i><i style="height:88%"></i><i style="height:70%"></i><i style="height:96%"></i></div>
+      </div>
+      <div class="scrim"><div class="lp-play"></div><div class="vhint" id="vhint">Click to play the breakdown</div></div>
+      <div class="lp-vbar"><span class="tm">01:42</span><span class="track"><i></i></span><span class="tm">12:04</span></div>
+     </div>
+    </div>
+   </header>
+
+   <div class="lp-trustbar"><div class="in">
+    <span class="tl">As seen in</span>
+    <span class="lp-wm"><i>◈</i>Northbeam Weekly</span>
+    <span class="lp-wm w2">Ledger&amp;Loop</span>
+    <span class="lp-wm w3">Founders Digest</span>
+    <span class="lp-wm"><i>◆</i>Ascent Review</span>
+    <span class="lp-wm w2">Cadence FM</span>
+   </div></div>
+
+   <section class="lp-sec reveal" id="lp-learn">
+    <span class="lp-eyebrow">What you learn</span>
+    <h3>Four things you can copy into your own account the same week</h3>
+    <p class="lead">No theory blocks, no 40-slide warm-up. Each pillar maps to one page or one automation you will actually build.</p>
+    <div class="lp-pillars">
+     <div class="lp-pill"><div class="pi">◱</div><h4>The 3-page skeleton</h4><p>Landing, opt-in, thank you. What each page must say, and the one section most founders leave out.</p></div>
+     <div class="lp-pill"><div class="pi">⚡</div><h4>Follow-up that runs itself</h4><p>The trigger, the tags, the delays. Set once and every new lead gets the same treatment forever.</p></div>
+     <div class="lp-pill"><div class="pi">🔀</div><h4>Attendee vs no-show</h4><p>Two audiences, two stories. How to split them automatically the minute the live session ends.</p></div>
+     <div class="lp-pill"><div class="pi">📈</div><h4>Numbers that mean something</h4><p>The four metrics worth a dashboard, and the vanity ones to delete before they mislead you.</p></div>
+    </div>
+   </section>
+
+   <section class="lp-sec reveal" id="lp-modules" style="padding-top:0">
+    <span class="lp-eyebrow">Curriculum</span>
+    <h3>Six modules, 60 minutes live</h3>
+    <p class="lead">Open any module to see what is inside. Everything is delivered live, with the template pack handed over at the end.</p>
+    <div class="lp-acc">
+     <details open><summary><span class="mno">01</span>The offer behind the funnel<span class="mtime">08 min</span><span class="chev">⌄</span></summary><div class="body"><ul><li>Why a funnel amplifies an offer instead of fixing it</li><li>The one-sentence promise test</li><li>Picking the single audience the whole page speaks to</li></ul></div></details>
+     <details><summary><span class="mno">02</span>The landing page, block by block<span class="mtime">12 min</span><span class="chev">⌄</span></summary><div class="body"><ul><li>Hero, proof, pillars, curriculum, close: what each block has to do</li><li>Where the video helps and where it quietly costs you signups</li><li>How many calls to action is too many</li></ul></div></details>
+     <details><summary><span class="mno">03</span>The opt-in that converts<span class="mtime">09 min</span><span class="chev">⌄</span></summary><div class="body"><ul><li>Field count, labels, and the consent line that keeps you compliant</li><li>Inline validation so bad data never reaches the CRM</li><li>What to promise on the button</li></ul></div></details>
+     <details><summary><span class="mno">04</span>The thank-you page nobody builds<span class="mtime">07 min</span><span class="chev">⌄</span></summary><div class="body"><ul><li>Confirmation, calendar hold, countdown: the show-up trio</li><li>The bonus ask that costs nothing and lifts attendance</li><li>Tracking the confirmation, not just the opt-in</li></ul></div></details>
+     <details><summary><span class="mno">05</span>Automation and tagging<span class="mtime">14 min</span><span class="chev">⌄</span></summary><div class="body"><ul><li>One trigger, a clean tag, and a sequence you never touch again</li><li>Reminder cadence for email and SMS without being annoying</li><li>The attended vs no-show branch, built live</li></ul></div></details>
+     <details><summary><span class="mno">06</span>Reading the numbers<span class="mtime">10 min</span><span class="chev">⌄</span></summary><div class="body"><ul><li>The four tiles that belong on your dashboard</li><li>Where drop-off usually hides and how to confirm it</li><li>What to change first when the funnel underperforms</li></ul></div></details>
+    </div>
+   </section>
+
+   <section class="lp-sec reveal" id="lp-host" style="padding-top:0">
+    <span class="lp-eyebrow">Your host</span>
+    <h3>Who is running the session</h3>
+    <div class="lp-host">
+     <div class="lp-av">MR</div>
+     <div>
+      <h4>Marta Reneau</h4>
+      <div class="role">Fictional host · Synthetic Launch Academy</div>
+      <p>Marta is an invented persona created for this demo. In the story she has spent nine years building launch funnels for service businesses and now teaches the same three-page system she uses with clients.</p>
+      <p>The credentials below are synthetic placeholders. They exist to show how a credibility block is structured, not to describe a real person.</p>
+      <div class="lp-cred"><span>Demo credential · 9 years in launches</span><span>Demo credential · 240 funnels shipped</span><span>Demo credential · ex-agency lead</span><span>Fictional persona</span></div>
+     </div>
+    </div>
+   </section>
+
+   <section class="lp-sec reveal" style="padding-top:0">
+    <span class="lp-eyebrow">Feedback</span>
+    <h3>What past attendees said</h3>
+    <p class="lead">Sample testimonials written for this demo. Names, avatars and outcomes are invented.</p>
+    <div class="lp-testi">
+     <div class="lp-tc"><div class="qs">★★★★★</div><p>"I had a landing page already, but no follow-up at all. I rebuilt the sequence during the session and it has been running on its own since."</p><div class="who"><span class="ini" style="background:#8fd7c4">AR</span><div><b>Anouk Reyes</b><span>Demo testimonial · fictional</span></div></div></div>
+     <div class="lp-tc"><div class="qs">★★★★★</div><p>"The part on splitting attendees and no-shows was worth the hour by itself. I stopped sending the same email to everyone."</p><div class="who"><span class="ini" style="background:#f2c98a">MK</span><div><b>Milos Kade</b><span>Demo testimonial · fictional</span></div></div></div>
+     <div class="lp-tc"><div class="qs">★★★★★</div><p>"Clear, no filler, and I left with a template I could copy the same evening. Setup that used to take me a weekend took an afternoon."</p><div class="who"><span class="ini" style="background:#b7c2f0">DS</span><div><b>Dana Solberg</b><span>Demo testimonial · fictional</span></div></div></div>
+    </div>
+   </section>
+
+   <section class="lp-sec reveal" style="padding-top:0">
+    <div class="lp-nums">
+     <div class="lp-numgrid">
+      <div><b>4,820</b><span>Visitors last 30 days</span></div>
+      <div><b>34.0%</b><span>Landing to opt-in</span></div>
+      <div><b>1,904</b><span>Seats reserved</span></div>
+      <div><b>61%</b><span>Show-up rate</span></div>
+     </div>
+     <div class="lp-numnote">All figures on this page are synthetic demo data. Nothing here comes from a real account.</div>
+    </div>
+   </section>
+
+   <section class="lp-sec reveal" style="padding-top:0">
+    <div class="lp-guar">
+     <div class="lp-seal">✓</div>
+     <div>
+      <h4>Nothing to lose, by design</h4>
+      <p>The masterclass is free and there is no card at any point. If the first ten minutes are not useful, close the tab and the reminder sequence stops with one click on unsubscribe. In a paid version of this funnel, this is exactly where the refund window would sit.</p>
+     </div>
+    </div>
+   </section>
+
+   <section class="lp-sec reveal" id="lp-faq" style="padding-top:0">
+    <span class="lp-eyebrow">FAQ</span>
+    <h3>Questions people ask before signing up</h3>
+    <div class="lp-acc">
+     <details open><summary><span class="mno">?</span>Is this really free<span class="chev">⌄</span></summary><div class="body">Yes. There is no card field anywhere in this funnel. The opt-in asks for a first name and an email so the access link and the reminders can reach you.</div></details>
+     <details><summary><span class="mno">?</span>What if I cannot attend live<span class="chev">⌄</span></summary><div class="body">Register anyway. In the demo story the no-show branch of the automation sends a replay link the next morning, which is exactly the branch you will see in the second tab of this page.</div></details>
+     <details><summary><span class="mno">?</span>Do I need a specific CRM<span class="chev">⌄</span></summary><div class="body">The structure works on any tool with forms, tags and delays. The walkthrough uses a GoHighLevel-style builder because that is what the demo reconstructs.</div></details>
+     <details><summary><span class="mno">?</span>How much of it is selling<span class="chev">⌄</span></summary><div class="body">The last ten minutes present an offer. The first fifty are the build. That ratio is stated up front so nobody feels ambushed.</div></details>
+     <details><summary><span class="mno">?</span>Is any of this real data<span class="chev">⌄</span></summary><div class="body">No. Every name, logo, number and testimonial on this page is synthetic and exists only to demonstrate the structure of a premium launch page.</div></details>
+    </div>
+   </section>
+
+   <section class="lp-final">
+    <h3>The seat is free. The template is not theory.</h3>
+    <p>Sixty minutes, six modules, and a three-page system you can copy the same week. Reserve your spot before the room fills.</p>
+    <button class="lp-btn" data-go="optin">Save my free seat →</button>
+    <div class="tiny">No card required · 1,904 founders registered · unsubscribe in one click</div>
+   </section>
+
+   <footer class="lp-foot">
+    <div class="in">
+     <div>
+      <div class="fbrand"><span class="mark">SL</span>Synthetic Launch Academy</div>
+      <div>A fictional brand built for this portfolio demo. No company, product or offer behind this page exists.</div>
+     </div>
+     <div><h5>Program</h5><ul><li>Masterclass</li><li>Template pack</li><li>Curriculum</li><li>Replay policy</li></ul></div>
+     <div><h5>Company</h5><ul><li>About</li><li>Host</li><li>Press kit</li><li>Contact</li></ul></div>
+     <div><h5>Legal</h5><ul><li>Privacy policy</li><li>Terms of service</li><li>Cookie preferences</li><li>Imprint</li></ul></div>
+    </div>
+    <div class="fine">© 2026 Synthetic Launch Academy (fictional). Footer links are decorative and intentionally not clickable. Synthetic interactive reconstruction based on real delivery patterns. No production or client data.</div>
+   </footer>
   </div>
 
   <!-- PAGE B: opt-in -->
-  <div class="fpage" id="pg-optin">
+  <div class="fpage lp" id="pg-optin">
+   <nav class="lp-nav">
+    <div class="lp-logo"><span class="mark">SL</span><span>Synthetic Launch<small>Academy · demo brand</small></span></div>
+   </nav>
    <div class="mk-opt">
+    <div class="mk-steps"><span>Step 1 seat</span>›<b>Step 2 details</b>›<span>Step 3 confirmed</span></div>
     <h2>Almost there: save your seat</h2>
     <p class="lead">Enter your details and we will send the access link plus a calendar hold.</p>
     <form class="mk-form" id="optForm" novalidate>
@@ -244,14 +626,17 @@ a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible{ou
      </div>
      <label class="mk-consent"><input type="checkbox" id="f-gdpr"><span>I agree to receive the masterclass access link and related emails. I can unsubscribe at any time. (GDPR consent)</span></label>
      <span class="mk-err" id="e-gdpr" style="margin:-12px 0 10px"></span>
-     <button class="mk-btn" type="submit">Reserve my seat →</button>
+     <button class="lp-btn" type="submit">Reserve my seat →</button>
      <div class="mk-secure">🔒 Your details are safe. This is a synthetic demo, no data is stored.</div>
     </form>
    </div>
   </div>
 
   <!-- PAGE C: thank you -->
-  <div class="fpage" id="pg-ty">
+  <div class="fpage lp" id="pg-ty">
+   <nav class="lp-nav">
+    <div class="lp-logo"><span class="mark">SL</span><span>Synthetic Launch<small>Academy · demo brand</small></span></div>
+   </nav>
    <div class="mk-ty">
     <div class="mk-check">✓</div>
     <h2>You are in, <span id="ty-name">friend</span>!</h2>
@@ -264,6 +649,7 @@ a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible{ou
      <button class="mk-cal" id="calBtn">📅 Add to calendar</button>
      <div class="mk-caldone" id="calDone">✓ Calendar hold created (demo)</div>
     </div>
+    <div class="mk-next">Open the second tab above to watch what this signup just triggered inside the CRM.</div>
    </div>
   </div>
 
@@ -281,56 +667,190 @@ a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible{ou
 <div class="ghl">
  <div class="ghl-side">
   <div class="ghl-brand"><div class="logo">S</div><div class="bt">SynthOps CRM<small>builder view · demo</small></div></div>
-  <ul class="ghl-nav">
-   <li><span class="ic">◱</span>Dashboard</li>
-   <li><span class="ic">👥</span>Contacts</li>
-   <li class="act"><span class="ic">⚡</span>Funnels &amp; Automation</li>
-   <li><span class="ic">✉</span>Email &amp; SMS</li>
-   <li><span class="ic">📅</span>Calendars</li>
-   <li><span class="ic">📊</span>Reporting</li>
+  <ul class="ghl-nav" id="crmNav">
+   <li class="navlabel">Workspace</li>
+   <li><button data-v="dash" class="act"><span class="ic">◱</span>Dashboard</button></li>
+   <li><button data-v="contacts"><span class="ic">👥</span>Contacts</button></li>
+   <li><button data-v="funnels"><span class="ic">⚡</span>Funnels &amp; Automation</button></li>
+   <li class="navlabel">Channels</li>
+   <li><button data-v="email"><span class="ic">✉</span>Email &amp; SMS</button></li>
+   <li><button data-v="cal"><span class="ic">📅</span>Calendars</button></li>
+   <li><button data-v="rep"><span class="ic">📊</span>Reporting</button></li>
   </ul>
  </div>
  <div class="ghl-main">
   <div class="ghl-bar">
-   <h2>July webinar launch</h2>
-   <div class="ghl-switch"><button class="on" data-gp="steps">Funnel steps</button><button data-gp="auto">Automation</button></div>
+   <div><h2 id="crmTitle">Dashboard</h2><div class="sub" id="crmSub">July webinar launch · synthetic workspace</div></div>
+   <div class="ghl-switch" id="funnelSwitch" style="display:none"><button class="on" data-gp="steps">Funnel steps</button><button data-gp="auto">Automation</button></div>
   </div>
 
-  <div class="ghl-panel on" id="gp-steps">
-   <div class="stat3">
-    <div class="s"><b>4,820</b><span>Visitors (30d)</span></div>
-    <div class="s"><b>1,640</b><span>Leads captured</span></div>
-    <div class="s"><b>34.0%</b><span>Landing → opt-in</span></div>
+  <!-- DASHBOARD -->
+  <div class="crm-view on" id="v-dash">
+   <div class="kpi4">
+    <div class="kpi"><div class="kl">Visitors 30d</div><b>4,820</b><div class="kd">▲ 12.4% vs prev</div></div>
+    <div class="kpi"><div class="kl">Leads captured</div><b>1,640</b><div class="kd">▲ 8.1% vs prev</div></div>
+    <div class="kpi"><div class="kl">Opt-in rate</div><b>34.0%</b><div class="kd">▲ 1.6 pts</div></div>
+    <div class="kpi"><div class="kl">Show-up rate</div><b>61.2%</b><div class="kd down">▼ 2.3 pts</div></div>
    </div>
-   <div class="fsteps">
-    <div class="fstep"><div class="num">STEP 1</div><h4>Landing / VSL</h4><div class="thumb">▶ sales video page</div><div class="cvr">100%<small>4,820 in</small></div><div class="fbar"><i style="width:100%"></i></div></div>
-    <div class="farrow">→</div>
-    <div class="fstep"><div class="num">STEP 2</div><h4>Opt-in form</h4><div class="thumb">✎ name + email</div><div class="cvr">34.0%<small>1,640 opt-ins</small></div><div class="fbar"><i style="width:34%"></i></div></div>
-    <div class="farrow">→</div>
-    <div class="fstep"><div class="num">STEP 3</div><h4>Thank you</h4><div class="thumb">✓ webinar confirmed</div><div class="cvr">31.6%<small>1,523 confirmed</small></div><div class="fbar"><i style="width:31.6%"></i></div></div>
+   <div class="grid2">
+    <div class="cardbox">
+     <h4>New leads, last 30 days</h4>
+     <p class="ch">Synthetic daily counts. Peak on day 29 after the reminder SMS went out.</p>
+     <div class="chartwrap"><svg viewBox="0 0 600 200" role="img" aria-label="Line chart of synthetic daily leads over 30 days">
+      <defs><linearGradient id="gA" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3fd0e0" stop-opacity=".45"/><stop offset="100%" stop-color="#3fd0e0" stop-opacity="0"/></linearGradient></defs>
+      <g stroke="currentColor" opacity=".16"><line x1="10" y1="40" x2="590" y2="40"/><line x1="10" y1="80" x2="590" y2="80"/><line x1="10" y1="120" x2="590" y2="120"/><line x1="10" y1="160" x2="590" y2="160"/></g>
+      <polygon fill="url(#gA)" points="10,128 30,123 50,131 70,117 90,110 110,120 130,126 150,113 170,104 190,108 210,116 230,99 250,92 270,102 290,96 310,83 330,89 350,78 370,84 390,71 410,62 430,74 450,66 470,53 490,59 510,48 530,54 550,42 570,32 590,38 590,170 10,170"/>
+      <polyline fill="none" stroke="#3fd0e0" stroke-width="2.5" stroke-linejoin="round" points="10,128 30,123 50,131 70,117 90,110 110,120 130,126 150,113 170,104 190,108 210,116 230,99 250,92 270,102 290,96 310,83 330,89 350,78 370,84 390,71 410,62 430,74 450,66 470,53 490,59 510,48 530,54 550,42 570,32 590,38"/>
+      <circle cx="570" cy="32" r="4.5" fill="#5fd08a"/>
+      <g fill="currentColor" font-family="monospace" font-size="14" opacity=".6"><text x="10" y="192">Day 1</text><text x="270" y="192" text-anchor="middle">Day 15</text><text x="590" y="192" text-anchor="end">Day 30</text></g>
+     </svg></div>
+    </div>
+    <div class="cardbox">
+     <h4>Recent activity</h4>
+     <p class="ch">Live event stream from the synthetic workspace.</p>
+     <ul class="feed">
+      <li><span class="fi">✉</span><span class="ft"><b>Reminder email sent</b><span>Sequence "Webinar reminders" · 412 recipients</span></span><span class="fw">4m</span></li>
+      <li><span class="fi">👤</span><span class="ft"><b>New contact: Dana Solberg</b><span>Source: Meta ads · tagged webinar-jul-lead</span></span><span class="fw">11m</span></li>
+      <li><span class="fi">📅</span><span class="ft"><b>Booking confirmed</b><span>Strategy call · Wed 15:00</span></span><span class="fw">26m</span></li>
+      <li><span class="fi">🔀</span><span class="ft"><b>Branch executed</b><span>128 contacts routed to the no-show path</span></span><span class="fw">1h</span></li>
+      <li><span class="fi">💬</span><span class="ft"><b>SMS reminder queued</b><span>287 recipients · fires tomorrow 17:00</span></span><span class="fw">2h</span></li>
+      <li><span class="fi">🏷</span><span class="ft"><b>Tag applied in bulk</b><span>webinar-jul-attended · 340 contacts</span></span><span class="fw">3h</span></li>
+     </ul>
+    </div>
    </div>
-   <p class="autohint" style="margin-top:18px">These are the three pages from the first tab, shown as the builder sees them. Each card is one editable page; the percentage is how many visitors made it that far. Open <b>Automation</b> to see what fires the moment someone submits the form.</p>
+   <p class="autohint">Every tile and row here is synthetic. The point is the shape of the workspace a founder logs into, not the figures.</p>
   </div>
 
-  <div class="ghl-panel" id="gp-auto">
-   <p class="autohint">This is the workflow that runs by itself after every opt-in. One trigger, then a chain of actions. No human touches it.</p>
-   <div class="flow">
-    <div class="acard trigger"><div class="ai">⚡</div><div class="atxt"><b>Form submitted</b><span>Trigger · opt-in form on the launch funnel</span></div><span class="atag">Trigger</span></div>
-    <div class="aconn"></div>
-    <div class="acard action"><div class="ai">🏷</div><div class="atxt"><b>Add tag: webinar-jul-lead</b><span>Marks the contact so reporting and segments stay clean</span></div><span class="atag">Action</span></div>
-    <div class="aconn"></div>
-    <div class="acard action"><div class="ai">✉</div><div class="atxt"><b>Send email · Day 0</b><span>"Your seat is confirmed" with the access link + calendar file</span></div><span class="atag">Action</span></div>
-    <div class="aconn"></div>
-    <div class="acard delay"><div class="ai">⏳</div><div class="atxt"><b>Wait 2 days</b><span>Pause the sequence until closer to the live date</span></div><span class="atag">Delay</span></div>
-    <div class="aconn"></div>
-    <div class="acard action"><div class="ai">💬</div><div class="atxt"><b>Send SMS · reminder</b><span>"We go live tomorrow at 6 PM CET, here is your link"</span></div><span class="atag">Action</span></div>
-    <div class="aconn"></div>
-    <div class="acard action"><div class="ai">🔀</div><div class="atxt"><b>Branch: attended vs no-show</b><span>After the webinar, split contacts down two different follow-ups</span></div><span class="atag">Action</span></div>
+  <!-- CONTACTS -->
+  <div class="crm-view" id="v-contacts">
+   <div class="searchrow">
+    <input type="search" id="cSearch" placeholder="Search name, email, source or stage" aria-label="Search contacts">
+    <span class="cnt" id="cCount">12 of 12 contacts</span>
    </div>
-   <div class="legend"><span><i style="background:var(--amber)"></i>Trigger (what starts it)</span><span><i style="background:var(--acc)"></i>Action (what it does)</span><span><i style="background:var(--line2)"></i>Delay (a timed pause)</span></div>
+   <div class="tablewrap"><table class="dt">
+    <thead><tr><th>Contact</th><th>Source</th><th>Stage</th><th>Added</th></tr></thead>
+    <tbody id="cBody"></tbody>
+   </table></div>
+   <p class="autohint" style="margin-top:14px">Click any row to open the contact record, the same drawer an operator uses to check what a lead has received.</p>
+  </div>
+
+  <!-- FUNNELS -->
+  <div class="crm-view" id="v-funnels">
+   <div class="ghl-panel on" id="gp-steps">
+    <div class="stat3">
+     <div class="s"><b>4,820</b><span>Visitors (30d)</span></div>
+     <div class="s"><b>1,640</b><span>Leads captured</span></div>
+     <div class="s"><b>34.0%</b><span>Landing → opt-in</span></div>
+    </div>
+    <div class="fsteps">
+     <div class="fstep"><div class="num">STEP 1</div><h4>Landing / VSL</h4><div class="thumb">▶ sales video page</div><div class="cvr">100%<small>4,820 in</small></div><div class="fbar"><i style="width:100%"></i></div></div>
+     <div class="farrow">→</div>
+     <div class="fstep"><div class="num">STEP 2</div><h4>Opt-in form</h4><div class="thumb">✎ name + email</div><div class="cvr">34.0%<small>1,640 opt-ins</small></div><div class="fbar"><i style="width:34%"></i></div></div>
+     <div class="farrow">→</div>
+     <div class="fstep"><div class="num">STEP 3</div><h4>Thank you</h4><div class="thumb">✓ webinar confirmed</div><div class="cvr">31.6%<small>1,523 confirmed</small></div><div class="fbar"><i style="width:31.6%"></i></div></div>
+    </div>
+    <p class="autohint" style="margin-top:18px">These are the three pages from the first tab, shown as the builder sees them. Each card is one editable page; the percentage is how many visitors made it that far. Open <b>Automation</b> to see what fires the moment someone submits the form.</p>
+   </div>
+
+   <div class="ghl-panel" id="gp-auto">
+    <p class="autohint">This is the workflow that runs by itself after every opt-in. One trigger, then a chain of actions. No human touches it.</p>
+    <div class="flow">
+     <div class="acard trigger"><div class="ai">⚡</div><div class="atxt"><b>Form submitted</b><span>Trigger · opt-in form on the launch funnel</span></div><span class="atag">Trigger</span></div>
+     <div class="aconn"></div>
+     <div class="acard action"><div class="ai">🏷</div><div class="atxt"><b>Add tag: webinar-jul-lead</b><span>Marks the contact so reporting and segments stay clean</span></div><span class="atag">Action</span></div>
+     <div class="aconn"></div>
+     <div class="acard action"><div class="ai">✉</div><div class="atxt"><b>Send email · Day 0</b><span>"Your seat is confirmed" with the access link + calendar file</span></div><span class="atag">Action</span></div>
+     <div class="aconn"></div>
+     <div class="acard delay"><div class="ai">⏳</div><div class="atxt"><b>Wait 2 days</b><span>Pause the sequence until closer to the live date</span></div><span class="atag">Delay</span></div>
+     <div class="aconn"></div>
+     <div class="acard action"><div class="ai">💬</div><div class="atxt"><b>Send SMS · reminder</b><span>"We go live tomorrow at 6 PM CET, here is your link"</span></div><span class="atag">Action</span></div>
+     <div class="aconn"></div>
+     <div class="acard action"><div class="ai">🔀</div><div class="atxt"><b>Branch: attended vs no-show</b><span>After the webinar, split contacts down two different follow-ups</span></div><span class="atag">Action</span></div>
+    </div>
+    <div class="legend"><span><i style="background:var(--amber)"></i>Trigger (what starts it)</span><span><i style="background:var(--acc)"></i>Action (what it does)</span><span><i style="background:var(--line2)"></i>Delay (a timed pause)</span></div>
+   </div>
+  </div>
+
+  <!-- EMAIL & SMS -->
+  <div class="crm-view" id="v-email">
+   <p class="autohint">Five sequences live in this workspace. Click one to preview the message a contact actually receives.</p>
+   <div class="grid2">
+    <div>
+     <div class="seqlist" id="seqList"></div>
+    </div>
+    <div>
+     <div class="mailprev">
+      <div class="mh"><b id="mSubj">Your seat is confirmed 🎟</b><span id="mMeta">From Synthetic Launch Academy · to contact@example.invalid</span></div>
+      <div class="mailbody" id="mBody"></div>
+     </div>
+    </div>
+   </div>
+  </div>
+
+  <!-- CALENDARS -->
+  <div class="crm-view" id="v-cal">
+   <p class="autohint">Booking calendar for the week of July 27. Slots are synthetic and colour-coded by appointment type.</p>
+   <div class="calwrap"><div class="calgrid" id="calGrid"></div></div>
+   <div class="callegend">
+    <span><i style="background:var(--acc)"></i>Strategy call</span>
+    <span><i style="background:var(--ok)"></i>Onboarding</span>
+    <span><i style="background:var(--amber)"></i>Live masterclass</span>
+    <span><i style="background:#a06bf0"></i>Internal review</span>
+   </div>
+  </div>
+
+  <!-- REPORTING -->
+  <div class="crm-view" id="v-rep">
+   <div class="grid2">
+    <div class="cardbox">
+     <h4>Funnel conversion by step</h4>
+     <p class="ch">Share of the original 4,820 visitors reaching each step. Synthetic demo data.</p>
+     <div class="chartwrap"><svg viewBox="0 0 600 220" role="img" aria-label="Bar chart of funnel conversion by step">
+      <g stroke="currentColor" opacity=".16"><line x1="0" y1="30" x2="600" y2="30"/><line x1="0" y1="75" x2="600" y2="75"/><line x1="0" y1="120" x2="600" y2="120"/><line x1="0" y1="165" x2="600" y2="165"/></g>
+      <g fill="#3fd0e0">
+       <rect x="26" y="15" width="82" height="150" rx="4"/>
+       <rect x="146" y="114" width="82" height="51" rx="4"/>
+       <rect x="266" y="118" width="82" height="47" rx="4"/>
+       <rect x="386" y="136" width="82" height="29" rx="4"/>
+       <rect x="506" y="150" width="82" height="15" rx="4"/>
+      </g>
+      <g fill="currentColor" font-family="monospace" font-size="14" text-anchor="middle">
+       <text x="67" y="185">Visit</text><text x="187" y="185">Opt-in</text><text x="307" y="185">Confirm</text><text x="427" y="185">Attend</text><text x="547" y="185">Booked</text>
+       <text x="67" y="207" opacity=".65">100%</text><text x="187" y="207" opacity=".65">34.0%</text><text x="307" y="207" opacity=".65">31.6%</text><text x="427" y="207" opacity=".65">19.3%</text><text x="547" y="207" opacity=".65">9.8%</text>
+      </g>
+     </svg></div>
+    </div>
+    <div class="cardbox">
+     <h4>Synthetic revenue, 12 weeks (demo)</h4>
+     <p class="ch">Invented figures in thousands. Included to show the chart, not to claim a result.</p>
+     <div class="chartwrap"><svg viewBox="0 0 600 220" role="img" aria-label="Line chart of synthetic weekly revenue over twelve weeks">
+      <defs><linearGradient id="gB" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#5fd08a" stop-opacity=".4"/><stop offset="100%" stop-color="#5fd08a" stop-opacity="0"/></linearGradient></defs>
+      <g stroke="currentColor" opacity=".16"><line x1="0" y1="40" x2="600" y2="40"/><line x1="0" y1="80" x2="600" y2="80"/><line x1="0" y1="120" x2="600" y2="120"/><line x1="0" y1="160" x2="600" y2="160"/></g>
+      <polygon fill="url(#gB)" points="20,124 70,115 120,117 170,101 220,93 270,97 320,81 370,67 420,73 470,58 520,42 570,28 570,170 20,170"/>
+      <polyline fill="none" stroke="#5fd08a" stroke-width="2.5" stroke-linejoin="round" points="20,124 70,115 120,117 170,101 220,93 270,97 320,81 370,67 420,73 470,58 520,42 570,28"/>
+      <g fill="currentColor" font-family="monospace" font-size="14" opacity=".65"><text x="20" y="192">W1</text><text x="170" y="192">W4</text><text x="320" y="192">W7</text><text x="470" y="192">W10</text><text x="545" y="192">W12</text></g>
+      <g fill="currentColor" font-family="monospace" font-size="14" opacity=".65"><text x="0" y="212">Synthetic demo figures, no real revenue</text></g>
+     </svg></div>
+    </div>
+   </div>
+   <div class="cardbox">
+    <h4>Campaign summary</h4>
+    <p class="ch">Traffic sources feeding the same funnel. All values synthetic.</p>
+    <div class="tablewrap"><table class="dt static">
+     <thead><tr><th>Source</th><th>Visitors</th><th>Leads</th><th>Opt-in rate</th><th>Show-up</th></tr></thead>
+     <tbody>
+      <tr><td><b>Meta ads</b></td><td>2,140</td><td>742</td><td>34.7%</td><td>58.9%</td></tr>
+      <tr><td><b>Email list</b></td><td>1,180</td><td>498</td><td>42.2%</td><td>71.4%</td></tr>
+      <tr><td><b>Organic search</b></td><td>760</td><td>216</td><td>28.4%</td><td>60.1%</td></tr>
+      <tr><td><b>Referral</b></td><td>430</td><td>132</td><td>30.7%</td><td>64.8%</td></tr>
+      <tr><td><b>Direct</b></td><td>310</td><td>52</td><td>16.8%</td><td>49.2%</td></tr>
+     </tbody>
+    </table></div>
+   </div>
   </div>
 
  </div>
+ <aside class="drawer" id="drawer" aria-hidden="true"></aside>
 </div>
 </section>
 
@@ -356,6 +876,7 @@ const pages={landing:document.getElementById('pg-landing'),optin:document.getEle
 const urls={landing:'demo-launch.example/vsl',optin:'demo-launch.example/register',ty:'demo-launch.example/confirmed'};
 const dots=document.getElementById('dots').children;
 const hexp=document.getElementById('hexp');
+const viewport=document.getElementById('viewport');
 const EXP={
  landing:'The lead landed on the sales page. Nothing has been captured yet, they are just watching the pitch. Click <b>Save my free seat</b> to move to the opt-in.<span class="tech">Behind it: a page view is tracked, the traffic source is remembered for attribution.</span>',
  optin:'The lead is filling in the form. The email is validated live and consent is required before anything can be sent.<span class="tech">Behind it: nothing is stored until the form passes validation, so junk data never reaches the CRM.</span>',
@@ -367,11 +888,25 @@ function goto(page){
  hexp.innerHTML=EXP[page];
  const idx={landing:0,optin:1,ty:2}[page];
  [...dots].forEach((d,i)=>d.classList.toggle('on',i<=idx));
- document.querySelector('.viewport').scrollTop=0;
+ viewport.scrollTop=0;
  window.scrollTo({top:document.querySelector('.browser').offsetTop-70,behavior:'smooth'});
 }
 document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>goto(b.dataset.go));
-document.getElementById('playbtn').onclick=function(){this.querySelector('small').textContent='(demo video, playback is simulated)'};
+const vhint=document.getElementById('vhint');
+function playFake(){vhint.textContent='(demo video, playback is simulated)'}
+document.getElementById('playbtn').onclick=playFake;
+document.getElementById('watchBtn').onclick=()=>{playFake();document.getElementById('playbtn').scrollIntoView({behavior:'smooth',block:'center'})};
+
+/* in-frame anchor links scroll inside the viewport */
+document.querySelectorAll('.lp-links a').forEach(a=>a.onclick=e=>{
+ e.preventDefault();
+ const t=document.querySelector(a.getAttribute('href'));
+ if(t)viewport.scrollTo({top:t.offsetTop-70,behavior:'smooth'});
+});
+
+/* scroll reveals */
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{root:viewport,threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
 /* opt-in validation */
 const form=document.getElementById('optForm');
@@ -410,11 +945,129 @@ function startCountdown(){
 }
 document.getElementById('calBtn').onclick=function(){this.style.display='none';document.getElementById('calDone').style.display='block'};
 
-/* GHL sub-switch */
+/* ---------- CRM router ---------- */
+const META={
+ dash:['Dashboard','July webinar launch · synthetic workspace'],
+ contacts:['Contacts','1,640 leads in this workspace · synthetic records'],
+ funnels:['Funnels & Automation','July webinar launch · 3 pages, 1 workflow'],
+ email:['Email & SMS','5 sequences · synthetic send metrics'],
+ cal:['Calendars','Week of July 27 · synthetic bookings'],
+ rep:['Reporting','Last 30 days · synthetic demo data']
+};
+const fSwitch=document.getElementById('funnelSwitch');
+function showView(v){
+ document.querySelectorAll('.crm-view').forEach(x=>x.classList.toggle('on',x.id==='v-'+v));
+ document.querySelectorAll('#crmNav button').forEach(b=>b.classList.toggle('act',b.dataset.v===v));
+ document.getElementById('crmTitle').textContent=META[v][0];
+ document.getElementById('crmSub').textContent=META[v][1];
+ fSwitch.style.display=v==='funnels'?'':'none';
+ closeDrawer();
+}
+document.querySelectorAll('#crmNav button').forEach(b=>b.onclick=()=>showView(b.dataset.v));
+
+/* funnel sub-switch */
 document.querySelectorAll('.ghl-switch button').forEach(b=>b.onclick=()=>{
  document.querySelectorAll('.ghl-switch button').forEach(x=>x.classList.toggle('on',x===b));
  document.getElementById('gp-steps').classList.toggle('on',b.dataset.gp==='steps');
  document.getElementById('gp-auto').classList.toggle('on',b.dataset.gp==='auto');
 });
+
+/* contacts */
+const AV=['#8fd7c4','#f2c98a','#b7c2f0','#f0a9a0','#a9e0f0','#d6c4f0','#c8e6a0','#f0c8d8'];
+const CONTACTS=[
+ {n:'Anouk Reyes',e:'anouk.reyes@example.invalid',s:'Meta ads',st:'attended',stl:'Attended',d:'24 Jul 2026',ph:'+00 000 0000 001',tags:['webinar-jul-lead','webinar-jul-attended'],last:'Opened "Replay inside" · 2h ago',val:'Registered 24 Jul, attended 60 of 60 min'},
+ {n:'Milos Kade',e:'milos.kade@example.invalid',s:'Email list',st:'reg',stl:'Registered',d:'24 Jul 2026',ph:'+00 000 0000 002',tags:['webinar-jul-lead'],last:'Received "Your seat is confirmed" · 1d ago',val:'Reminder SMS queued for 29 Jul'},
+ {n:'Dana Solberg',e:'dana.solberg@example.invalid',s:'Meta ads',st:'lead',stl:'Lead',d:'25 Jul 2026',ph:'+00 000 0000 003',tags:['webinar-jul-lead'],last:'Form submitted · 11m ago',val:'Entered the automation, day 0 email sent'},
+ {n:'Priya Ranjit',e:'priya.ranjit@example.invalid',s:'Organic search',st:'cust',stl:'Customer',d:'19 Jul 2026',ph:'+00 000 0000 004',tags:['webinar-jul-attended','offer-accepted'],last:'Booked a strategy call · 3d ago',val:'Moved to the post-purchase sequence'},
+ {n:'Tomas Wehrli',e:'tomas.wehrli@example.invalid',s:'Referral',st:'no',stl:'No-show',d:'22 Jul 2026',ph:'+00 000 0000 005',tags:['webinar-jul-lead','no-show'],last:'Replay link sent · 1d ago',val:'Routed down the no-show branch'},
+ {n:'Ingrid Bauer',e:'ingrid.bauer@example.invalid',s:'Email list',st:'attended',stl:'Attended',d:'23 Jul 2026',ph:'+00 000 0000 006',tags:['webinar-jul-attended'],last:'Clicked the offer link · 5h ago',val:'Hot: two link clicks in 24 hours'},
+ {n:'Samir Oduya',e:'samir.oduya@example.invalid',s:'Meta ads',st:'lead',stl:'Lead',d:'25 Jul 2026',ph:'+00 000 0000 007',tags:['webinar-jul-lead'],last:'Form submitted · 40m ago',val:'Confirmation email delivered'},
+ {n:'Elena Marchetti',e:'elena.marchetti@example.invalid',s:'Direct',st:'reg',stl:'Registered',d:'21 Jul 2026',ph:'+00 000 0000 008',tags:['webinar-jul-lead'],last:'Calendar hold created · 4d ago',val:'Added the event to their calendar'},
+ {n:'Noah Fitzgerald',e:'noah.fitzgerald@example.invalid',s:'Organic search',st:'no',stl:'No-show',d:'20 Jul 2026',ph:'+00 000 0000 009',tags:['webinar-jul-lead','no-show'],last:'Replay link sent · 2d ago',val:'Replay opened, not watched'},
+ {n:'Yuki Tanabe',e:'yuki.tanabe@example.invalid',s:'Referral',st:'attended',stl:'Attended',d:'23 Jul 2026',ph:'+00 000 0000 010',tags:['webinar-jul-attended'],last:'Replied to the follow-up · 8h ago',val:'Reply routed to a human operator'},
+ {n:'Alice Nordmann',e:'alice.nordmann@example.invalid',s:'Email list',st:'cust',stl:'Customer',d:'18 Jul 2026',ph:'+00 000 0000 011',tags:['offer-accepted','onboarding'],last:'Onboarding call booked · 6d ago',val:'Removed from the reminder sequence'},
+ {n:'Bruno Estevez',e:'bruno.estevez@example.invalid',s:'Meta ads',st:'lead',stl:'Lead',d:'25 Jul 2026',ph:'+00 000 0000 012',tags:['webinar-jul-lead'],last:'Form submitted · 2h ago',val:'Day 0 email opened once'}
+];
+const cBody=document.getElementById('cBody'),cCount=document.getElementById('cCount'),cSearch=document.getElementById('cSearch');
+const ini=n=>n.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+function renderContacts(q){
+ const t=(q||'').trim().toLowerCase();
+ const rows=CONTACTS.filter(c=>!t||(c.n+' '+c.e+' '+c.s+' '+c.stl).toLowerCase().includes(t));
+ cBody.innerHTML=rows.length?rows.map(c=>{
+  const i=CONTACTS.indexOf(c);
+  return '<tr data-i="'+i+'"><td><span class="who2"><span class="ini" style="background:'+AV[i%AV.length]+'">'+ini(c.n)+'</span><span><b>'+c.n+'</b><span>'+c.e+'</span></span></span></td><td>'+c.s+'</td><td><span class="pill '+c.st+'">'+c.stl+'</span></td><td>'+c.d+'</td></tr>';
+ }).join(''):'<tr><td colspan="4" class="emptyrow">No contact matches that search.</td></tr>';
+ cCount.textContent=rows.length+' of '+CONTACTS.length+' contacts';
+ cBody.querySelectorAll('tr[data-i]').forEach(tr=>tr.onclick=()=>openContact(+tr.dataset.i));
+}
+cSearch.oninput=()=>renderContacts(cSearch.value);
+renderContacts('');
+
+const drawer=document.getElementById('drawer');
+function openContact(i){
+ const c=CONTACTS[i];
+ drawer.innerHTML='<button class="dclose" id="dClose" aria-label="Close contact">✕</button>'
+ +'<div class="dhead"><span class="ini" style="background:'+AV[i%AV.length]+'">'+ini(c.n)+'</span><span><b>'+c.n+'</b><span>'+c.e+'</span></span></div>'
+ +'<div class="drow"><span class="dk">Stage</span><span class="dv"><span class="pill '+c.st+'">'+c.stl+'</span></span></div>'
+ +'<div class="drow"><span class="dk">Source</span><span class="dv">'+c.s+'</span></div>'
+ +'<div class="drow"><span class="dk">Phone</span><span class="dv">'+c.ph+'</span></div>'
+ +'<div class="drow"><span class="dk">Added</span><span class="dv">'+c.d+'</span></div>'
+ +'<div class="dsec">Tags</div><div class="dtags">'+c.tags.map(t=>'<span>'+t+'</span>').join('')+'</div>'
+ +'<div class="dsec">Last activity</div><p style="font-size:14px;margin:0 0 10px">'+c.last+'</p>'
+ +'<div class="dsec">Where they are in the machine</div><p style="font-size:14px;margin:0">'+c.val+'</p>'
+ +'<p class="autohint" style="margin-top:18px">Synthetic record. The email domain example.invalid can never route to a real inbox.</p>';
+ drawer.classList.add('open');drawer.setAttribute('aria-hidden','false');
+ document.getElementById('dClose').onclick=closeDrawer;
+ document.getElementById('dClose').focus();
+}
+function closeDrawer(){drawer.classList.remove('open');drawer.setAttribute('aria-hidden','true')}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawer()});
+
+/* email & sms */
+const SEQ=[
+ {i:'✉',n:'Webinar confirmation',d:'1 email · fires on opt-in',sent:'1,640',open:'68.4%',subj:'Your seat is confirmed 🎟',meta:'From Synthetic Launch Academy · to contact@example.invalid',
+  body:'<h5>You are in. Here is your access link.</h5><p>Hi {{first_name}},</p><p>Your seat for <b>The 3-Page Launch Funnel</b> is reserved. We go live Thursday at 6:00 PM CET and the room opens ten minutes early.</p><p><span class="mbtn">Join the masterclass →</span></p><p>Add it to your calendar now so it does not get buried. If you cannot make it live, register anyway and the replay comes to this same address.</p><div class="msig">Synthetic Launch Academy · fictional brand · demo email, never sent</div>'},
+ {i:'⏰',n:'Webinar reminders',d:'3 emails · day -2, day -1, 1 hour before',sent:'4,102',open:'54.1%',subj:'We go live tomorrow at 6 PM CET',meta:'From Synthetic Launch Academy · to contact@example.invalid',
+  body:'<h5>Tomorrow, 6:00 PM CET.</h5><p>Hi {{first_name}},</p><p>Quick reminder: the masterclass runs tomorrow evening. Sixty minutes, six modules, and the template pack at the end.</p><p><span class="mbtn">Save the link →</span></p><p>Bring the page you already have. Module 02 is the one where most founders find the leak.</p><div class="msig">Synthetic Launch Academy · fictional brand · demo email, never sent</div>'},
+ {i:'💬',n:'SMS reminder',d:'1 SMS · 3 hours before live',sent:'1,203',open:'92.0%',subj:'SMS · going live in 3 hours',meta:'Sender: SYNTHLA · to +00 000 0000 000',
+  body:'<h5>SMS preview</h5><p style="background:#eef6f8;border-radius:12px;padding:14px;font-size:15px">Hi {{first_name}}, we go live in 3 hours. Here is your link: demo-launch.example/live · reply STOP to opt out.</p><p style="color:#5f7186;font-size:14px">160 characters, one segment. Sent only to contacts who gave phone consent.</p><div class="msig">Synthetic Launch Academy · fictional brand · demo message, never sent</div>'},
+ {i:'🔀',n:'No-show recovery',d:'2 emails · replay + last call',sent:'987',open:'41.7%',subj:'You missed it, the replay is inside',meta:'From Synthetic Launch Academy · to contact@example.invalid',
+  body:'<h5>The replay is up for 48 hours.</h5><p>Hi {{first_name}},</p><p>You registered but did not make it live, which happens. The full session is inside, including the automation build in module 05.</p><p><span class="mbtn">Watch the replay →</span></p><p>After Friday the link expires and this sequence stops on its own.</p><div class="msig">Synthetic Launch Academy · fictional brand · demo email, never sent</div>'},
+ {i:'🎯',n:'Attendee follow-up',d:'3 emails · offer, objections, last call',sent:'1,340',open:'59.8%',subj:'The template pack, plus what comes next',meta:'From Synthetic Launch Academy · to contact@example.invalid',
+  body:'<h5>Your template pack is attached.</h5><p>Hi {{first_name}},</p><p>Thanks for staying to the end. Here is the three-page template and the automation blueprint we built together.</p><p><span class="mbtn">Download the pack →</span></p><p>If you want the version with the done-for-you setup, the details are on the page below. No pressure, the templates are yours either way.</p><div class="msig">Synthetic Launch Academy · fictional brand · demo email, never sent</div>'}
+];
+const seqList=document.getElementById('seqList');
+seqList.innerHTML=SEQ.map((s,i)=>'<button class="seqrow'+(i===0?' sel':'')+'" data-s="'+i+'"><span class="si">'+s.i+'</span><span class="st"><b>'+s.n+'</b><span>'+s.d+'</span></span><span class="seqmetrics"><span><b>'+s.sent+'</b><span>sent</span></span><span><b>'+s.open+'</b><span>open rate</span></span></span></button>').join('');
+function showMail(i){
+ const s=SEQ[i];
+ document.getElementById('mSubj').textContent=s.subj;
+ document.getElementById('mMeta').textContent=s.meta;
+ document.getElementById('mBody').innerHTML=s.body;
+ seqList.querySelectorAll('.seqrow').forEach(b=>b.classList.toggle('sel',+b.dataset.s===i));
+}
+seqList.querySelectorAll('.seqrow').forEach(b=>b.onclick=()=>showMail(+b.dataset.s));
+showMail(0);
+
+/* calendars */
+const DAYS=[['Mon','27 Jul'],['Tue','28 Jul'],['Wed','29 Jul'],['Thu','30 Jul'],['Fri','31 Jul']];
+const HOURS=['09:00','10:00','11:00','14:00','15:00','16:00','18:00'];
+const BOOK={
+ '10:00-0':{c:'s1',t:'Strategy call',w:'Anouk Reyes'},
+ '14:00-1':{c:'s2',t:'Onboarding',w:'Alice Nordmann'},
+ '15:00-2':{c:'s1',t:'Strategy call',w:'Priya Ranjit'},
+ '11:00-2':{c:'s4',t:'Internal review',w:'Funnel copy pass'},
+ '18:00-3':{c:'s3',t:'Live masterclass',w:'1,904 registered'},
+ '09:00-4':{c:'s2',t:'Onboarding',w:'Ingrid Bauer'}
+};
+const calGrid=document.getElementById('calGrid');
+let cal='<div class="ch2"></div>'+DAYS.map(d=>'<div class="ch2">'+d[0]+'<span>'+d[1]+'</span></div>').join('');
+HOURS.forEach(h=>{
+ cal+='<div class="hr">'+h+'</div>';
+ DAYS.forEach((d,i)=>{
+  const b=BOOK[h+'-'+i];
+  cal+='<div class="cell">'+(b?'<div class="slot '+b.c+'"><b>'+b.t+'</b><span>'+b.w+'</span></div>':'')+'</div>';
+ });
+});
+calGrid.innerHTML=cal;
 </script>
 </body></html>

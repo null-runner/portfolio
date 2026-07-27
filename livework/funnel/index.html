@@ -47,7 +47,7 @@
   a{color:inherit;text-decoration:none}
   .center{text-align:center}
   .eyebrow{font-size:15px;letter-spacing:.24em;text-transform:uppercase;color:var(--brand);font-weight:700}
-  .kicker{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);font-weight:700}
+  .kicker{font-size:14px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);font-weight:700}
   .muted{color:var(--muted)}
 
 
@@ -63,20 +63,20 @@
   .queuebar .pip{width:8px;height:8px;flex:none}
   .queuebar a{color:var(--brand);font-weight:800;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
   .queuebar a:hover{filter:brightness(1.15)}
-  @media (max-width:640px){.queuebar{margin-bottom:20px;padding:11px 14px;font-size:13.5px}}
+  @media (max-width:640px){.queuebar{margin-bottom:20px;padding:11px 14px;font-size:14px}}
   .rev{opacity:0;transform:translateY(16px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
   .rev.in{opacity:1;transform:none}
   .hero .rev{opacity:1;transform:none;animation:revin .7s cubic-bezier(.2,.7,.2,1) .1s backwards}
   @keyframes revin{from{opacity:0;transform:translateY(16px)}}
   @media (prefers-reduced-motion:reduce){.hero .rev{animation:none}}
-  @media (prefers-reduced-motion:reduce){.rev{opacity:1;transform:none;transition:none}*{scroll-behavior:auto}.f-ico,.bg-ico,.m-emblem{animation:none!important}}
+  @media (prefers-reduced-motion:reduce){.rev{opacity:1;transform:none;transition:none}*{scroll-behavior:auto}.h-orb,.h-ring{animation:none!important}}
 
   .top{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 78%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line-2)}
   .top .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
   .brand{display:flex;align-items:center;gap:9px;font-weight:700}
   .brand .mk{width:26px;height:26px;border-radius:7px;background:linear-gradient(140deg,var(--brand),color-mix(in srgb,var(--brand) 55%,#000));display:grid;place-items:center;color:var(--brand-ink);font-weight:800;font-size:14px}
-  .brand small{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);font-weight:700}
-  .themebtn{background:transparent;border:1px solid var(--line);color:var(--muted);border-radius:20px;padding:7px 13px;font:inherit;font-size:12.5px;cursor:pointer}
+  .brand small{font-size:14px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);font-weight:700}
+  .themebtn{background:transparent;border:1px solid var(--line);color:var(--muted);border-radius:20px;padding:7px 13px;font:inherit;font-size:14px;cursor:pointer}
   .themebtn:hover{color:var(--ink)}
 
   .btn{display:inline-flex;align-items:center;justify-content:center;gap:11px;color:var(--brand-ink);
@@ -103,36 +103,38 @@
   .hero .gline .u{border-bottom:2px solid var(--brand);padding-bottom:1px}
   .hero .sub{margin-top:16px;font-size:clamp(16.5px,2vw,20px);color:var(--muted);max-width:620px;margin-left:auto;margin-right:auto}
 
-  .ico-phone{display:block;background:var(--icoPhone) center/contain no-repeat;aspect-ratio:530/720}
-  .ico-bag{display:block;background:var(--icoBag) center/contain no-repeat;aspect-ratio:412/440}
-  .f-ico{position:absolute;z-index:1;pointer-events:none;filter:drop-shadow(0 18px 30px rgba(0,0,0,.45)) hue-rotate(64deg);animation:float 7s ease-in-out infinite,icofade 1s ease .45s backwards}
-  @keyframes float{0%,100%{transform:translateY(0) rotate(var(--rot,0deg))}50%{transform:translateY(-16px) rotate(var(--rot,0deg))}}
+  /* orb decorativi astratti (solo CSS, coerenti col blu del brand) */
+  .h-orb{position:absolute;z-index:0;pointer-events:none;border-radius:50%;
+    background:radial-gradient(circle at 34% 30%,color-mix(in srgb,var(--brand) 32%,transparent),transparent 68%);
+    filter:blur(26px);animation:float 9s ease-in-out infinite,icofade 1.2s ease .3s backwards}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
   @keyframes icofade{from{opacity:0}}
-  .i-bag{width:230px;left:2%;top:300px;--rot:-9deg;animation-duration:7.5s}
-  .i-phone{width:235px;right:1.5%;top:150px;--rot:8deg;animation-duration:8.4s;animation-delay:.5s}
-  .m-emblem{display:none}
-  @media (max-width:1100px){
-    .f-ico{display:none}
-    .m-emblem{display:block;width:88px;margin:0 auto 18px;filter:drop-shadow(0 12px 22px rgba(0,0,0,.4)) hue-rotate(64deg);animation:float 6.5s ease-in-out infinite,icofade 1s ease .45s backwards}
-    }
+  .h-orb.a{width:340px;height:340px;left:-70px;top:210px;animation-duration:10s}
+  .h-orb.b{width:280px;height:280px;right:-60px;top:120px;opacity:.8;animation-duration:12s;animation-delay:.6s}
+  .h-ring{position:absolute;z-index:0;pointer-events:none;border-radius:50%;
+    border:1px solid color-mix(in srgb,var(--brand) 26%,transparent);opacity:.5;
+    animation:float 11s ease-in-out infinite,icofade 1.2s ease .3s backwards}
+  .h-ring.a{width:260px;height:260px;left:1%;top:250px;animation-delay:.9s}
+  .h-ring.b{width:200px;height:200px;right:3%;top:170px;animation-duration:13s}
+  @media (max-width:1100px){.h-ring{display:none}.h-orb{opacity:.55}}
 
   .videowrap{margin:44px auto 0;max-width:1000px;position:relative;z-index:2}
   .video{position:relative;border-radius:16px;overflow:hidden;border:1px solid var(--line);aspect-ratio:16/9;
     background:radial-gradient(120% 120% at 50% 0%,color-mix(in srgb,var(--brand) 9%,transparent),transparent 55%),linear-gradient(180deg,var(--bg-2),var(--surface));
     box-shadow:0 40px 90px -40px rgba(0,0,0,.8),0 0 0 1px var(--line-2);display:grid;place-items:center}
   .video::after{content:"";position:absolute;inset:0;background-image:linear-gradient(var(--line-2) 1px,transparent 1px),linear-gradient(90deg,var(--line-2) 1px,transparent 1px);background-size:52px 52px;mask:radial-gradient(130% 80% at 50% 42%,#000,transparent 76%);opacity:.45}
-  .video .live{position:absolute;top:6px;left:50%;transform:translateX(-50%);z-index:3;transition:opacity .4s ease,left .4s ease,transform .4s ease;display:flex;align-items:center;gap:8px;background:rgba(0,0,0,.42);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.14);border-radius:20px;padding:7px 13px;font-size:13px;font-weight:600;color:#fff}
+  .video .live{position:absolute;top:6px;left:50%;transform:translateX(-50%);z-index:3;transition:opacity .4s ease,left .4s ease,transform .4s ease;display:flex;align-items:center;gap:8px;background:rgba(0,0,0,.42);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.14);border-radius:20px;padding:7px 13px;font-size:14px;font-weight:600;color:#fff}
   :root[data-theme="light"] .video .live{background:rgba(0,0,0,.62)}
   .video .live.dim{left:14px;transform:none}
   .live .livelbl-s{display:none}
   @media (max-width:640px){
-    .video .live{font-size:11px;padding:5px 9px;gap:6px;max-width:none;white-space:nowrap}
+    .video .live{font-size:14px;padding:5px 9px;gap:6px;max-width:none;white-space:nowrap}
     .live .livelbl-l{display:none}.live .livelbl-s{display:inline}
-    .video .dur{font-size:11px;padding:4px 8px}
+    .video .dur{font-size:14px;padding:4px 8px}
   }
   .video .live .pip{width:8px;height:8px;border-radius:50%;background:var(--live);animation:pulse 2s infinite}
   @keyframes pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--live) 60%,transparent)}70%{box-shadow:0 0 0 8px transparent}100%{box-shadow:0 0 0 0 transparent}}
-  .video .dur{position:absolute;top:14px;right:14px;z-index:2;font-size:12px;color:#fff;background:rgba(0,0,0,.45);border-radius:14px;padding:5px 10px}
+  .video .dur{position:absolute;top:14px;right:14px;z-index:2;font-size:14px;color:#fff;background:rgba(0,0,0,.45);border-radius:14px;padding:5px 10px}
   .vsl-veil{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2;pointer-events:none;
     opacity:1;transition:opacity .35s ease}
   .vsl-veil.off{opacity:0}
@@ -143,22 +145,22 @@
 
   .cta-stack{margin:36px auto 0;display:flex;flex-direction:column;align-items:center;gap:30px;position:relative;z-index:2}
   .spotbar{width:min(360px,88vw);margin:0 auto;background:var(--surface);border:1px solid color-mix(in srgb,var(--warn) 35%,var(--line));border-radius:14px;padding:13px 16px;box-shadow:0 18px 44px -30px color-mix(in srgb,var(--warn) 55%,transparent)}
-  .spotbar-row{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--muted);justify-content:center;text-align:center}
+  .spotbar-row{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);justify-content:center;text-align:center}
   .spotbar .pip{width:8px;height:8px;border-radius:50%;background:var(--warn);flex:none;animation:pulse2 1.6s infinite}
   .spotbar .n{color:var(--warn);font-weight:800}
   @keyframes pulse2{0%,100%{opacity:1}50%{opacity:.4}}
   .spotbar-track{margin-top:10px;height:8px;border-radius:6px;background:var(--line-2);overflow:hidden}
   .spotbar-fill{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,color-mix(in srgb,var(--warn) 60%,#e0562f),var(--warn));box-shadow:0 0 12px color-mix(in srgb,var(--warn) 70%,transparent);transition:width .6s ease;animation:spotblink 1.5s ease-in-out infinite}
   @keyframes spotblink{0%,100%{opacity:1}50%{opacity:.5}}
-  .spotbar-upd{margin-top:7px;text-align:center;color:var(--faint);font-size:11.5px}
+  .spotbar-upd{margin-top:7px;text-align:center;color:var(--faint);font-size:14px}
   @media (prefers-reduced-motion:reduce){.spotbar-fill,.spotbar .pip,.whois .ph{animation:none}}
 
   .media{border-top:1px solid var(--line-2);border-bottom:1px solid var(--line-2);background:var(--bg-2)}
   .media .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px 44px;padding:26px 22px}
-  .media .lab{font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);font-weight:700;width:100%;text-align:center;margin-bottom:4px}
+  .media .lab{font-size:14px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);font-weight:700;width:100%;text-align:center;margin-bottom:4px}
   .media .logo{font-weight:800;color:var(--muted);font-size:19px;opacity:.85}
-  .media .logo small{font-weight:600;font-size:11px;letter-spacing:.05em}
-  .media .more{font-size:13px;color:var(--faint);font-style:italic}
+  .media .logo small{font-weight:600;font-size:14px;letter-spacing:.05em}
+  .media .more{font-size:14px;color:var(--faint);font-style:italic}
 
   .sh{max-width:660px;margin:0 auto 50px;text-align:center}
   .sh .kicker{margin-bottom:16px;display:block}
@@ -175,12 +177,12 @@
   .vthumb .pl{position:absolute;inset:0;display:grid;place-items:center;background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.16))}
   .vthumb .pl .d{width:54px;height:54px;border-radius:50%;background:rgba(255,255,255,.94);color:#0a0f0c;display:grid;place-items:center;box-shadow:0 10px 30px -8px rgba(0,0,0,.6);transition:transform .18s}
   .vcard:hover .pl .d{transform:scale(1.1);background:var(--brand);color:var(--brand-ink)}
-  .vthumb .yt{position:absolute;bottom:10px;right:10px;background:rgba(0,0,0,.65);color:#fff;font-size:11px;padding:4px 9px;border-radius:6px;letter-spacing:.04em}
+  .vthumb .yt{position:absolute;bottom:10px;right:10px;background:rgba(0,0,0,.65);color:#fff;font-size:14px;padding:4px 9px;border-radius:6px;letter-spacing:.04em}
   .vbody{padding:18px 20px 20px;display:flex;flex-direction:column;gap:8px;flex:1}
   .vbody .nm{font-weight:750;font-size:15.5px}
   .vbody .res{font-weight:800;font-size:19px;letter-spacing:-.01em}
-  .vbody .res small{display:block;color:var(--faint);font-weight:600;font-size:11px;letter-spacing:.06em;margin-top:2px}
-  .disc-note{margin-top:22px;text-align:center;font-size:12.5px;color:var(--faint);max-width:64ch;margin-left:auto;margin-right:auto}
+  .vbody .res small{display:block;color:var(--faint);font-weight:600;font-size:14px;letter-spacing:.06em;margin-top:2px}
+  .disc-note{margin-top:22px;text-align:center;font-size:14px;color:var(--faint);max-width:64ch;margin-left:auto;margin-right:auto}
 
   /* QUALIFY */
   .qual{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:900px;margin:0 auto}
@@ -205,7 +207,7 @@
   .ai{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
   .ai summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:16px;padding:22px 24px;font-weight:700;font-size:16.5px}
   .ai summary::-webkit-details-marker{display:none}
-  .ai .num{flex:0 0 auto;width:32px;height:32px;border-radius:9px;background:var(--brand-soft);color:var(--brand);font-weight:800;display:grid;place-items:center;font-size:13.5px}
+  .ai .num{flex:0 0 auto;width:32px;height:32px;border-radius:9px;background:var(--brand-soft);color:var(--brand);font-weight:800;display:grid;place-items:center;font-size:14px}
   .ai .chev{margin-left:auto;color:var(--faint);transition:transform .25s}
   .ai[open] .chev{transform:rotate(180deg)}
   .ai .body{padding:0 24px 22px 72px;color:var(--muted);font-size:15px}
@@ -224,7 +226,7 @@
   .final p{position:relative;margin:18px auto 0;color:var(--muted);max-width:560px}
   .final .cta-stack{position:relative}
 
-  footer{padding:52px 0 64px;border-top:1px solid var(--line-2);color:var(--faint);font-size:12.5px;background:var(--bg-2)}
+  footer{padding:52px 0 64px;border-top:1px solid var(--line-2);color:var(--faint);font-size:14px;background:var(--bg-2)}
   footer .cols{display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between}
   footer a{color:var(--muted);margin-right:16px}footer a:hover{color:var(--ink)}
   footer .disc{margin-top:20px;max-width:78ch;line-height:1.7}
@@ -238,28 +240,27 @@
   :root{--sh-strong:rgba(0,0,0,.8);--sh-soft:rgba(0,0,0,.45)}
   :root[data-theme="light"]{--sh-strong:rgba(18,22,15,.18);--sh-soft:rgba(18,22,15,.12)}
   .video{box-shadow:0 40px 90px -40px var(--sh-strong),0 0 0 1px var(--line-2)}
-  .f-ico,.m-emblem{filter:drop-shadow(0 18px 30px var(--sh-soft)) hue-rotate(64deg)}
   .btn:active{transform:translateY(1px) scale(.985);filter:brightness(.97)}
   .ai summary{transition:background .2s}
   .ai summary:hover{background:color-mix(in srgb,var(--brand) 4%,transparent)}
   .proof{background:var(--bg-2);border-top:1px solid var(--line-2);border-bottom:1px solid var(--line-2)}
   .vbody .res{font-size:24px;order:-1}
-  .vbody .nm{font-weight:600;font-size:13.5px;color:var(--muted)}
+  .vbody .nm{font-weight:600;font-size:14px;color:var(--muted)}
   .gcard.sign-g{border-color:color-mix(in srgb,var(--brand) 35%,var(--line));background:linear-gradient(180deg,var(--brand-soft),transparent 60%),var(--surface)}
   .gcard .firma{margin-top:18px;padding-top:12px;border-top:1px dashed var(--line);font-family:"Segoe Script","Brush Script MT",cursive;font-size:21px;color:var(--ink)}
-  .gcard .firma small{display:block;font-family:system-ui,sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-top:4px}
+  .gcard .firma small{display:block;font-family:system-ui,sans-serif;font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-top:4px}
   .apform{max-width:640px;margin:34px auto 0;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:clamp(22px,3vw,34px);text-align:left;position:relative;box-shadow:0 30px 70px -40px var(--sh-strong)}
   .apform .fgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
   .apform .field{display:flex;flex-direction:column;gap:7px}
   .apform .field.full{grid-column:1/-1}
   .apform .chk.full{grid-column:1/-1}
-  .apform label{font-size:13px;color:var(--muted);font-weight:600}
+  .apform label{font-size:14px;color:var(--muted);font-weight:600}
   .apform label .req{color:var(--brand)}
   .apform input,.apform select{font:inherit;font-size:15.5px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:13px 14px;width:100%;transition:border-color .15s,box-shadow .15s}
   .apform input::placeholder{color:var(--faint)}
   .apform input:focus,.apform select:focus{outline:0;border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-soft)}
   .apform .btn{width:100%;margin-top:20px}
-  .apform .micro{display:block;text-align:center;font-size:12.5px;color:var(--faint);margin-top:9px;line-height:1.6}
+  .apform .micro{display:block;text-align:center;font-size:14px;color:var(--faint);margin-top:9px;line-height:1.6}
   .apform .micro:first-of-type{margin-top:22px;padding-top:18px;border-top:1px solid var(--line-2)}
   .sticky-cta{display:none}
   @media (max-width:880px){
@@ -268,7 +269,6 @@
     .sticky-cta .btn{width:100%;padding:16px 18px;font-size:16px}
   }
   @media (max-width:640px){
-    .m-emblem{display:none!important}
     .hero{padding:28px 0 36px}
     .hero .eyebrow{margin-bottom:12px}
     .hero h1{font-size:clamp(29px,7.5vw,60px)}
@@ -276,7 +276,7 @@
     .videowrap{margin-top:22px}
     .play .disc{width:60px;height:60px}
     .play{gap:10px}
-    .play .cap{font-size:12.5px;max-width:240px}
+    .play .cap{font-size:14px;max-width:240px}
     .cap-long{display:none}
     .btn.big{padding:18px 22px;font-size:17px;width:100%}
     .vcards{display:flex;flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;margin:0 -22px;padding:4px 22px 14px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
@@ -292,36 +292,29 @@
 
 
   .wz-head{margin-bottom:30px}
-  .wz-lab{font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);font-weight:700}
+  .wz-lab{font-size:14px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);font-weight:700}
   .wz-bar{margin-top:8px;height:4px;border-radius:2px;background:var(--line-2);overflow:hidden}
   .wz-bar span{display:block;height:100%;background:var(--brand);border-radius:2px;transition:width .35s cubic-bezier(.2,.7,.2,1)}
   .wz-step{display:none}
   .wz-step.on{display:block;animation:wzin .35s cubic-bezier(.2,.7,.2,1)}
   @keyframes wzin{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:none}}
   .wz-q{font-size:19px;font-weight:750;margin-bottom:18px;letter-spacing:-.01em}
-  .wz-hint{font-size:13.5px;color:var(--muted);margin:-8px 0 22px;line-height:1.6}
+  .wz-hint{font-size:14px;color:var(--muted);margin:-8px 0 22px;line-height:1.6}
   .opt-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
   .opt{font:inherit;font-size:15px;font-weight:600;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:14px 14px;cursor:pointer;text-align:center;min-height:52px;transition:border-color .15s,background .15s,transform .12s}
   .opt:hover{border-color:color-mix(in srgb,var(--brand) 45%,var(--line));background:var(--brand-soft)}
   .opt:active{transform:scale(.98)}
   .opt.sel{border-color:var(--brand);background:var(--brand-soft);box-shadow:0 0 0 3px var(--brand-soft)}
-  .wz-back{display:block;margin:24px 0 0;background:none;border:0;color:var(--faint);font:inherit;font-size:13.5px;cursor:pointer;padding:8px 0}
+  .wz-back{display:block;margin:24px 0 0;background:none;border:0;color:var(--faint);font:inherit;font-size:14px;cursor:pointer;padding:8px 0}
   .wz-back:hover{color:var(--ink)}
-  .chk{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);cursor:pointer;line-height:1.5}
+  .chk{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--muted);cursor:pointer;line-height:1.5}
   .chk input{margin-top:3px;width:17px;height:17px;accent-color:var(--brand);flex:0 0 auto}
   .chk a{color:var(--brand);text-decoration:underline}
   @media (max-width:640px){.opt-grid{grid-template-columns:1fr}.wz-q{font-size:17px}}
 
 
-  /* mobile: icone come sfondo decorativo dietro il hero, con overlay leggibilita */
-  .bg-ico{display:none}
   @media (max-width:640px){
-    .bg-ico{display:block;position:absolute;z-index:0;opacity:.55;pointer-events:none;filter:hue-rotate(64deg);animation:icofade 1s ease .45s backwards}
-    /* angolo in alto a destra: sbuca dietro la top-bar, NON dietro la headline */
-    .bg-ico.a{width:150px;right:-58px;top:170px;transform:rotate(10deg)}
-    /* basso, accanto al video/CTA */
-    .bg-ico.b{width:120px;left:-46px;bottom:120px;top:auto;transform:rotate(-10deg);opacity:.42}
-    /* glow verde per dare profondita' invece del nero piatto */
+    /* glow per dare profondita' invece del nero piatto */
     .hero::before{background:radial-gradient(70% 50% at 50% -5%,color-mix(in srgb,var(--brand) 22%,transparent),transparent 65%)!important}
   }
 
@@ -356,7 +349,7 @@
   .letter .col{max-width:660px;margin:0 auto}
   .letter .from{text-align:center;margin-bottom:34px}
   .letter .from .eyebrow{display:block}
-  .letter .from .meta{margin-top:8px;font-size:13px;color:var(--faint)}
+  .letter .from .meta{margin-top:8px;font-size:14px;color:var(--faint)}
   .letter .lead{font-size:clamp(19px,2.2vw,23px);line-height:1.5;color:var(--ink);font-weight:600}
   .letter p+p{margin-top:18px}
   .letter p{color:var(--muted)}
@@ -382,7 +375,7 @@
   .press-vid .plabel b{color:var(--ink);display:block;font-size:15px;margin-bottom:2px}
   .press-badge{display:flex;justify-content:center;margin-top:26px;position:relative}
   .press-badge::before{content:"";position:absolute;top:50%;left:50%;width:340px;height:200px;transform:translate(-50%,-50%);background:radial-gradient(50% 50% at 50% 50%,rgba(255,255,255,.16),transparent 72%);pointer-events:none;border-radius:50%}
-  .press-award{margin:16px auto 0;text-align:center;font-size:13.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);max-width:760px;line-height:1.9}
+  .press-award{margin:16px auto 0;text-align:center;font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);max-width:760px;line-height:1.9}
   .press-award b{color:var(--brand);font-weight:800}
   .press-badge img{max-height:112px;width:auto;position:relative;filter:drop-shadow(0 0 2px rgba(255,255,255,.5)) drop-shadow(0 0 14px rgba(255,255,255,.28))}
   @media (max-width:640px){.press-vids{grid-template-columns:1fr}}
@@ -392,7 +385,7 @@
   @keyframes phGlow{0%,100%{box-shadow:0 0 26px -6px color-mix(in srgb,var(--brand) 40%,transparent)}50%{box-shadow:0 0 52px 2px color-mix(in srgb,var(--brand) 62%,transparent)}}
   .whois .ph img{width:100%;height:100%;object-fit:cover}
   .whois .ph .mono{position:absolute;font-size:56px;font-weight:800;color:var(--brand);opacity:.5}
-  .whois .ph .tag{position:absolute;bottom:8px;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+  .whois .ph .tag{position:absolute;bottom:8px;font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
   .whois .kicker{margin-bottom:12px;display:block}
   .whois h2{font-size:clamp(20px,2.4vw,26px);margin-bottom:12px}
   .whois p{color:var(--muted);font-size:15.5px}
@@ -411,7 +404,7 @@
   .vbanner{display:block;background:var(--brand);color:var(--brand-ink);font-weight:750;font-size:14.5px;line-height:1.35;padding:12px 18px;border-radius:14px 14px 0 0;text-align:center;letter-spacing:.005em;position:relative;z-index:2}
   .vbanner svg{vertical-align:-2px;margin-right:6px}
   .videowrap .video{border-radius:0 0 16px 16px}
-  @media (max-width:640px){.vbanner{font-size:13px;padding:11px 12px}}
+  @media (max-width:640px){.vbanner{font-size:14px;padding:11px 12px}}
 
 
   .hsub-strange{font-family:"Segoe Script","Bradley Hand","Brush Script MT","Comic Sans MS",cursive;font-size:clamp(22px,3.2vw,32px);color:#7CC2FF;font-weight:600;margin-top:10px;display:inline-block;transform:rotate(-1.6deg);text-shadow:0 0 14px rgba(78,158,255,.75),0 1px 10px rgba(0,0,0,.4)}
@@ -419,38 +412,41 @@
   .honest p{margin:0;font-size:14.5px}
 
 </style>
-<style>:root{--icoBag:url("assets/img/bag_360.webp");--icoBagAlt:url("assets/img/bag_360_alt.webp")}.ico-phone{background:var(--icoBagAlt) center/contain no-repeat;aspect-ratio:412/440}</style>
 <header class="hero">
-  <span class="bg-ico a ico-phone" aria-hidden="true"></span>
-  <span class="bg-ico b ico-bag" aria-hidden="true"></span>
-  <span class="f-ico i-bag ico-bag" aria-hidden="true"></span>
-  <span class="f-ico i-phone ico-phone" aria-hidden="true"></span>
+  <span class="h-orb a" aria-hidden="true"></span>
+  <span class="h-orb b" aria-hidden="true"></span>
+  <span class="h-ring a" aria-hidden="true"></span>
+  <span class="h-ring b" aria-hidden="true"></span>
 
   <div class="wrap center inner">
-    <div class="m-emblem rev ico-bag"></div>
-    <h1 class="rev">Ti mostro come costruirti una <span class="hl">rendita scandalosamente profumata</span>, e riprendere il pieno controllo delle tue giornate.</h1>
+    <h1 class="rev">Ti mostro come costruire il tuo <span class="hl">progetto online</span> e un sistema di acquisizione clienti che lavora per te.</h1>
     <p class="hsub-strange rev">anche se parti da zero</p>
-    <p class="gline rev">Ci metto la faccia. E una <span class="u">garanzia scritta</span>.</p>
-    <p class="sub rev">Forse hai gi&agrave; provato altro e ti sei scottato. Nel video ti spiego, senza giri di parole, come funziona e perch&eacute; stavolta &egrave; diverso.</p>
+    <p class="gline rev">Ci metto la faccia. E un <span class="u">affiancamento messo per iscritto</span>.</p>
+    <p class="sub rev">Forse hai gi&agrave; provato altro e ti sei scottato. Nel video ti spiego, senza giri di parole, come lavoriamo e cosa serve davvero per partire.</p>
 
     <div class="videowrap rev">
       <span class="vglow" aria-hidden="true"></span>
         <div class="vbanner rev"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg> Guarda il video per capire <b>esattamente</b> come funziona</div>
-        <div class="video" id="vslBox" aria-label="Segnaposto del video di presentazione">
-        <div class="vph"><div class="vph-in">
-          <span class="vph-disc" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
-          <span class="vph-lab">Video demo</span>
-          <span class="vph-sub">Nella versione live qui gira la presentazione video. Nel portfolio il player &egrave; scollegato.</span>
-        </div></div>
+        <div class="video" id="vslBox" title="Video demo" aria-label="Segnaposto del video di presentazione">
+        <div class="vslide" aria-hidden="true">
+          <span class="vs-kick">Presentazione &middot; modulo 1</span>
+          <span class="vs-title">Come si costruisce<br>un progetto <em>da zero</em></span>
+          <span class="vs-sub">I tre pilastri del metodo, spiegati in chiaro</span>
+          <span class="vs-bars"><i></i><i></i><i></i></span>
+        </div>
+        <span class="vs-play" aria-hidden="true"><svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+        <span class="vs-dur" aria-hidden="true">18:42</span>
+        <span class="vs-prog" aria-hidden="true"><i></i></span>
+        <span class="vph-sub">Nella versione live qui gira la presentazione video. Nel portfolio il player &egrave; scollegato.</span>
       </div>
     </div>
 
     <div class="cta-stack rev">
       <a class="btn big" data-next href="candidatura/">Candidati per una consulenza gratuita <span class="arw" aria-hidden="true">&rarr;</span></a>
-      <div class="spotbar rev" role="status" hidden>
-        <div class="spotbar-row"><span class="pip"></span><span>Rimasti solo <span id="spotsN" class="n mono"></span> posti per accedere al percorso</span></div>
-        <div class="spotbar-track"><span class="spotbar-fill" id="spotsFill" style="width:82%"></span></div>
-        <div class="spotbar-upd">aggiornato <span id="today"></span></div>
+      <div class="spotbar rev" role="status">
+        <div class="spotbar-row"><span class="pip"></span><span>Selezione a numero chiuso: seguiamo poche persone per ciclo</span></div>
+        <div class="spotbar-track"><span class="spotbar-fill" style="width:78%"></span></div>
+        <div class="spotbar-upd">le candidature vengono valutate in ordine di arrivo</div>
       </div>
     </div>
   </div>
@@ -468,57 +464,57 @@
     <span class="logo">Rivista&nbsp;Impresa</span>
     <span class="logo">Economia&nbsp;Now</span>
     <span class="logo">BusinessDigest</span>
-    <span class="more" style="font-size:13px;color:var(--faint);font-style:italic">e molti altri...</span>
+    <span class="more" style="font-size:14px;color:var(--faint);font-style:italic">e molti altri...</span>
   </div>
 </div>
 
 <section class="proof">
   <div class="wrap">
-    <div class="sh rev"><span class="kicker">Risultati di chi &egrave; partito da zero</span><h2 id="risultati">Non fidarti di me. Guarda loro.</h2><p>Centinaia di persone seguite passo dopo passo. Qui sotto una selezione di storie. <b>Nomi, volti e cifre sono sintetici</b>: nella versione live ogni scheda apre la videotestimonianza.</p></div>
+    <div class="sh rev"><span class="kicker">Storie di chi &egrave; partito da zero</span><h2 id="risultati">Non fidarti di me. Guarda loro.</h2><p>Persone seguite passo dopo passo, dal primo passo alla messa online. Qui sotto una selezione di storie. <b>Nomi, volti e contenuti sono sintetici</b>: nella versione live ogni scheda apre la videotestimonianza.</p></div>
     <div class="vcards">
       <div class="vcard rev">
-        <span class="vthumb"><span class="avph" aria-hidden="true">AM</span><span class="vtag">Video demo</span></span>
-        <span class="vbody"><span class="nm">Andrea M.</span><span class="res mono">0 &rarr; 40.000&thinsp;&euro;<small>IN 4 MESI, EX TECNICO<span class="synthtag">dato sintetico</span></small></span></span>
+        <span class="vthumb"><span class="avph" aria-hidden="true">AM</span><span class="vplay" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><span class="vdur" aria-hidden="true">4:12</span><span class="vtag">Video demo</span></span>
+        <span class="vbody"><span class="nm">Andrea M.</span><span class="res">Ha lanciato il suo primo progetto online<small>IN 4 MESI, EX TECNICO<span class="synthtag">storia sintetica</span></small></span></span>
       </div>
       <div class="vcard rev">
-        <span class="vthumb"><span class="avph" aria-hidden="true">SL</span><span class="vtag">Video demo</span></span>
-        <span class="vbody"><span class="nm">Sara L.</span><span class="res mono">0 &rarr; 60.000&thinsp;&euro;<small>IN 6 MESI, GENITORE<span class="synthtag">dato sintetico</span></small></span></span>
+        <span class="vthumb"><span class="avph" aria-hidden="true">SL</span><span class="vplay" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><span class="vdur" aria-hidden="true">6:38</span><span class="vtag">Video demo</span></span>
+        <span class="vbody"><span class="nm">Sara L.</span><span class="res">Dal primo prodotto al primo gruppo di clienti<small>IN 6 MESI, GENITORE<span class="synthtag">storia sintetica</span></small></span></span>
       </div>
       <div class="vcard rev">
-        <span class="vthumb"><span class="avph" aria-hidden="true">GP</span><span class="vtag">Video demo</span></span>
-        <span class="vbody"><span class="nm">Giulio P.</span><span class="res mono">0 &rarr; 7.000&thinsp;&euro;<small>IN 20 GIORNI, OVER 50<span class="synthtag">dato sintetico</span></small></span></span>
+        <span class="vthumb"><span class="avph" aria-hidden="true">GP</span><span class="vplay" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><span class="vdur" aria-hidden="true">3:57</span><span class="vtag">Video demo</span></span>
+        <span class="vbody"><span class="nm">Giulio P.</span><span class="res">Ha messo online il suo progetto dopo i 50<small>IN 20 GIORNI, OVER 50<span class="synthtag">storia sintetica</span></small></span></span>
       </div>
       <div class="vcard rev">
-        <span class="vthumb"><span class="avph" aria-hidden="true">EB</span><span class="vtag">Video demo</span></span>
-        <span class="vbody"><span class="nm">Elena B.</span><span class="res mono">0 &rarr; 25.000&thinsp;&euro;<small>IN 3 MESI<span class="synthtag">dato sintetico</span></small></span></span>
+        <span class="vthumb"><span class="avph" aria-hidden="true">EB</span><span class="vplay" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><span class="vdur" aria-hidden="true">5:21</span><span class="vtag">Video demo</span></span>
+        <span class="vbody"><span class="nm">Elena B.</span><span class="res">Ha strutturato la sua acquisizione clienti<small>IN 3 MESI<span class="synthtag">storia sintetica</span></small></span></span>
       </div>
       <div class="vcard rev">
-        <span class="vthumb"><span class="avph" aria-hidden="true">MC</span><span class="vtag">Video demo</span></span>
-        <span class="vbody"><span class="nm">Marco C.</span><span class="res mono">0 &rarr; 30.000&thinsp;&euro;<small>AL MESE<span class="synthtag">dato sintetico</span></small></span></span>
+        <span class="vthumb"><span class="avph" aria-hidden="true">MC</span><span class="vplay" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><span class="vdur" aria-hidden="true">7:04</span><span class="vtag">Video demo</span></span>
+        <span class="vbody"><span class="nm">Marco C.</span><span class="res">Ha reso ripetibile il processo di vendita<small>CON UN CALENDARIO DI LAVORO FISSO<span class="synthtag">storia sintetica</span></small></span></span>
       </div>
       <div class="vcard rev">
-        <span class="vthumb"><span class="avph" aria-hidden="true">DF</span><span class="vtag">Video demo</span></span>
-        <span class="vbody"><span class="nm">Davide F.</span><span class="res mono">0 &rarr; 35.000&thinsp;&euro;<small>AL MESE, OGGI E-COMMERCE MANAGER<span class="synthtag">dato sintetico</span></small></span></span>
+        <span class="vthumb"><span class="avph" aria-hidden="true">DF</span><span class="vplay" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><span class="vdur" aria-hidden="true">4:46</span><span class="vtag">Video demo</span></span>
+        <span class="vbody"><span class="nm">Davide F.</span><span class="res">Oggi gestisce il progetto in autonomia<small>PARTITO SENZA ESPERIENZA TECNICA<span class="synthtag">storia sintetica</span></small></span></span>
       </div>
       <div class="vcard rev">
-        <span class="vthumb"><span class="avph" aria-hidden="true">NP</span><span class="vtag">Video demo</span></span>
-        <span class="vbody"><span class="nm">Nina e Paolo</span><span class="res mono">0 &rarr; 20.000&thinsp;&euro;<small>IN MENO DI 2 MESI<span class="synthtag">dato sintetico</span></small></span></span>
+        <span class="vthumb"><span class="avph" aria-hidden="true">NP</span><span class="vplay" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><span class="vdur" aria-hidden="true">8:12</span><span class="vtag">Video demo</span></span>
+        <span class="vbody"><span class="nm">Nina e Paolo</span><span class="res">Hanno avviato il progetto insieme<small>IN MENO DI 2 MESI<span class="synthtag">storia sintetica</span></small></span></span>
       </div>
       <div class="vcard rev">
-        <span class="vthumb"><span class="avph" aria-hidden="true">TS</span><span class="vtag">Video demo</span></span>
-        <span class="vbody"><span class="nm">Tommaso e Sara</span><span class="res mono">0 &rarr; 18.000&thinsp;&euro;<small>IN MENO DI 2 MESI<span class="synthtag">dato sintetico</span></small></span></span>
+        <span class="vthumb"><span class="avph" aria-hidden="true">TS</span><span class="vplay" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><span class="vdur" aria-hidden="true">5:03</span><span class="vtag">Video demo</span></span>
+        <span class="vbody"><span class="nm">Tommaso e Sara</span><span class="res">Si sono divisi i ruoli e sono partiti<small>IN MENO DI 2 MESI<span class="synthtag">storia sintetica</span></small></span></span>
       </div>
       <div class="vcard rev">
-        <span class="vthumb"><span class="avph" aria-hidden="true">DM</span><span class="vtag">Video demo</span></span>
-        <span class="vbody"><span class="nm">Dario M.</span><span class="res mono">0 &rarr; 2.000&thinsp;&euro;<small>AL MESE NETTI<span class="synthtag">dato sintetico</span></small></span></span>
+        <span class="vthumb"><span class="avph" aria-hidden="true">DM</span><span class="vplay" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><span class="vdur" aria-hidden="true">3:28</span><span class="vtag">Video demo</span></span>
+        <span class="vbody"><span class="nm">Dario M.</span><span class="res">Ha individuato il suo primo mercato<small>ALLA PRIMA PROVA, UN SOLO PRODOTTO<span class="synthtag">storia sintetica</span></small></span></span>
       </div>
       <div class="vcard rev">
-        <span class="vthumb"><span class="avph" aria-hidden="true">SV</span><span class="vtag">Video demo</span></span>
-        <span class="vbody"><span class="nm">Silvia V.</span><span class="res mono">0 &rarr; 2.100&thinsp;&euro;<small>NETTI, DAL PRIMO MESE<span class="synthtag">dato sintetico</span></small></span></span>
+        <span class="vthumb"><span class="avph" aria-hidden="true">SV</span><span class="vplay" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><span class="vdur" aria-hidden="true">6:15</span><span class="vtag">Video demo</span></span>
+        <span class="vbody"><span class="nm">Silvia V.</span><span class="res">Ha completato il lancio del suo store<small>DAL PRIMO MESE DI PERCORSO<span class="synthtag">storia sintetica</span></small></span></span>
       </div>
       <div class="vcard rev">
-        <span class="vthumb"><span class="avph" aria-hidden="true">RT</span><span class="vtag">Video demo</span></span>
-        <span class="vbody"><span class="nm">Riccardo T.</span><span class="res mono">0 &rarr; 1.800&thinsp;&euro;+<small>AL MESE NETTI, DA CASA<span class="synthtag">dato sintetico</span></small></span></span>
+        <span class="vthumb"><span class="avph" aria-hidden="true">RT</span><span class="vplay" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><span class="vdur" aria-hidden="true">4:39</span><span class="vtag">Video demo</span></span>
+        <span class="vbody"><span class="nm">Riccardo T.</span><span class="res">Ha imparato a gestire ordini e fornitori<small>LAVORANDO DA CASA<span class="synthtag">storia sintetica</span></small></span></span>
       </div>
     </div>
     <span class="swipe-hint">Scorri per vedere le altre storie &rarr;</span>
@@ -533,11 +529,11 @@
     <div class="sh rev"><span class="kicker">Non lo dico solo io</span><h2 id="press">Ne hanno parlato radio e TV</h2><p>Blocco di riprova sociale con le clip delle interviste. In questa demo i player sono scollegati e le testate sono di fantasia.</p></div>
     <div class="press-vids">
       <div class="vcard rev press-vid">
-        <span class="vthumb"><span class="vph"><span class="vph-in"><span class="vph-disc" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><span class="vph-lab">Video demo</span></span></span></span>
+        <span class="vthumb press-thumb"><span class="vpress-tit">Radio Nord 101<small>L'intervista in diretta</small></span><span class="vplay" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><span class="vdur" aria-hidden="true">21:08</span><span class="vtag">Video demo</span></span>
         <span class="plabel"><b>Radio Nord 101</b>L'intervista in diretta (contenuto sintetico)</span>
       </div>
       <div class="vcard rev press-vid">
-        <span class="vthumb"><span class="vph"><span class="vph-in"><span class="vph-disc" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><span class="vph-lab">Video demo</span></span></span></span>
+        <span class="vthumb press-thumb"><span class="vpress-tit">Canale Impresa TV<small>Lo speciale sul lavoro da remoto</small></span><span class="vplay" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><span class="vdur" aria-hidden="true">14:35</span><span class="vtag">Video demo</span></span>
         <span class="plabel"><b>Canale Impresa TV</b>Lo speciale sul lavoro da remoto (contenuto sintetico)</span>
       </div>
     </div>
@@ -567,7 +563,7 @@
       <div class="qbox yes rev">
         <h3><span>&#10003;</span> &Egrave; per te se&hellip;</h3>
         <ul>
-          <li><span class="i">&#10003;</span> Vuoi una seconda entrata vera, non l'ennesima promessa di soldi facili.</li>
+          <li><span class="i">&#10003;</span> Vuoi costruire un progetto tuo, non l'ennesima scorciatoia.</li>
           <li><span class="i">&#10003;</span> Puoi dedicarci 60&ndash;90 minuti al giorno.</li>
           <li><span class="i">&#10003;</span> Parti da zero: va benissimo, quasi tutti partono cos&igrave;.</li>
           <li><span class="i">&#10003;</span> Vuoi qualcuno che ti segua passo dopo passo, non un corso e via.</li>
@@ -576,9 +572,9 @@
       <div class="qbox no rev">
         <h3><span>&#10007;</span> NON &egrave; per te se&hellip;</h3>
         <ul>
-          <li><span class="i">&#10007;</span> Cerchi un pulsante che ti fa guadagnare mentre dormi.</li>
+          <li><span class="i">&#10007;</span> Cerchi un pulsante che lavori al posto tuo.</li>
           <li><span class="i">&#10007;</span> Molli al primo ostacolo invece di andare avanti.</li>
-          <li><span class="i">&#10007;</span> Ti aspetti di diventare ricco in due settimane senza fare niente.</li>
+          <li><span class="i">&#10007;</span> Ti aspetti risultati in due settimane senza metterci lavoro.</li>
           <li><span class="i">&#10007;</span> Non hai davvero voglia di metterti in gioco adesso.</li>
         </ul>
       </div>
@@ -588,27 +584,27 @@
 
 <section>
   <div class="wrap">
-    <div class="sh rev"><span class="kicker">Il processo</span><h2 id="come-funziona">Come funziona il mio sistema</h2><p>Il mio sistema funziona cos&igrave;: ti costruisco un negozio online consegnato pronto a vendere: il prodotto lo individua il mio software di intelligenza artificiale, i fornitori gestiscono magazzino e spedizioni, e io ti affianco passo dopo passo fino all'obiettivo. Tre passi, sempre nello stesso ordine.</p></div>
+    <div class="sh rev"><span class="kicker">Il processo</span><h2 id="come-funziona">Come funziona il mio metodo</h2><p>Funziona cos&igrave;: ti consegno un negozio online gi&agrave; configurato, il prodotto lo seleziono con il mio software di analisi, i fornitori gestiscono magazzino e spedizioni, e io ti affianco passo dopo passo nel lancio. Tre passi, sempre nello stesso ordine.</p></div>
     <div class="steps">
-      <div class="step rev"><div class="no mono">1</div><h3>Trovo io il prodotto per te</h3><p>Il mio software di intelligenza artificiale analizza i prodotti e trova quelli che la gente sta gi&agrave; cercando. Non inventiamo un bisogno: intercettiamo uno che esiste gi&agrave;, e lo sfruttiamo per generare profitti.</p></div>
-      <div class="step rev"><div class="no mono">2</div><h3>Costruisco il tuo negozio</h3><p>Non dovrai perdere ore a creare il tuo primo negozio da zero: te lo costruir&ograve; io, con un prodotto selezionato, e te lo consegner&ograve; pronto a vendere. E niente pensieri per fornitori, magazzino o spedizioni: ti dar&ograve; i miei fornitori privati, quelli che uso ogni giorno da anni, e gestiranno tutto loro senza che tu debba sborsare un euro.</p></div>
-      <div class="step rev"><div class="no mono">3</div><h3>Ti sto accanto fino all'obiettivo</h3><p>Non ti lascio solo il giorno dopo. L'autostrada l'ho costruita io, e tu la percorrerai con la mia guida, passo dopo passo. Come se fossi il tuo copilota e il tuo navigatore satellitare.</p></div>
+      <div class="step rev"><div class="no mono">1</div><h3>Trovo io il prodotto per te</h3><p>Il mio software analizza i prodotti e individua quelli che le persone stanno gi&agrave; cercando. Non inventiamo un bisogno: partiamo da uno che esiste gi&agrave; e costruiamo l'offerta su quello.</p></div>
+      <div class="step rev"><div class="no mono">2</div><h3>Costruisco il tuo negozio</h3><p>Non dovrai perdere ore a creare il tuo primo negozio da zero: te lo costruir&ograve; io, con un prodotto selezionato, e te lo consegner&ograve; gi&agrave; configurato. E niente pensieri per fornitori, magazzino o spedizioni: ti dar&ograve; i miei fornitori privati, quelli che uso ogni giorno da anni, e gestiranno tutto loro senza che tu debba sborsare un euro.</p></div>
+      <div class="step rev"><div class="no mono">3</div><h3>Ti sto accanto per tutto il percorso</h3><p>Non ti lascio solo il giorno dopo. L'autostrada l'ho costruita io, e tu la percorrerai con la mia guida, passo dopo passo. Come se fossi il tuo copilota e il tuo navigatore satellitare.</p></div>
     </div>
-    <div class="honest rev"><b class="htitle">La parte che chi vende sogni non ti dice</b><p>&Egrave; un'attivit&agrave; vera: 60&ndash;90 minuti al giorno. L'AI accelera, non lavora al posto tuo. Ma se tu dedichi davvero questo tempo, con me al tuo fianco puoi farcela anche tu.</p></div>
+    <div class="honest rev"><b class="htitle">La parte che chi vende scorciatoie non ti dice</b><p>&Egrave; un'attivit&agrave; vera: 60&ndash;90 minuti al giorno. Il software accelera l'analisi, non lavora al posto tuo. Nessuno pu&ograve; promettere un risultato al posto tuo: quello che posso garantirti &egrave; il metodo e l'affiancamento.</p></div>
   </div>
 </section>
 
 <section class="numeri">
   <div class="wrap">
-    <div class="sh rev"><span class="kicker">Numeri sintetici</span><h2 id="numeri">I numeri dei negozi</h2><p>Nel funnel live questo carosello mostra gli screenshot delle dashboard degli studenti. Qui i numeri sono <b>interamente sintetici</b>.</p></div>
-    <div class="nmarquee" id="nmarquee"><div class="ntrack"><div class="ngroup"><span class="statcard"><span class="sc-lab">Ordini / mese</span><span class="sc-val">1.240</span><span class="sc-sub">negozio demo A &middot; dato sintetico</span><span class="sc-spark" aria-hidden="true"><i style="height:22%"></i><i style="height:34%"></i><i style="height:30%"></i><i style="height:48%"></i><i style="height:55%"></i><i style="height:71%"></i><i style="height:66%"></i><i style="height:88%"></i></span></span><span class="statcard"><span class="sc-lab">Incasso / mese</span><span class="sc-val">38.400 &euro;</span><span class="sc-sub">negozio demo B &middot; dato sintetico</span><span class="sc-spark" aria-hidden="true"><i style="height:30%"></i><i style="height:26%"></i><i style="height:44%"></i><i style="height:40%"></i><i style="height:62%"></i><i style="height:58%"></i><i style="height:79%"></i><i style="height:92%"></i></span></span><span class="statcard"><span class="sc-lab">Ticket medio</span><span class="sc-val">72 &euro;</span><span class="sc-sub">negozio demo C &middot; dato sintetico</span><span class="sc-spark" aria-hidden="true"><i style="height:18%"></i><i style="height:33%"></i><i style="height:41%"></i><i style="height:37%"></i><i style="height:52%"></i><i style="height:68%"></i><i style="height:74%"></i><i style="height:81%"></i></span></span><span class="statcard"><span class="sc-lab">Margine lordo</span><span class="sc-val">41%</span><span class="sc-sub">negozio demo D &middot; dato sintetico</span><span class="sc-spark" aria-hidden="true"><i style="height:26%"></i><i style="height:30%"></i><i style="height:39%"></i><i style="height:55%"></i><i style="height:51%"></i><i style="height:66%"></i><i style="height:83%"></i><i style="height:90%"></i></span></span><span class="statcard"><span class="sc-lab">Conversione</span><span class="sc-val">2,8%</span><span class="sc-sub">negozio demo E &middot; dato sintetico</span><span class="sc-spark" aria-hidden="true"><i style="height:35%"></i><i style="height:28%"></i><i style="height:46%"></i><i style="height:43%"></i><i style="height:60%"></i><i style="height:57%"></i><i style="height:72%"></i><i style="height:86%"></i></span></span><span class="statcard"><span class="sc-lab">Ordini / mese</span><span class="sc-val">860</span><span class="sc-sub">negozio demo F &middot; dato sintetico</span><span class="sc-spark" aria-hidden="true"><i style="height:20%"></i><i style="height:38%"></i><i style="height:35%"></i><i style="height:50%"></i><i style="height:58%"></i><i style="height:64%"></i><i style="height:77%"></i><i style="height:89%"></i></span></span><span class="statcard"><span class="sc-lab">Incasso / mese</span><span class="sc-val">21.900 &euro;</span><span class="sc-sub">negozio demo G &middot; dato sintetico</span><span class="sc-spark" aria-hidden="true"><i style="height:28%"></i><i style="height:24%"></i><i style="height:42%"></i><i style="height:47%"></i><i style="height:54%"></i><i style="height:70%"></i><i style="height:76%"></i><i style="height:84%"></i></span></span><span class="statcard"><span class="sc-lab">Resi</span><span class="sc-val">1,9%</span><span class="sc-sub">negozio demo H &middot; dato sintetico</span><span class="sc-spark" aria-hidden="true"><i style="height:24%"></i><i style="height:36%"></i><i style="height:33%"></i><i style="height:45%"></i><i style="height:61%"></i><i style="height:59%"></i><i style="height:80%"></i><i style="height:87%"></i></span></span></div></div></div>
+    <div class="sh rev"><span class="kicker">Numeri sintetici</span><h2 id="numeri">I numeri del percorso</h2><p>Nel funnel live questo carosello mostra le dashboard dei progetti seguiti. Qui i numeri descrivono la struttura del percorso e sono <b>interamente sintetici</b>.</p></div>
+    <div class="nmarquee" id="nmarquee"><div class="ntrack"><div class="ngroup"><span class="statcard"><span class="sc-lab">Sessioni di affiancamento</span><span class="sc-val">12</span><span class="sc-sub">percorso demo A &middot; dato sintetico</span><span class="sc-spark" aria-hidden="true"><i style="height:22%"></i><i style="height:34%"></i><i style="height:30%"></i><i style="height:48%"></i><i style="height:55%"></i><i style="height:71%"></i><i style="height:66%"></i><i style="height:88%"></i></span></span><span class="statcard"><span class="sc-lab">Giorni al lancio</span><span class="sc-val">21</span><span class="sc-sub">percorso demo B &middot; dato sintetico</span><span class="sc-spark" aria-hidden="true"><i style="height:30%"></i><i style="height:26%"></i><i style="height:44%"></i><i style="height:40%"></i><i style="height:62%"></i><i style="height:58%"></i><i style="height:79%"></i><i style="height:92%"></i></span></span><span class="statcard"><span class="sc-lab">Persone per ciclo</span><span class="sc-val">8</span><span class="sc-sub">selezione demo C &middot; dato sintetico</span><span class="sc-spark" aria-hidden="true"><i style="height:18%"></i><i style="height:33%"></i><i style="height:41%"></i><i style="height:37%"></i><i style="height:52%"></i><i style="height:68%"></i><i style="height:74%"></i><i style="height:81%"></i></span></span><span class="statcard"><span class="sc-lab">Check del metodo</span><span class="sc-val">34</span><span class="sc-sub">percorso demo D &middot; dato sintetico</span><span class="sc-spark" aria-hidden="true"><i style="height:26%"></i><i style="height:30%"></i><i style="height:39%"></i><i style="height:55%"></i><i style="height:51%"></i><i style="height:66%"></i><i style="height:83%"></i><i style="height:90%"></i></span></span><span class="statcard"><span class="sc-lab">Materiali operativi</span><span class="sc-val">40+</span><span class="sc-sub">libreria demo E &middot; dato sintetico</span><span class="sc-spark" aria-hidden="true"><i style="height:35%"></i><i style="height:28%"></i><i style="height:46%"></i><i style="height:43%"></i><i style="height:60%"></i><i style="height:57%"></i><i style="height:72%"></i><i style="height:86%"></i></span></span><span class="statcard"><span class="sc-lab">Canali di supporto</span><span class="sc-val">3</span><span class="sc-sub">assistenza demo F &middot; dato sintetico</span><span class="sc-spark" aria-hidden="true"><i style="height:20%"></i><i style="height:38%"></i><i style="height:35%"></i><i style="height:50%"></i><i style="height:58%"></i><i style="height:64%"></i><i style="height:77%"></i><i style="height:89%"></i></span></span><span class="statcard"><span class="sc-lab">Revisioni del negozio</span><span class="sc-val">5</span><span class="sc-sub">progetto demo G &middot; dato sintetico</span><span class="sc-spark" aria-hidden="true"><i style="height:28%"></i><i style="height:24%"></i><i style="height:42%"></i><i style="height:47%"></i><i style="height:54%"></i><i style="height:70%"></i><i style="height:76%"></i><i style="height:84%"></i></span></span><span class="statcard"><span class="sc-lab">Percorsi completati</span><span class="sc-val">87%</span><span class="sc-sub">coorte demo H &middot; dato sintetico</span><span class="sc-spark" aria-hidden="true"><i style="height:24%"></i><i style="height:36%"></i><i style="height:33%"></i><i style="height:45%"></i><i style="height:61%"></i><i style="height:59%"></i><i style="height:80%"></i><i style="height:87%"></i></span></span></div></div></div>
   </div>
 </section>
 
 <section class="tight" style="padding-top:0">
   <div class="wrap center">
     <div class="cta-stack rev" style="margin-top:0">
-      <a class="btn" data-next href="candidatura/">Voglio risultati cos&igrave; anch'io <span class="arw" aria-hidden="true">&rarr;</span></a>
+      <a class="btn" data-next href="candidatura/">Voglio costruire il mio progetto <span class="arw" aria-hidden="true">&rarr;</span></a>
       <span class="micro">Gratis e senza impegno &middot; meno di un minuto</span>
     </div>
   </div>
@@ -620,19 +616,19 @@
     <div class="acc">
       <details class="ai rev" open>
         <summary><span class="num mono">1</span> Il tuo negozio, costruito e consegnato pronto <span class="chev">&#9662;</span></summary>
-        <div class="body">Non partirai da un foglio bianco. <b>Il prodotto perfetto per iniziare a generare vendite lo seleziono io stesso con il mio software AI</b>, cos&igrave; parti con un prodotto vincente. Il negozio te lo costruisco io e sar&agrave; gi&agrave; impostato per vendere dal primo giorno. Non inventiamo un bisogno: intercettiamo uno che esiste gi&agrave;, e lo sfruttiamo per generare profitti. E tu non tocchi un pacco: magazzino e spedizioni li gestiscono i miei fornitori, senza che tu debba pagargli nemmeno 1&thinsp;&euro; per il servizio.</div>
+        <div class="body">Non partirai da un foglio bianco. <b>Il prodotto da cui partire lo seleziono io con il mio software di analisi</b>, cos&igrave; non parti da un'ipotesi a caso. Il negozio te lo costruisco io e sar&agrave; gi&agrave; impostato dal primo giorno. Non inventiamo un bisogno: partiamo da uno che esiste gi&agrave;. E tu non tocchi un pacco: magazzino e spedizioni li gestiscono i miei fornitori, senza che tu debba pagargli nemmeno 1&thinsp;&euro; per il servizio.</div>
       </details>
       <details class="ai rev">
         <summary><span class="num mono">2</span> Il sistema per trasformare sconosciuti in clienti <span class="chev">&#9662;</span></summary>
-        <div class="body">Una <b>mappa esatta per trasformare sconosciuti in clienti</b>, niente teoria infinita: accesso al mio software di intelligenza artificiale, template e testi persuasivi gi&agrave; pronti da adattare, e guide dirette su come usare il negozio, andare sul mercato, trovare clienti e generare un incasso costante ogni singolo mese.</div>
+        <div class="body">Una <b>mappa esatta per trasformare sconosciuti in clienti</b>, niente teoria infinita: accesso al mio software di analisi, template e testi persuasivi gi&agrave; pronti da adattare, e guide dirette su come usare il negozio, andare sul mercato e costruire un flusso di richieste costante.</div>
       </details>
       <details class="ai rev">
         <summary><span class="num mono">3</span> Affiancamento passo dopo passo <span class="chev">&#9662;</span></summary>
-        <div class="body">L'affiancamento serve proprio a questo: <b>evitare di sbagliare</b> e di sprecare tempo e soldi in tentativi a caso. Un team di esperti lavora al tuo fianco passo dopo passo: ogni scelta la fai con chi l'ha gi&agrave; fatta cento volte, ed &egrave; cos&igrave; che il tasso di successo resta alto. Se sbandi, riprendo il volante con te.</div>
+        <div class="body">L'affiancamento serve proprio a questo: <b>evitare di sbagliare</b> e di sprecare tempo e soldi in tentativi a caso. Un team di esperti lavora al tuo fianco passo dopo passo: ogni scelta la fai con chi l'ha gi&agrave; fatta cento volte, ed &egrave; cos&igrave; che si evitano gli errori pi&ugrave; costosi. Se sbandi, riprendo il volante con te.</div>
       </details>
       <details class="ai rev">
         <summary><span class="num mono">4</span> La garanzia, per iscritto <span class="chev">&#9662;</span></summary>
-        <div class="body">Quando entri firmiamo una garanzia vera, non uno slogan. Da una parte <b>non ti lascio a met&agrave;: ti affianco passo dopo passo fino all'obiettivo che fissiamo insieme</b>. Dall'altra ci metto la firma sul risultato: <b>se fai la tua parte e non arrivi all'obiettivo, interveniamo finch&eacute; non ci arrivi</b>. I termini esatti si vedono in chiamata, carte in tavola. L'unica condizione &egrave; che tu ci lavori davvero.</div>
+        <div class="body">Quando entri firmiamo una garanzia vera, non uno slogan. Da una parte <b>non ti lascio a met&agrave;: ti affianco passo dopo passo per tutto il percorso concordato</b>. Dall'altra ci metto la firma sull'impegno: <b>se fai la tua parte e il progetto non &egrave; ancora in piedi, continuiamo a lavorarci senza costi aggiuntivi</b>. I termini esatti si vedono in chiamata, carte in tavola. L'unica condizione &egrave; che tu ci lavori davvero.</div>
       </details>
     </div>
   </div>
@@ -641,7 +637,7 @@
 <section class="tight">
   <div class="wrap">
     <div class="gbar">
-      <div class="gcard sign-g rev"><span class="kicker">La garanzia</span><div class="big">Il rischio <b>me lo prendo io</b></div><p>Ci metto la firma: da una parte ti affianco fino all'obiettivo che fissiamo insieme, senza mollarti; dall'altra, <b>se fai la tua parte e non ci arrivi, continuiamo a lavorarci senza costi aggiuntivi</b>. I dettagli esatti si vedono con calma in chiamata, carte in tavola. L'unica condizione &egrave; il tuo impegno.</p><div class="firma">Marco Sintini<small>Founder, Synthetic Launch Academy</small></div></div>
+      <div class="gcard sign-g rev"><span class="kicker">La garanzia</span><div class="big">L'impegno <b>me lo prendo io</b></div><p>Ci metto la firma: da una parte ti affianco per tutto il percorso concordato, senza mollarti; dall'altra, <b>se fai la tua parte e il progetto non &egrave; ancora in piedi, continuiamo a lavorarci senza costi aggiuntivi</b>. I dettagli esatti si vedono con calma in chiamata, carte in tavola. L'unica condizione &egrave; il tuo impegno.</p><div class="firma">Marco Sintini<small>Founder, Synthetic Launch Academy</small></div></div>
       <div class="gcard rev"><span class="kicker">La selezione</span><div class="big">Non prendo tutti</div><p>Seguiamo bene solo poche persone al mese. Per questo c'&egrave; una candidatura: serve a capire se ha senso, per te e per me.</p></div>
     </div>
   </div>
@@ -650,8 +646,8 @@
 <section class="tight" style="padding-top:0">
   <div class="wrap center">
     <div class="cta-stack rev" style="margin-top:0">
-      <a class="btn" data-next href="candidatura/">Candidati con la garanzia <span class="arw" aria-hidden="true">&rarr;</span></a>
-      <span class="micro">Ci mettiamo la firma: ti accompagniamo fino all'obiettivo</span>
+      <a class="btn" data-next href="candidatura/">Candidati e parliamone <span class="arw" aria-hidden="true">&rarr;</span></a>
+      <span class="micro">Ci mettiamo la firma sull'affiancamento, per tutto il percorso</span>
     </div>
   </div>
 </section>
@@ -660,11 +656,11 @@
   <div class="wrap">
     <div class="sh rev"><span class="kicker">Domande frequenti</span><h2 id="faq">Quello che vorresti chiedermi</h2></div>
     <div class="acc">
-      <details class="ai rev"><summary><span class="num mono">?</span> Quanto costa? <span class="chev">&#9662;</span></summary><div class="body">La candidatura e la consulenza sono <b>gratuite e senza impegno</b>. Del percorso e dei numeri si parla in chiamata, con calma e con tutte le carte in tavola. Ti potr&agrave; far capire realmente <b>dove puoi arrivare e come</b>: dato che non ti costa nulla, sarebbe sciocco non sfruttare la chiamata.</div></details>
+      <details class="ai rev"><summary><span class="num mono">?</span> Quanto costa? <span class="chev">&#9662;</span></summary><div class="body">La candidatura e la consulenza sono <b>gratuite e senza impegno</b>. Del percorso e dei numeri si parla in chiamata, con calma e con tutte le carte in tavola. Serve a capire <b>se il percorso ha senso per te e come funziona</b>: dato che non ti costa nulla, tanto vale sfruttare la chiamata.</div></details>
       <details class="ai rev"><summary><span class="num mono">?</span> Cosa succede dopo che mi candido? <span class="chev">&#9662;</span></summary><div class="body">Se la tua candidatura passa, <b>ti contattiamo entro 24 ore</b> e fissiamo una chiacchierata per capire il tuo punto di partenza e se ha senso, per te e per me.</div></details>
-      <details class="ai rev"><summary><span class="num mono">?</span> Devo comprare merce o gestire pacchi e magazzino? <span class="chev">&#9662;</span></summary><div class="body">No, mai. E c'&egrave; di pi&ugrave;: funziona al contrario di un negozio normale. <b>Prima il cliente compra e ti paga, e solo dopo ordini il prodotto al fornitore</b>: la differenza resta a te, ed &egrave; il tuo guadagno. Quindi zero soldi anticipati per la merce, <b>niente scorte, niente pacchi, niente magazzino</b>: la spedizione parte dal magazzino del fornitore e arriva dritta a casa del cliente. Se ne occupano dalla A alla Z i nostri fornitori privati, con cui lavoriamo ogni giorno da anni. E questo servizio non ti costa nemmeno 1&thinsp;&euro;.</div></details>
-      <details class="ai rev"><summary><span class="num mono">?</span> Non ho mai fatto niente online. Fa per me? <span class="chev">&#9662;</span></summary><div class="body">Quasi tutti partono da zero, e il percorso &egrave; pensato proprio per questo: <b>il prodotto te lo trovo io e il negozio te lo costruisco io</b>, poi ti seguo passo dopo passo. A te basta avere 60-90 minuti al giorno.</div></details>
-      <details class="ai rev"><summary><span class="num mono">?</span> Cosa succede se non ci riesco? <span class="chev">&#9662;</span></summary><div class="body">&Egrave; scritto nero su bianco nella garanzia che firmiamo quando entri: <b>non ti mollo</b>. Ti affianco fino all'obiettivo che abbiamo fissato insieme, e <b>se fai la tua parte e non ci arrivi, continuiamo finch&eacute; non ci arrivi</b>. Come funziona nel dettaglio te lo spiego in chiamata, con tutte le carte in tavola. L'unica condizione &egrave; l'impegno.</div></details>
+      <details class="ai rev"><summary><span class="num mono">?</span> Devo comprare merce o gestire pacchi e magazzino? <span class="chev">&#9662;</span></summary><div class="body">No, mai. E c'&egrave; di pi&ugrave;: funziona al contrario di un negozio normale. <b>Prima il cliente compra, e solo dopo ordini il prodotto al fornitore</b>: non anticipi merce che potrebbe restarti in mano. Quindi zero soldi anticipati per lo stock, <b>niente scorte, niente pacchi, niente magazzino</b>: la spedizione parte dal magazzino del fornitore e arriva dritta a casa del cliente. Se ne occupano dalla A alla Z i nostri fornitori privati, con cui lavoriamo ogni giorno da anni. E questo servizio non ti costa nemmeno 1&thinsp;&euro;.</div></details>
+      <details class="ai rev"><summary><span class="num mono">?</span> Non ho mai fatto niente online. Fa per me? <span class="chev">&#9662;</span></summary><div class="body">Quasi tutti partono da zero, e il percorso &egrave; pensato proprio per questo: <b>il prodotto lo seleziono io e il negozio te lo costruisco io</b>, poi ti seguo passo dopo passo. A te basta avere 60-90 minuti al giorno.</div></details>
+      <details class="ai rev"><summary><span class="num mono">?</span> Cosa succede se non ci riesco? <span class="chev">&#9662;</span></summary><div class="body">&Egrave; scritto nero su bianco nell'impegno che firmiamo quando entri: <b>non ti mollo</b>. Ti affianco per tutto il percorso concordato, e <b>se fai la tua parte e il progetto non &egrave; ancora in piedi, continuiamo a lavorarci</b>. Come funziona nel dettaglio te lo spiego in chiamata, con tutte le carte in tavola. L'unica condizione &egrave; l'impegno.</div></details>
     </div>
   </div>
 </section>
@@ -676,7 +672,7 @@
     <div class="cta-stack rev">
       <a class="btn big" data-next href="candidatura/">Inizia la candidatura <span class="arw" aria-hidden="true">&rarr;</span></a>
       <span class="micro">Gratis e senza impegno. Se passerai la selezione, ti contattiamo entro 24 ore e vediamo insieme se fa per te.</span>
-      <span class="micro" id="spotsFoot" hidden>Rimasti solo <span class="spotsMirror" style="color:var(--warn);font-weight:700"></span> posti per accedere al percorso <span class="dotsep">&middot; </span>aggiornato <span class="todayMirror"></span></span>
+      <span class="micro">Selezione a numero chiuso <span class="dotsep">&middot; </span>le candidature vengono valutate in ordine di arrivo</span>
     </div>
   </div>
 </section>
@@ -709,48 +705,6 @@
       root.setAttribute('data-theme', cur==='light'?'dark':(cur==='dark'?'light':(matchMedia('(prefers-color-scheme:light)').matches?'dark':'light')));
     });
 
-    try{
-    var d=new Date();
-    var mesi=['gennaio','febbraio','marzo','aprile','maggio','giugno','luglio','agosto','settembre','ottobre','novembre','dicembre'];
-    var today=d.getDate()+' '+mesi[d.getMonth()]+' '+d.getFullYear();
-    document.getElementById('today').textContent=today;
-    document.querySelectorAll('.todayMirror').forEach(function(e){e.textContent=today;});
-
-    /* posti: ciclo settimanale deterministico, lun 12 -> dom 3 */
-    var week=Math.floor((d-new Date(d.getFullYear(),0,1))/(7*864e5));
-    var wh=(week*2654435761)>>>0;
-    var start=8+(wh%2), floor=7;
-    var dow=(d.getDay()+6)%7;
-    var spots=Math.max(floor, start-Math.round(dow*(start-floor)/6));
-    document.getElementById('spotsN').textContent=spots;
-    document.querySelectorAll('.spotsMirror').forEach(function(e){e.textContent=spots;});
-    var sb=document.querySelector('.spotbar'); if(sb) sb.hidden=false;
-    var sf=document.getElementById('spotsFoot'); if(sf) sf.hidden=false;
-    var fillPct=Math.max(62,Math.min(93,100-spots*6));
-    var fillEl=document.getElementById('spotsFill'); if(fillEl){fillEl.style.width=fillPct+'%';}
-
-    /* live viewers simulato, plausibile per ora del giorno */
-    var liveEl=document.getElementById('liveN');
-    var h=d.getHours();
-    var baseByHour=[70,55,42,35,32,40,70,110,150,175,190,200,205,195,185,190,210,235,260,290,305,285,220,140];
-    var base=baseByHour[h]||160;
-    function seededRand(n){var x=Math.sin(n*99.13+h*7.7)*10000;return x-Math.floor(x);}
-    var cur=base+Math.round((seededRand(d.getMinutes())-0.5)*30);
-    liveEl.textContent=cur;
-    var lvBox=document.querySelector('.video .live'); if(lvBox) lvBox.hidden=false;
-    var t=0;
-    setInterval(function(){
-      t++;
-      var target=base+Math.round((seededRand(t)-0.5)*36);
-      cur += Math.sign(target-cur)*Math.max(1,Math.round(Math.abs(target-cur)/4)) + (seededRand(t*7)>0.6?1:-1);
-      if(cur<28) cur=28;
-      liveEl.textContent=cur;
-    }, 3800);
-
-
-
-
-    }catch(e){}
     try{
     var sc=document.getElementById('stickyCta');
     var heroEl=document.querySelector('.hero');
@@ -809,49 +763,107 @@
 <style>
 .pf-note{position:fixed;left:0;right:0;bottom:0;z-index:60;
   padding:7px 14px calc(7px + env(safe-area-inset-bottom));text-align:center;
-  font:600 11.5px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  font:600 14px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   letter-spacing:.02em;color:var(--faint,#68726D);
   background:color-mix(in srgb,var(--bg,#000) 88%,transparent);
   backdrop-filter:blur(10px);border-top:1px solid var(--line-2,rgba(255,255,255,.06))}
 body{padding-bottom:34px}
 @media (max-width:880px){.sticky-cta{bottom:54px}body{padding-bottom:122px}}
-.vph{position:relative;display:grid;place-items:center;width:100%;height:100%;
-  background:linear-gradient(180deg,var(--bg-2,#0A0D12),var(--surface,#0E1218))}
-.vph::after{content:"";position:absolute;inset:0;
+/* ---- thumbnail dei player (tutte in CSS, nessuna risorsa esterna) ---- */
+.vslide{position:absolute;inset:0;z-index:1;display:flex;flex-direction:column;
+  justify-content:center;gap:14px;padding:0 34% 6% 8%;text-align:left;
+  background:
+    radial-gradient(90% 70% at 12% 8%,color-mix(in srgb,var(--brand,#4E9EFF) 26%,transparent),transparent 62%),
+    radial-gradient(70% 60% at 92% 95%,color-mix(in srgb,var(--brand,#4E9EFF) 14%,transparent),transparent 60%),
+    linear-gradient(158deg,var(--surface,#0E1218),var(--bg-2,#0A0D12))}
+.vslide::after{content:"";position:absolute;inset:0;
   background-image:linear-gradient(var(--line-2) 1px,transparent 1px),
-    linear-gradient(90deg,var(--line-2) 1px,transparent 1px);background-size:44px 44px;
-  mask:radial-gradient(120% 80% at 50% 45%,#000,transparent 78%);opacity:.5}
-.vph .vph-in{position:relative;z-index:1;display:flex;flex-direction:column;
-  align-items:center;gap:12px;text-align:center;padding:16px}
-.vph .vph-disc{width:66px;height:66px;border-radius:50%;
-  background:color-mix(in srgb,var(--brand,#4E9EFF) 22%,transparent);
-  border:1px solid color-mix(in srgb,var(--brand,#4E9EFF) 45%,transparent);
-  color:var(--brand,#4E9EFF);display:grid;place-items:center}
-.vph .vph-lab{font-size:12px;letter-spacing:.2em;text-transform:uppercase;
-  color:var(--faint,#68726D);font-weight:700}
-.vph .vph-sub{font-size:13px;color:var(--muted,#96A09B);max-width:34ch}
-.avph{width:100%;height:100%;display:grid;place-items:center;
-  background:linear-gradient(150deg,var(--brand-soft),transparent),var(--raised,#131820);
-  color:var(--brand,#4E9EFF);font-weight:800;font-size:clamp(22px,6vw,44px);letter-spacing:.04em}
-.synthtag{display:inline-block;margin-top:6px;padding:2px 7px;border-radius:5px;
+    linear-gradient(90deg,var(--line-2) 1px,transparent 1px);background-size:46px 46px;
+  mask:radial-gradient(120% 90% at 30% 30%,#000,transparent 82%);opacity:.55}
+.vslide>*{position:relative;z-index:1}
+.vs-kick{font-size:14px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+  color:color-mix(in srgb,var(--brand,#4E9EFF) 82%,#fff)}
+.vs-title{font-size:clamp(26px,4.4vw,50px);font-weight:800;line-height:1.12;
+  letter-spacing:-.02em;color:var(--ink,#fff);text-shadow:0 12px 34px rgba(0,0,0,.55)}
+.vs-title em{font-style:normal;color:var(--brand,#4E9EFF)}
+.vs-sub{font-size:clamp(15px,1.6vw,19px);color:var(--muted,#96A09B);max-width:44ch}
+.vs-bars{display:flex;gap:9px;margin-top:6px}
+.vs-bars i{height:7px;border-radius:4px;background:color-mix(in srgb,var(--brand,#4E9EFF) 55%,transparent)}
+.vs-bars i:nth-child(1){width:82px}
+.vs-bars i:nth-child(2){width:54px;opacity:.6}
+.vs-bars i:nth-child(3){width:34px;opacity:.35}
+.vs-play{position:absolute;z-index:3;right:9%;top:50%;transform:translateY(-50%);
+  width:92px;height:92px;border-radius:50%;display:grid;place-items:center;
+  background:rgba(255,255,255,.95);color:#0b1016;
+  box-shadow:0 22px 48px -12px rgba(0,0,0,.75),0 0 0 10px rgba(255,255,255,.1)}
+.vs-dur{position:absolute;z-index:3;right:16px;bottom:22px;font-size:14px;font-weight:700;
+  color:#fff;background:rgba(0,0,0,.66);border-radius:7px;padding:4px 9px;letter-spacing:.02em}
+.vs-prog{position:absolute;z-index:3;left:0;right:0;bottom:0;height:4px;background:rgba(255,255,255,.16)}
+.vs-prog i{display:block;height:100%;width:34%;background:var(--brand,#4E9EFF)}
+.video .vph-sub{position:absolute;z-index:3;left:0;right:0;bottom:14px;text-align:left;
+  font-size:14px;color:color-mix(in srgb,#fff 66%,transparent);
+  text-shadow:0 2px 10px rgba(0,0,0,.85);padding:0 110px 0 8%}
+@media (max-width:900px){
+  .vslide{padding:7% 7% 8%;text-align:center;align-items:center;justify-content:flex-start;gap:8px}
+  .vs-sub,.vs-bars{display:none}
+  .vs-kick{font-size:14px;letter-spacing:.14em}
+  .vs-title{font-size:clamp(19px,5vw,26px);line-height:1.2}
+  .vs-play{right:auto;left:50%;top:64%;transform:translate(-50%,-50%);width:58px;height:58px}
+  .video .vph-sub{padding:0 14px;bottom:10px;text-align:center;font-size:14px}
+  .vs-dur{right:10px;bottom:18px}
+}
+
+/* miniature delle videotestimonianze e delle clip stampa */
+.vthumb{background:linear-gradient(158deg,var(--surface,#0E1218),var(--bg-2,#0A0D12))}
+.vthumb::before{content:"";position:absolute;inset:0;z-index:2;
+  background-image:linear-gradient(var(--line-2) 1px,transparent 1px),
+    linear-gradient(90deg,var(--line-2) 1px,transparent 1px);background-size:34px 34px;
+  mask:radial-gradient(110% 85% at 50% 40%,#000,transparent 80%);opacity:.5;pointer-events:none}
+.vthumb::after{content:"";position:absolute;z-index:3;left:0;right:0;bottom:0;height:3px;
+  background:linear-gradient(90deg,var(--brand,#4E9EFF) 0 38%,rgba(255,255,255,.16) 38%)}
+.avph{position:relative;width:100%;height:100%;display:grid;place-items:end start;padding:0 0 18px 18px;
+  background:
+    radial-gradient(75% 65% at 26% 18%,color-mix(in srgb,var(--brand,#4E9EFF) 30%,transparent),transparent 64%),
+    radial-gradient(60% 60% at 88% 92%,color-mix(in srgb,var(--brand,#4E9EFF) 12%,transparent),transparent 62%),
+    linear-gradient(150deg,var(--brand-soft),transparent),var(--raised,#131820);
+  color:color-mix(in srgb,var(--brand,#4E9EFF) 88%,#fff);
+  font-weight:800;font-size:clamp(30px,6vw,52px);letter-spacing:.06em;
+  text-shadow:0 10px 26px rgba(0,0,0,.5)}
+.vplay{position:absolute;z-index:4;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:54px;height:54px;border-radius:50%;display:grid;place-items:center;
+  background:rgba(255,255,255,.94);color:#0b1016;
+  box-shadow:0 12px 30px -8px rgba(0,0,0,.7),0 0 0 7px rgba(255,255,255,.09)}
+.vdur{position:absolute;z-index:4;right:10px;bottom:12px;font-size:14px;font-weight:700;
+  color:#fff;background:rgba(0,0,0,.66);border-radius:6px;padding:3px 8px}
+.press-thumb{background:
+  radial-gradient(80% 70% at 18% 12%,color-mix(in srgb,var(--brand,#4E9EFF) 24%,transparent),transparent 62%),
+  radial-gradient(60% 60% at 90% 94%,color-mix(in srgb,var(--brand,#4E9EFF) 12%,transparent),transparent 60%),
+  linear-gradient(158deg,var(--surface,#0E1218),var(--bg-2,#0A0D12))}
+.vpress-tit{position:absolute;z-index:4;left:18px;right:18px;top:16px;
+  font-size:20px;font-weight:800;letter-spacing:-.01em;line-height:1.25;
+  color:color-mix(in srgb,#fff 92%,transparent);text-shadow:0 2px 14px rgba(0,0,0,.75)}
+.vpress-tit small{display:block;margin-top:5px;font-size:14px;font-weight:600;
+  letter-spacing:.01em;color:color-mix(in srgb,#fff 62%,transparent)}
+.press-thumb .vtag{top:auto;bottom:12px;left:14px}
+.synthtag{display:table;margin-top:8px;padding:2px 8px;border-radius:5px;
   background:var(--warn-soft,rgba(246,183,80,.14));color:var(--warn,#F6B750);
-  font-size:9.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+  font-size:14px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;line-height:1.5}
 .statcard{flex:0 0 min(240px,70vw);border-radius:14px;border:1px solid var(--line);
   background:linear-gradient(180deg,var(--surface),var(--bg-2));padding:22px 20px;
   display:flex;flex-direction:column;gap:6px}
-.statcard .sc-lab{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+.statcard .sc-lab{font-size:14px;letter-spacing:.16em;text-transform:uppercase;
   color:var(--faint);font-weight:700}
 .statcard .sc-val{font-size:27px;font-weight:800;letter-spacing:-.02em;color:var(--brand);
   font-family:ui-monospace,Menlo,Consolas,monospace}
-.statcard .sc-sub{font-size:12px;color:var(--muted)}
+.statcard .sc-sub{font-size:14px;color:var(--muted)}
 .statcard .sc-spark{margin-top:6px;height:34px;display:flex;align-items:flex-end;gap:3px}
 .statcard .sc-spark i{flex:1;background:color-mix(in srgb,var(--brand) 45%,transparent);
   border-radius:2px 2px 0 0}
 .demo-msg{display:none;margin-top:14px;padding:12px 14px;border-radius:10px;
-  border:1px dashed var(--line);color:var(--muted);font-size:13.5px;text-align:center}
+  border:1px dashed var(--line);color:var(--muted);font-size:14px;text-align:center}
 .demo-msg.on{display:block}
 </style>
-<style>.foot-inert{color:var(--faint);cursor:default}.vcard{cursor:default}.vcard:hover{transform:none}.vcard:hover .pl .d{transform:none;background:rgba(255,255,255,.94);color:#0a0f0c}.vtag{position:absolute;bottom:10px;right:10px;background:rgba(0,0,0,.55);border:1px solid var(--line);color:var(--muted);font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:4px 8px;border-radius:6px}
+<style>.foot-inert{color:var(--faint);cursor:default}.vcard{cursor:default}.vcard:hover{transform:none}.vcard:hover .pl .d{transform:none;background:rgba(255,255,255,.94);color:#0a0f0c}.vtag{position:absolute;z-index:4;top:10px;left:10px;background:rgba(0,0,0,.55);border:1px solid var(--line);color:color-mix(in srgb,#fff 70%,transparent);font-size:14px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 9px;border-radius:6px}
 </style>
 <div class="pf-note" role="note">Funnel reale, contenuti anonimizzati e dati sintetici. I moduli non inviano nulla.</div>
 </body>
